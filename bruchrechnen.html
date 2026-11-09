@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lernpfad Bruchrechnen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap">
+<style>
+/* Gleiche Familie wie Terme- und Ganze-Zahlen-Lernpfad: Papier, Tinte, Petrol (Bedienung), Bernstein (Hervorhebung).
+   Bruchstreifen und Kreise in drei Farben (--ca, --cb, --cc); Blau/Himbeere wie bei den ganzen Zahlen für Vorzeichen. */
+:root {
+  --bg: #f4f1ea; --dot: rgba(90, 75, 40, .13); --card: #fffdf9; --card-2: #f6f2e9;
+  --ink: #1e2430; --ink-2: #5b606c; --ink-3: #8c909a; --line: #e6dfd1; --line-2: #cbc1ae;
+  --pri: #0e6b6b; --pri-ink: #ffffff; --pri-soft: #dcefeb;
+  --red: #d1382c; --hop: #ffc02e; --hop-ink: #2e2200; --hop-soft: #fff0c2; --hop-strong: #a86a00;
+  --ok: #1b7a45; --ok-soft: #e0f3e6; --warn: #a3560a; --warn-soft: #fff1de;
+  --pos: #2c5fc0; --pos-soft: #e1e9fb; --neg: #c22f5f; --neg-soft: #fbe3ec;
+  --ca: #5b86d8; --ca-soft: #dbe5f8; --cb: #f0b23a; --cb-soft: #fdecc5; --cc: #8a68d6; --cut: #e9a0a0;
+  --k1: #0e6b6b; --k1s: #dcefeb; --k2: #a86a00; --k2s: #fff0c2; --k3: #6a4bc4; --k3s: #ece6fb;
+  --shadow: 0 1px 2px rgba(40, 32, 15, .05), 0 8px 24px rgba(40, 32, 15, .06);
+  --f: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --ease: cubic-bezier(.5, 0, .25, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161d1c; --dot: rgba(220, 235, 225, .07); --card: #1e2826; --card-2: #25302e;
+    --ink: #edf2ee; --ink-2: #b3c0ba; --ink-3: #82918b; --line: #34433f; --line-2: #4f625c;
+    --pri: #5cc6bc; --pri-ink: #0a1d1b; --pri-soft: #1f3b38; --red: #ff7b6b;
+    --hop: #f2b62c; --hop-ink: #1d1600; --hop-soft: rgba(242, 182, 44, .17); --hop-strong: #ffcb55;
+    --ok: #6fd69a; --ok-soft: #1b3326; --warn: #ffbf6e; --warn-soft: #3a2d18;
+    --pos: #8fb2ff; --pos-soft: rgba(143, 178, 255, .16); --neg: #ff8fb8; --neg-soft: rgba(255, 143, 184, .15);
+    --ca: #6f9bf0; --ca-soft: rgba(111, 155, 240, .22); --cb: #e0a530; --cb-soft: rgba(224, 165, 48, .22); --cc: #a68cf0; --cut: #8a4a4a;
+    --k1: #5cc6bc; --k1s: #1f3b38; --k2: #ffcb55; --k2s: rgba(242, 182, 44, .17); --k3: #b9a4ff; --k3s: rgba(185, 164, 255, .16);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .2);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161d1c; --dot: rgba(220, 235, 225, .07); --card: #1e2826; --card-2: #25302e;
+  --ink: #edf2ee; --ink-2: #b3c0ba; --ink-3: #82918b; --line: #34433f; --line-2: #4f625c;
+  --pri: #5cc6bc; --pri-ink: #0a1d1b; --pri-soft: #1f3b38; --red: #ff7b6b;
+  --hop: #f2b62c; --hop-ink: #1d1600; --hop-soft: rgba(242, 182, 44, .17); --hop-strong: #ffcb55;
+  --ok: #6fd69a; --ok-soft: #1b3326; --warn: #ffbf6e; --warn-soft: #3a2d18;
+  --pos: #8fb2ff; --pos-soft: rgba(143, 178, 255, .16); --neg: #ff8fb8; --neg-soft: rgba(255, 143, 184, .15);
+  --ca: #6f9bf0; --ca-soft: rgba(111, 155, 240, .22); --cb: #e0a530; --cb-soft: rgba(224, 165, 48, .22); --cc: #a68cf0; --cut: #8a4a4a;
+  --k1: #5cc6bc; --k1s: #1f3b38; --k2: #ffcb55; --k2s: rgba(242, 182, 44, .17); --k3: #b9a4ff; --k3s: rgba(185, 164, 255, .16);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .2);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font: 16px/1.5 var(--f);
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -.015em; text-wrap: balance; }
+h1 { font-size: clamp(1.25rem, 3vw, 1.6rem); }
+h2 { font-size: clamp(1.3rem, 3.4vw, 1.75rem); }
+h3 { font-size: 1.12rem; margin-bottom: 10px; }
+p { margin: 0 0 10px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0; padding-left: 1.25em; display: grid; gap: 6px; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--pri); outline-offset: 2px; }
+[hidden] { display: none !important; }
+sup { font-size: .62em; vertical-align: .75em; line-height: 0; margin-left: .03em; font-weight: 700; }
+.fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-size: .86em; line-height: 1.12; margin: 0 .1em; }
+.fr > span { padding: 0 .22em; white-space: nowrap; }
+.fr > span + span { border-top: 2px solid currentColor; }
+.fr .fr { font-size: .9em; }
+.mx { display: inline-block; width: .12em; }
+.fig { display: flex; justify-content: center; }
+.bars { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.bar { display: grid; width: min(300px, 64vw); height: 40px; border: 2.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--card); }
+.bar i { border-right: 1.5px solid var(--line-2); transition: background-color .3s; }
+.bar i:last-child { border-right: 0; }
+.bar i.m { border-right: 3px solid var(--ink); }
+.bar i.a { background: var(--ca); } .bar i.b { background: var(--cb); } .bar i.c { background: var(--cc); }
+.bar i.x { background: repeating-linear-gradient(135deg, var(--cut) 0 5px, var(--card) 5px 10px); }
+.barrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.barl { min-width: 2.6em; text-align: right; font-weight: 600; font-size: 1.3rem; }
+.pie { width: 140px; height: 140px; flex: none; }
+.pie path, .pie circle { stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+.pie .a { fill: var(--ca); } .pie .b { fill: var(--cb); } .pie .c { fill: var(--cc); } .pie .e { fill: var(--card); }
+.dots { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 560px; }
+.dg { display: grid; gap: 5px; padding: 8px; border: 2px dashed var(--line-2); border-radius: 10px; transition: border-color .3s; }
+.dg i { width: 14px; height: 14px; border-radius: 50%; background: var(--line-2); }
+.dg.on { border-color: var(--hop-strong); border-style: solid; background: var(--hop-soft); }
+.dg.on i { background: var(--ca); }
+.area { display: grid; width: min(240px, 62vw); aspect-ratio: 1; max-width: 100%; border: 2.5px solid var(--ink); background: var(--card); }
+.area i { border: 1px solid var(--line-2); transition: background-color .3s; }
+.area i.x { background: var(--ca-soft); } .area i.y { background: var(--cb-soft); } .area i.xy { background: var(--cc); } .area i.f { opacity: .5; }
+.anat { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 24px; }
+.anat-r { display: grid; gap: 8px; justify-items: center; }
+.decs { display: grid; gap: 10px; }
+.dec { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.dec .dl { font: 600 1.3rem/1 var(--f); min-width: 2.5ch; text-align: right; }
+.dec .eqs { font-weight: 600; color: var(--ink-3); }
+.dec .row { justify-content: flex-start; }
+.fc.com { background: var(--hop-soft); border-color: var(--hop-strong); }
+.nl g.sq line { stroke: var(--c, var(--ink)); stroke-width: 1.8; }
+.nl g.sq text { font-size: 16px; fill: var(--c, var(--ink)); }
+.nl g.nl-fl text { fill: var(--ink-2); font-weight: 500; }
+.nl g.nl-fl line { stroke: var(--ink-2); }
+
+.k1 { --kb: var(--k1); --ks: var(--k1s); } .k2 { --kb: var(--k2); --ks: var(--k2s); } .k3 { --kb: var(--k3); --ks: var(--k3s); }
+.pos { --kb: var(--pos); --ks: var(--pos-soft); } .neg { --kb: var(--neg); --ks: var(--neg-soft); }
+.nv { color: var(--neg); } .pv { color: var(--pos); }
+.hl { background: var(--hop); color: var(--hop-ink); border-radius: 6px; padding: 0 .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.box { display: inline-block; width: 1.05em; height: 1.1em; border: 2.5px dashed var(--ink-3); border-radius: 7px; vertical-align: -.15em; margin: 0 .15em; }
+
+/* ---------- Kopf ---------- */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-bottom: 18px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo {
+  width: 46px; height: 46px; flex: none; border-radius: 13px; background: var(--pri); color: var(--pri-ink);
+  display: flex; align-items: center; justify-content: center; font: 700 19px/1 var(--f); letter-spacing: -.02em;
+}
+.logo i { font-style: normal; color: var(--hop); }
+
+.seg { display: inline-flex; gap: 3px; padding: 3px; background: var(--card-2); border: 1px solid var(--line); border-radius: 13px; }
+.seg button, .seg a {
+  border: 0; background: transparent; cursor: pointer; font-weight: 600; color: var(--ink-2); text-decoration: none;
+  padding: 7px 16px; min-height: 42px; border-radius: 10px; line-height: 1.15;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.seg button small { font-weight: 400; font-size: .74rem; opacity: .85; }
+.seg button:hover, .seg a:hover { background: var(--pri-soft); color: var(--ink); }
+.seg button[aria-pressed="true"], .seg a[aria-current="page"] { background: var(--pri); color: var(--pri-ink); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+  min-height: 44px; padding: 8px 16px; border-radius: 12px; cursor: pointer;
+  border: 1.5px solid var(--line-2); background: var(--card); color: var(--ink); font-weight: 600;
+}
+.btn:hover { border-color: var(--pri); }
+.btn.primary { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn:disabled { opacity: .4; cursor: default; filter: none; border-color: var(--line-2); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn.icon { padding: 8px 11px; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 20px 22px; min-width: 0; }
+.view { display: grid; gap: 16px; }
+.view > * { min-width: 0; }
+.lbl { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 0; }
+
+/* ---------- Lernpfad (Startseite) ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px 28px; align-items: center; }
+.hero p { max-width: 62ch; color: var(--ink-2); }
+.hero h2 { margin: 4px 0 10px; }
+.herofx { display: grid; gap: 8px; justify-items: center; padding: 14px; border-radius: 14px; background: var(--card-2); border: 1px dashed var(--line-2); min-width: 0; overflow: hidden; }
+.herofx .eqbig { font-size: 1.3rem; margin: 0; }
+.herofx .lbl { justify-self: start; }
+.herofx .nl { min-width: 0; }
+.path { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; }
+.path::before { content: ""; position: absolute; left: 33px; top: 26px; bottom: 26px; border-left: 3px dashed var(--line-2); }
+.stn {
+  position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; align-items: center; gap: 6px 16px;
+  padding: 12px 16px 12px 12px; text-decoration: none; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+  transition: border-color .2s, transform .2s;
+}
+.stn:hover { border-color: var(--pri); transform: translateX(3px); }
+.num {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.1rem;
+  background: var(--card); border: 3px solid var(--pri); color: var(--pri); position: relative; z-index: 1; flex: none;
+}
+.stn.done .num { background: var(--pri); color: var(--pri-ink); }
+.stn.goal .num { border-color: var(--hop-strong); color: var(--hop-strong); }
+.st-t { display: grid; min-width: 0; }
+.st-t b { font-size: 1.05rem; }
+.st-t small { color: var(--ink-2); font-size: .86rem; }
+.st-ex { font-weight: 600; color: var(--ink-2); white-space: nowrap; font-size: .98rem; }
+.st-ex small { font-weight: 500; }
+.stars { display: inline-flex; gap: 2px; }
+.stars svg { width: 20px; height: 20px; }
+.stars .on { fill: var(--hop); stroke: var(--hop-strong); }
+.stars .off { fill: none; stroke: var(--line-2); }
+
+/* ---------- Station ---------- */
+.shead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; }
+.stitle { display: flex; align-items: center; gap: 12px; margin-right: auto; min-width: 0; }
+.intro p, .intro li { max-width: 68ch; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.merke { background: var(--pri-soft); border-color: var(--pri); }
+.falle { background: var(--warn-soft); border-color: var(--warn); }
+.merke h3 { color: var(--pri); }
+.falle h3 { color: var(--warn); }
+.nextrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }
+.figwrap { overflow-x: auto; margin: 6px 0 12px; padding: 8px 0; }
+.figwrap .nl { margin-top: -54px; }
+
+.dictwrap { overflow-x: auto; margin: 4px 0 10px; }
+.dict { border-collapse: collapse; width: 100%; min-width: 440px; font-size: .95rem; }
+.dict th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: 6px 10px; border-bottom: 2px solid var(--line); }
+.dict td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.dict td.z { font-weight: 700; font-size: 1.25rem; color: var(--pri); text-align: center; }
+.dict td:last-child { white-space: nowrap; font-weight: 600; }
+
+/* Vorzeichen-Regeln */
+.vz { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 460px; width: 100%; margin: 6px 0 10px; }
+.vz > span { padding: 8px 10px; border-radius: 10px; background: var(--card); border: 1.5px solid var(--line); font-weight: 600; text-align: center; white-space: nowrap; font-size: 1.05rem; }
+.vz > span.p { border-color: var(--pos); } .vz > span.n { border-color: var(--neg); }
+.vz > span.on { background: var(--hop-soft); border-color: var(--hop-strong); }
+.vz b { font-size: 1.15em; }
+.ladder { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0 12px; }
+.ladder span { padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line-2); font-weight: 600; }
+.ladder i { font-style: normal; color: var(--ink-3); font-weight: 700; }
+
+/* ---------- Zahlengerade (SVG) ---------- */
+.nl { display: block; width: 100%; min-width: 480px; max-width: 760px; height: auto; margin: 0 auto; }
+.nl text { font: 600 18px var(--f); fill: var(--ink); }
+.nl text.nl-l { fill: var(--ink-2); font-weight: 500; font-size: 17px; }
+.nl text.nl-l.n { fill: var(--neg); }
+.nl text.nl-l.z { fill: var(--ink); font-weight: 700; }
+.nl-ax { stroke: var(--ink); stroke-width: 2.5; }
+.nl-ah { fill: var(--ink); }
+.nl-t { stroke: var(--ink-2); stroke-width: 1.6; }
+.nl-t.z { stroke: var(--ink); stroke-width: 3; }
+.nl-nz { fill: var(--neg-soft); } .nl-pz { fill: var(--pos-soft); }
+.nl .pos { --c: var(--pos); } .nl .neg { --c: var(--neg); } .nl .hop { --c: var(--hop-strong); } .nl .ink { --c: var(--ink); }
+.nl-j { fill: none; stroke: var(--c, var(--ink)); stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 1; }
+.nl-jh { fill: var(--c, var(--ink)); }
+.nl text.nl-jl { fill: var(--c, var(--ink)); font-size: 17px; }
+.nl-sp { fill: none; stroke: var(--c, var(--ink-2)); stroke-width: 2.4; }
+.nl text.nl-sl { fill: var(--c, var(--ink-2)); font-size: 17px; }
+.nl-p circle { fill: var(--c, var(--hop)); stroke: var(--card); stroke-width: 3; }
+.nl text.nl-pl { fill: var(--c, var(--ink)); font-size: 20px; font-weight: 700; }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pop { from { opacity: 0; } to { opacity: 1; } }
+.nl-j.new { animation: draw .6s var(--ease); }
+.nl .new-h { animation: pop .25s .5s backwards; }
+
+/* ---------- Erklär-Bühne ---------- */
+.exhead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.chip {
+  border: 1.5px solid var(--line-2); background: var(--card); border-radius: 999px; cursor: pointer;
+  padding: 4px 13px; min-height: 38px; color: var(--ink); font-weight: 500;
+}
+.chip:hover { border-color: var(--pri); }
+.chip[aria-pressed="true"] { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
+.stagebox {
+  margin-top: 16px; min-height: 240px; padding: 18px 10px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line);
+  display: grid; align-content: center; justify-items: center; gap: 14px; overflow-x: auto; overflow-y: hidden;
+}
+.stagebox > * { max-width: 100%; }
+.stagebox > .nl { max-width: 760px; }
+.cap { margin: 14px 0 0; min-height: 3em; font-size: 1.02rem; max-width: 72ch; }
+.cap b { background: var(--hop); color: var(--hop-ink); padding: 0 6px; border-radius: 6px; }
+.player { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; margin-top: 14px; }
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; min-width: 0; }
+.cv {
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink-3); cursor: pointer;
+  border-radius: 10px; padding: 3px 10px; min-height: 36px; font-weight: 600; white-space: nowrap; font-size: .9rem;
+}
+.cv.past { color: var(--ink-2); }
+.cv[aria-current="step"] { color: var(--ink); border-color: var(--pri); background: var(--pri-soft); }
+.ar { color: var(--ink-3); font-weight: 600; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.eqbig { font: 600 clamp(1.45rem, 4.6vw, 2.05rem)/1.35 var(--f); text-align: center; margin: 0; }
+.eqbig.sm { font-size: clamp(1.2rem, 3.8vw, 1.6rem); }
+.eqbig.dim { color: var(--ink-3); }
+.run { margin: 0; font-weight: 600; font-size: clamp(1.05rem, 3.2vw, 1.3rem); text-align: center; color: var(--ink-2); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+.op { font-weight: 700; color: var(--ink-3); font-size: 1.2rem; }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 680px; }
+.duo > div { display: grid; gap: 8px; justify-items: center; padding: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+
+.phrase { font-size: clamp(1.05rem, 3.2vw, 1.3rem); line-height: 2; text-align: center; margin: 0; max-width: 46ch; }
+.phrase .sg { border-radius: 6px; padding: 2px 3px; transition: background-color .3s, box-shadow .3s; }
+.phrase .sg.on { background: var(--ks); box-shadow: inset 0 -3px 0 var(--kb); }
+
+/* Kärtchen und Gruppen */
+.fc {
+  display: inline-block; vertical-align: middle; text-align: center; min-width: 44px; height: 44px; padding: 0 10px; border-radius: 10px; position: relative;
+  border: 2px solid var(--kb, var(--line-2)); background: var(--ks, var(--card)); font: 600 1.25rem/40px var(--f); white-space: nowrap;
+}
+.fc:has(.fr) { height: auto; min-height: 44px; line-height: 1.2; padding-block: 4px; }
+.fc.big { height: 54px; line-height: 50px; padding: 0 14px; font-size: 1.45rem; }
+.fc::after {
+  content: ""; position: absolute; left: -6%; right: -6%; top: 50%; height: 3px; border-radius: 2px; background: var(--red);
+  transform: rotate(-35deg) scaleX(0); transition: transform .45s var(--ease);
+}
+.fc.cut { opacity: .55; }
+.fc.cut::after { transform: rotate(-35deg) scaleX(1); }
+.grp { display: inline-grid; justify-items: center; gap: 8px; padding: 10px; border: 2px dashed var(--kb, var(--line-2)); border-radius: 14px; }
+.gl { font-size: .88rem; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.pair { display: inline-grid; justify-items: center; gap: 6px; padding: 8px; border: 2px dashed var(--pos); border-radius: 14px; }
+.pair .gl { color: var(--pos); }
+
+/* Plättchen */
+.pls { display: grid; gap: 10px; justify-items: start; }
+.plrow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.plrow .gl { min-width: 4.2em; text-align: right; margin-right: 6px; font-size: 1rem; }
+.pl {
+  width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; position: relative;
+  font: 700 1.2rem/1 var(--f); color: var(--card); background: var(--kb);
+}
+.pl.cut { opacity: .4; }
+.pl.cut::after { content: ""; position: absolute; left: -5px; right: -5px; top: 50%; height: 3px; margin-top: -1.5px; background: var(--ink); border-radius: 2px; transform: rotate(-35deg); }
+
+/* Muster-Tabelle */
+.mt { border-collapse: collapse; font-weight: 600; font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+.mt td { padding: 4px 10px; text-align: right; }
+.mt td.d { color: var(--ink-3); font-size: .85rem; font-weight: 500; text-align: left; }
+.mt tr.new td { background: var(--hop-soft); }
+.mt tr.new td:first-child { border-radius: 8px 0 0 8px; }
+.mt tr.new td:last-child { border-radius: 0 8px 8px 0; }
+
+/* Schrittweise rechnen */
+.calc { display: grid; gap: 6px; justify-items: start; }
+.calc .ln { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font: 600 clamp(1.25rem, 4vw, 1.7rem)/1.3 var(--f); color: var(--ink-3); }
+.calc .ln.now { color: var(--ink); }
+.calc .lc { font-size: .8rem; font-weight: 500; color: var(--ink-3); }
+
+/* Lösungswege */
+.lines { display: grid; gap: 8px; }
+.ln { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+.lm { font-weight: 600; font-size: 1.22rem; }
+.lc { font-size: .85rem; color: var(--ink-2); }
+.lines .nl { max-width: 560px; margin: 0; }
+.lines .ln:has(.nl) { display: block; overflow-x: auto; }
+.bsp { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.wk { padding: 14px 16px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.wq { margin: 0; font-size: .85rem; color: var(--ink-2); font-weight: 500; }
+.wk .lines { overflow-x: auto; }
+
+/* ---------- Üben ---------- */
+.ptop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+.pstat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.score { font-weight: 600; color: var(--ink-2); display: flex; align-items: baseline; gap: 6px; }
+.task { display: grid; gap: 16px; }
+.tq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.tag { font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--pri-soft); color: var(--pri); }
+.qline { font: 600 clamp(1.5rem, 5vw, 2.1rem)/1.3 var(--f); margin: 0; overflow-x: auto; }
+.qline.text { font-size: clamp(1.1rem, 3.4vw, 1.35rem); font-weight: 500; max-width: 60ch; }
+.qline .for { display: block; font-size: .6em; color: var(--ink-2); font-weight: 500; margin-top: 6px; }
+.qline.text .for { font-size: .82em; }
+.qline .nl { margin: 0; max-width: 640px; }
+.ansrow { display: grid; gap: 10px; }
+.tin {
+  font: 600 1.6rem/1.1 var(--f); height: 58px; padding: 0 14px; width: 100%; max-width: 520px;
+  border: 2px solid var(--pri); border-radius: 13px; background: var(--card); color: var(--ink);
+}
+.tin:focus { outline: none; box-shadow: 0 0 0 4px var(--pri-soft); }
+.tin.bad { border-color: var(--warn); background: var(--warn-soft); }
+.tin.good { border-color: var(--ok); background: var(--ok-soft); }
+.preview { min-height: 1.6em; color: var(--ink-2); font-size: 1rem; }
+.preview b { color: var(--ink); font-size: 1.15rem; }
+.keypad { display: flex; flex-wrap: wrap; gap: 6px; max-width: 620px; }
+.key {
+  min-width: 46px; min-height: 44px; padding: 0 10px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1.15rem;
+  border: 1.5px solid var(--line-2); background: var(--card-2); color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.key:hover { border-color: var(--pri); }
+.key.fk { color: var(--pri); font-size: 1rem; }
+.key.mi { color: var(--neg); border-color: var(--neg); font-size: 1.35rem; }
+.opts { display: grid; gap: 8px; }
+.opts.sym { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); max-width: 420px; }
+.opt {
+  text-align: left; padding: 12px 16px; min-height: 52px; border-radius: 12px; cursor: pointer; font-size: 1.05rem; font-weight: 500;
+  border: 1.5px solid var(--line-2); background: var(--card); color: var(--ink);
+}
+.opts.sym .opt { text-align: center; font-size: 1.8rem; font-weight: 700; min-height: 64px; }
+.opt:hover { border-color: var(--pri); }
+.opt.good { border-color: var(--ok); background: var(--ok-soft); }
+.opt.bad { border-color: var(--warn); background: var(--warn-soft); }
+.opt:disabled { cursor: default; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.fb { padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line); display: grid; gap: 8px; background: var(--card-2); }
+.fb.ok { background: var(--ok-soft); border-color: var(--ok); }
+.fb.no { background: var(--warn-soft); border-color: var(--warn); }
+.fb .head { font-weight: 700; font-size: 1.1rem; margin: 0; }
+.fb .star { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.fb .star svg { width: 22px; height: 22px; fill: var(--hop); stroke: var(--hop-strong); }
+.fb .lines { overflow-x: auto; }
+.solbox { padding: 14px 18px; border-radius: 14px; border: 1px dashed var(--line-2); display: grid; gap: 10px; overflow-x: auto; }
+.goalinfo { color: var(--ink-3); font-size: .88rem; margin: 0; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.foot { margin-top: 26px; color: var(--ink-3); font-size: .85rem; text-align: center; }
+
+/* ---------- Fortschritt ---------- */
+.stack { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--line); min-width: 70px; }
+.stack b { display: block; height: 100%; transition: width .4s var(--ease); }
+.stack .f, .legend .f { background: var(--ok); } .stack .h, .legend .h { background: var(--hop); } .stack .s, .legend .s { background: var(--red); }
+.legend .o { background: var(--line); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .9rem; color: var(--ink-2); }
+.legend span { white-space: nowrap; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.prog { display: grid; gap: 10px; }
+.prog h3 { margin: 0; }
+.ptop2 { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.st-r { display: grid; gap: 6px; justify-items: end; min-width: 80px; }
+.st-r .stack { width: 100%; height: 8px; }
+.btn.danger { border-color: var(--red); color: var(--red); }
+.btn.sm { min-height: 36px; padding: 4px 12px; font-size: .9rem; }
+.slots { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-end; }
+.slv { display: inline-flex; align-items: center; gap: 5px; }
+.slv .lbl { margin-right: 3px; }
+.sl {
+  min-width: 40px; min-height: 40px; border-radius: 10px; cursor: pointer; font-weight: 700;
+  border: 2px solid var(--line-2); background: var(--card); color: var(--ink-2);
+}
+.sl:hover { border-color: var(--pri); }
+.sl.tried { border-style: dashed; border-color: var(--warn); }
+.sl.free { background: var(--ok); border-color: var(--ok); color: var(--card); }
+.sl.hint { background: var(--hop); border-color: var(--hop-strong); color: var(--hop-ink); }
+.sl.shown { background: var(--red); border-color: var(--red); color: var(--card); }
+.sl.cur { outline: 3px solid var(--pri); outline-offset: 2px; }
+.sl.extra { color: var(--pri); border-style: dashed; }
+.tries { margin-left: auto; font-size: .85rem; color: var(--ink-3); letter-spacing: 1px; white-space: nowrap; }
+.hints { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hints:empty { display: none; }
+.hints > li { background: var(--hop-soft); border-radius: 12px; padding: 10px 14px 10px 40px; position: relative; overflow-x: auto; }
+.hints > li::before { content: "💡"; position: absolute; left: 12px; top: 9px; }
+.hints > li ul, .hints > li ol { margin-top: 6px; }
+.hints > li .lines { margin-top: 8px; padding: 10px 12px; background: var(--card); border-radius: 10px; overflow-x: auto; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .two { grid-template-columns: 1fr; }
+  .stn { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .st-ex { grid-column: 2 / -1; grid-row: 2; font-size: .9rem; }
+  .st-r { grid-column: 3; grid-row: 1 / span 2; }
+}
+@media (max-width: 640px) {
+  .wrap { padding-top: 14px; }
+  .card { padding: 16px; border-radius: 16px; }
+  .shead .seg { width: 100%; }
+  .shead .seg a { flex: 1; }
+  .player { flex-direction: column; align-items: stretch; }
+  .btns .btn { flex: 1; }
+  .ptop .seg { width: 100%; }
+  .ptop .seg button { flex: 1; padding-inline: 6px; }
+  .tin { font-size: 1.35rem; height: 52px; }
+  .key { min-width: 42px; }
+  .actions .btn { flex: 1 1 40%; }
+  .fb { padding: 12px; }
+  .lm { font-size: 1.1rem; }
+  .fc { min-width: 38px; height: 40px; line-height: 36px; font-size: 1.1rem; padding: 0 8px; }
+  .duo { grid-template-columns: 1fr; }
+  .pl { width: 28px; height: 28px; font-size: 1rem; }
+  .nl { min-width: 0; }
+  .nl text { font-size: 27px; }
+  .nl text.nl-l, .nl text.nl-jl, .nl text.nl-sl { font-size: 25px; }
+  .nl text.nl-pl { font-size: 30px; }
+  .stagebox { padding-inline: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stn, .fc::after, .phrase .sg { transition: none; }
+  .nl-j.new, .nl .new-h { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#start" aria-label="Zum Lernpfad">
+      <span class="logo" aria-hidden="true">3<i>/</i>4</span>
+      <h1>Lernpfad Bruchrechnen</h1>
+    </a>
+    <button class="btn icon" id="theme" type="button" title="Hell / Dunkel" aria-label="Hell oder dunkel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </header>
+  <main id="main" class="view"></main>
+  <p class="foot">Neun Stationen, jede mit kurzer Erklärung und Übungen. Dein Fortschritt wird automatisch in diesem Browser gespeichert.</p>
+</div>
+
+<!-- =====================================================================
+     RECHENKERN (ohne DOM): Brüche, Parser für Schülereingaben, Zahlengerade
+     als SVG, Prüfung mit Fehlerdiagnose, Stationen mit Erklär-Schritten
+     und Aufgaben-Generatoren. Test: TL.runTests()
+     ===================================================================== -->
+<script id="kern">
+(function (global) {
+'use strict';
+
+// ---------- Zufall (für Tests mit Startwert) ----------
+let rnd = Math.random;
+function seed(s) {
+  rnd = () => { s = (s + 0x6D2B79F5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+const ri = (a, b) => a + Math.floor(rnd() * (b - a + 1));
+const pick = a => a[Math.floor(rnd() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sgn = () => (rnd() < 0.5 ? -1 : 1);
+const abs = Math.abs;
+function err(msg) { const e = new Error(msg); e.user = true; return e; }
+
+// ---------- Brüche [Zähler, Nenner], immer gekürzt, Nenner positiv ----------
+function gcd(a, b) { a = abs(a); b = abs(b); while (b) [a, b] = [b, a % b]; return a; }
+const lcm = (a, b) => a / gcd(a, b) * b;
+function Q(n, d = 1) {
+  if (d === 0) throw err('Durch 0 kann man nicht teilen.');
+  if (d < 0) { n = -n; d = -d; }
+  const g = gcd(n, d) || 1;
+  return [n / g + 0, d / g];
+}
+const qadd = (a, b) => Q(a[0] * b[1] + b[0] * a[1], a[1] * b[1]);
+const qneg = a => [-a[0] + 0, a[1]];
+const qsub = (a, b) => qadd(a, qneg(b));
+const qmul = (a, b) => Q(a[0] * b[0], a[1] * b[1]);
+const qdiv = (a, b) => Q(a[0] * b[1], a[1] * b[0]);
+const qinv = a => Q(a[1], a[0]);
+const qeq = (a, b) => a[0] === b[0] && a[1] === b[1];
+const qzero = a => a[0] === 0;
+const qpow = (a, e) => { let r = [1, 1]; for (let i = 0; i < e; i++) r = qmul(r, a); return r; };
+const qcmp = (a, b) => a[0] * b[1] - b[0] * a[1];
+const isInt = q => q[1] === 1;
+// echter Bruch mit teilerfremdem Zähler und Nenner
+const sfrac = (dmin, dmax, pn = 0.4, proper = true) => qmul(frac(dmin, dmax, proper), [rnd() < pn ? -1 : 1, 1]);
+const sg = () => (rnd() < 0.4 ? -1 : 1);
+const sq = (q, s) => (s < 0 ? qneg(q) : q);
+function frac(dmin, dmax, proper = true) { for (;;) { const d = ri(dmin, dmax), n = ri(1, proper ? d - 1 : 2 * d); if (gcd(n, d) === 1 && n !== d) return Q(n, d); } }
+
+// ---------- HTML ----------
+const MI = '−';
+const nH = n => (n < 0 ? MI + -n : String(n));
+const F = (n, d) => `<span class="fr"><span>${n}</span><span>${d}</span></span>`;
+const sF = (n, d) => (n < 0 ? MI : '') + F(abs(n), d);                    // ungekürzt, mit Vorzeichen
+const qH = q => (q[1] === 1 ? nH(q[0]) : sF(q[0], q[1]));
+const qP = q => (q[0] < 0 ? `(${qH(q)})` : qH(q));
+const mixRaw = (w, n, d) => `${w}<span class="mx"></span>${F(n, d)}`;
+function mixH(q) {
+  if (q[1] === 1 || abs(q[0]) < q[1]) return qH(q);
+  const w = Math.trunc(abs(q[0]) / q[1]), r = abs(q[0]) % q[1];
+  return (q[0] < 0 ? MI : '') + mixRaw(w, r, q[1]);
+}
+const qmH = q => qH(q) + (q[1] !== 1 && abs(q[0]) > q[1] ? ` = ${mixH(q)}` : '');   // 7/4 = 1 3/4
+const qS = q => (q[1] === 1 ? String(q[0]) : `${q[0]}/${q[1]}`);
+const qSP = q => (q[0] < 0 ? `(${qS(q)})` : qS(q));
+function mixS(q) {
+  if (q[1] === 1 || abs(q[0]) < q[1]) return qS(q);
+  return `${q[0] < 0 ? '-' : ''}${Math.trunc(abs(q[0]) / q[1])} ${abs(q[0]) % q[1]}/${q[1]}`;
+}
+const supH = e => `<sup>${e}</sup>`;
+const ul = items => `<ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`;
+const ol = items => `<ol>${items.map(x => `<li>${x}</li>`).join('')}</ol>`;
+const eqbig = (h, cls = '') => `<p class="eqbig ${cls}">${h}</p>`;
+const chipRow = (items, op = '·') => `<div class="row">${items.join(`<span class="op">${op}</span>`)}</div>`;
+const LT = '&lt;', GT = '&gt;';
+const relH = r => (r === '<' ? LT : r === '>' ? GT : '=');
+const BOX = '<span class="box"></span>';
+const hl = h => `<span class="hl">${h}</span>`;
+
+// ---------- Parser für Eingaben: / ist der Bruchstrich, : heißt geteilt ----------
+const SUPS = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+function tokenize(s) {
+  s = String(s).replace(/[−–—]/g, '-').replace(/[·⋅×∙*]/g, '*').replace(/÷/g, ':')
+    .replace(/[[{]/g, '(').replace(/[\]}]/g, ')');
+  const t = []; let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (/\s/.test(ch)) { i++; continue; }
+    if (/[0-9]/.test(ch)) {
+      const m = /^(\d+)\s+(\d+)\s*\/\s*(\d+)/.exec(s.slice(i));
+      if (m && !(t.length && t[t.length - 1].t === 'fr')) {
+        if (+m[3] === 0) throw err('Der Nenner darf nicht 0 sein.');
+        t.push({ t: 'mixed', w: +m[1], n: +m[2], d: +m[3] }); i += m[0].length; continue;
+      }
+    }
+    if (/[0-9.,]/.test(ch)) {
+      let j = i; while (j < s.length && /[0-9.,]/.test(s[j])) j++;
+      const str = s.slice(i, j).replace(',', '.');
+      if (!/^\d+(\.\d+)?$/.test(str)) throw err(`„${s.slice(i, j)}“ ist keine gültige Zahl.`);
+      const [ip, fp = ''] = str.split('.');
+      t.push({ t: 'num', q: Q(+(ip + fp), 10 ** fp.length), dec: !!fp });
+      i = j; continue;
+    }
+    if (SUPS.includes(ch)) {
+      let j = i, e = '';
+      while (j < s.length && SUPS.includes(s[j])) { e += SUPS.indexOf(s[j]); j++; }
+      t.push({ t: 'sup', e: +e }); i = j; continue;
+    }
+    if (ch === '/') { t.push({ t: 'fr' }); i++; continue; }
+    if (ch === ':') { t.push({ t: '/' }); i++; continue; }
+    if ('+-*()^'.includes(ch)) { t.push({ t: ch }); i++; continue; }
+    if (/[a-zäöüß]/i.test(ch)) throw err('Hier brauchst du keine Buchstaben, nur Zahlen, Bruchstriche und Rechenzeichen.');
+    if (ch === '=') throw err('Schreib nur das Ergebnis, ohne „=“.');
+    if (ch === '°' || ch === '€' || ch === '%') throw err('Gib nur die Zahl ein, ohne Einheit.');
+    throw err(`Das Zeichen „${ch}“ kenne ich nicht.`);
+  }
+  return t;
+}
+const opName = t => ({ '*': '·', '/': ':', fr: '/' }[t] || t);
+function parse(src) {
+  const toks = tokenize(src);
+  if (!toks.length) throw err('Gib zuerst etwas ein.');
+  let p = 0;
+  const peek = () => toks[p];
+  const more = () => { if (!peek()) throw err('Nach dem Rechenzeichen fehlt noch etwas.'); };
+  function expr() {
+    const terms = [{ s: 1, a: term() }];
+    while (peek() && (peek().t === '+' || peek().t === '-')) {
+      const s = toks[p++].t === '-' ? -1 : 1; more();
+      terms.push({ s, a: term() });
+    }
+    return terms.length === 1 ? terms[0].a : { t: 'add', terms };
+  }
+  function term() {
+    const f = [{ op: '*', a: unary() }];
+    for (;;) {
+      const k = peek(); if (!k) break;
+      if (k.t === '*' || k.t === '/') { p++; more(); f.push({ op: k.t, a: unary() }); continue; }
+      if (k.t === '(') { f.push({ op: '*', a: unary() }); continue; }
+      if (k.t === 'num' || k.t === 'mixed') throw err(toks[p - 1].t === ')' ? 'Zwischen „)“ und der Zahl fehlt ein Rechenzeichen.' : 'Zwischen zwei Zahlen fehlt ein Rechenzeichen. Eine gemischte Zahl schreibst du so: 2 1/3.');
+      break;
+    }
+    return f.length === 1 ? f[0].a : { t: 'mul', f };
+  }
+  function unary() {
+    const k = peek();
+    if (k && k.t === '-') { p++; more(); return { t: 'neg', a: unary() }; }
+    if (k && k.t === '+') { p++; more(); return { t: 'pos', a: unary() }; }
+    return fracE();
+  }
+  function fracE() {
+    let a = power();
+    while (peek() && peek().t === 'fr') {
+      p++;
+      if (!peek()) throw err('Unter dem Bruchstrich fehlt noch der Nenner.');
+      a = { t: 'frac', n: a, d: power() };
+    }
+    return a;
+  }
+  function power() {
+    let b = atom();
+    for (;;) {
+      const k = peek();
+      if (k && k.t === 'sup') { p++; b = { t: 'pow', b, e: k.e }; continue; }
+      if (k && k.t === '^') {
+        p++;
+        const e = toks[p++];
+        if (e && e.t === '-') throw err('Negative Hochzahlen brauchst du hier nicht.');
+        if (!e || e.t !== 'num' || e.q[1] !== 1) throw err('Nach ^ muss eine ganze Zahl kommen, zum Beispiel (2/3)^2.');
+        if (e.q[0] > 12) throw err('Diese Hochzahl ist zu groß.');
+        b = { t: 'pow', b, e: e.q[0] }; continue;
+      }
+      break;
+    }
+    return b;
+  }
+  function atom() {
+    const k = toks[p++];
+    if (!k) throw err('Am Ende fehlt noch etwas.');
+    if (k.t === 'num') return { t: 'num', q: k.q, dec: k.dec };
+    if (k.t === 'mixed') return { t: 'mixed', w: k.w, n: k.n, d: k.d };
+    if (k.t === '(') {
+      if (peek() && peek().t === ')') throw err('Die Klammer ist leer.');
+      if (!peek()) throw err('Eine Klammer ist nicht geschlossen.');
+      const e = expr();
+      const c = toks[p++];
+      if (!c || c.t !== ')') throw err('Eine Klammer ist nicht geschlossen.');
+      return { ...e, p: true };
+    }
+    if (k.t === ')') throw err('Da ist eine Klammer „)“ zu viel.');
+    if (k.t === 'fr') throw err('Vor dem Bruchstrich fehlt der Zähler.');
+    if (k.t === 'sup' || k.t === '^') throw err('Vor der Hochzahl fehlt die Grundzahl.');
+    throw err(`An dieser Stelle passt „${opName(k.t)}“ nicht.`);
+  }
+  const ast = expr();
+  if (p < toks.length) throw err(toks[p].t === ')' ? 'Da ist eine Klammer „)“ zu viel.' : 'Da ist ein Zeichen zu viel.');
+  return ast;
+}
+function val(a) {
+  switch (a.t) {
+    case 'num': return a.q;
+    case 'mixed': return Q(a.w * a.d + a.n, a.d);
+    case 'neg': return qneg(val(a.a));
+    case 'pos': return val(a.a);
+    case 'frac': { const d = val(a.d); if (qzero(d)) throw err('Der Nenner darf nicht 0 sein.'); return qdiv(val(a.n), d); }
+    case 'add': return a.terms.reduce((s, x) => qadd(s, x.s < 0 ? qneg(val(x.a)) : val(x.a)), [0, 1]);
+    case 'mul': return a.f.reduce((s, x) => {
+      const v = val(x.a);
+      if (x.op === '/') { if (qzero(v)) throw err('Durch 0 kann man nicht teilen.'); return qdiv(s, v); }
+      return qmul(s, v);
+    }, [1, 1]);
+    case 'pow': return qpow(val(a.b), a.e);
+  }
+  throw new Error('unbekannter Knoten');
+}
+// einfache Zahl? (ganze Zahl, Bruch a/b, gemischte Zahl, Dezimalzahl – jeweils mit Vorzeichen)
+function lit(a) {
+  let neg = false;
+  while (a.t === 'neg' || a.t === 'pos') { if (a.t === 'neg') neg = !neg; a = a.a; }
+  if (a.t === 'num') return a.dec || a.q[1] !== 1 ? { neg, kind: 'dec' } : { neg, kind: 'int', n: a.q[0], d: 1 };
+  if (a.t === 'mixed') return { neg, kind: 'mixed', w: a.w, n: a.n, d: a.d };
+  if (a.t === 'frac') {
+    let n = a.n, s = neg;
+    if (n.t === 'neg' && n.a.t === 'num') { s = !s; n = n.a; }
+    const d = a.d;
+    if (n.t === 'num' && d.t === 'num' && !n.dec && !d.dec && n.q[1] === 1 && d.q[1] === 1) return { neg: s, kind: 'frac', n: n.q[0], d: d.q[0] };
+  }
+  return null;
+}
+
+// ---------- Formatierung eines Syntaxbaums ----------
+function fmt(a, pos = 'top') {
+  let h, need = false;
+  const outer = pos !== 'top' && pos !== 'first';
+  switch (a.t) {
+    case 'num':
+      h = qH([abs(a.q[0]), a.q[1]]);
+      if (a.q[0] < 0) { h = MI + h; if (outer) need = true; }
+      if (a.q[1] !== 1 && pos === 'base') need = true;
+      break;
+    case 'mixed': h = mixRaw(a.w, a.n, a.d); if (pos === 'base') need = true; break;
+    case 'frac': h = F(fmt(a.n, 'top'), fmt(a.d, 'top')); if (pos === 'base') need = true; break;
+    case 'neg': h = MI + fmt(a.a, 'un'); if (outer) need = true; break;
+    case 'pos': h = '+' + fmt(a.a, 'un'); if (outer) need = true; break;
+    case 'pow': h = fmt(a.b, 'base') + supH(a.e); if (pos === 'base') need = true; break;
+    case 'mul':
+      h = a.f.map((f, i) => (i === 0 ? '' : f.op === '/' ? ' : ' : ' · ') + fmt(f.a, f.op === '/' ? 'div' : 'factor')).join('');
+      if (pos === 'base' || pos === 'un' || pos === 'div') need = true;
+      break;
+    case 'add':
+      h = a.terms.map((x, i) => (i === 0 ? '' : x.s < 0 ? ' − ' : ' + ') + fmt(x.a, i === 0 ? 'first' : 'term')).join('');
+      if (outer && pos !== 'term') need = true;
+      break;
+  }
+  if (a.p && pos !== 'top') need = true;
+  if (need) h = `(${h})`;
+  if (a.hl) h = `<span class="hl">${h}</span>`;
+  return h;
+}
+const srcH = src => fmt(parse(src));
+function preview(src) { try { return fmt(parse(src)); } catch (e) { if (e.user) return null; throw e; } }
+const splitList = s => String(s).split(/[;<]+/).map(x => x.trim()).filter(Boolean);
+function previewList(s) {
+  const it = splitList(s); if (!it.length) return null;
+  try { return it.map(x => fmt(parse(x))).join(' ; '); } catch (e) { if (e.user) return null; throw e; }
+}
+
+// ---------- Schrittweise rechnen (Klammer, Hoch, Punkt, Strich) ----------
+function mapKids(a, f) {
+  switch (a.t) {
+    case 'neg': case 'pos': return { ...a, a: f(a.a) };
+    case 'pow': return { ...a, b: f(a.b) };
+    case 'mul': return { ...a, f: a.f.map(x => ({ ...x, a: f(x.a) })) };
+    case 'add': return { ...a, terms: a.terms.map(x => ({ ...x, a: f(x.a) })) };
+    default: return a;
+  }
+}
+const unmark = a => JSON.parse(JSON.stringify(a, (k, v) => (k === 'hl' ? undefined : v)));
+const numN = q => ({ t: 'num', q, hl: true });
+function stKl(a, root) { return a.p && (a.t === 'add' || a.t === 'mul') && !root ? numN(val(a)) : mapKids(a, x => stKl(x, false)); }
+function stPow(a) { return a.t === 'pow' ? numN(val(a)) : mapKids(a, stPow); }
+function stPunkt(a) {
+  const b = mapKids(a, stPunkt);
+  if (b.t === 'mul') return numN(val(b));
+  if ((b.t === 'neg' || b.t === 'pos') && b.a.t === 'num' && b.a.hl) return numN(val(b));
+  return b;
+}
+function evalSteps(src) {
+  const a0 = parse(src);
+  const steps = [{ lab: 'Aufgabe', h: fmt(a0), cap: 'Schau dir die Aufgabe an: Gibt es Klammern? Potenzen? Mal und geteilt?' }];
+  let a = a0;
+  const stages = [
+    ['Klammer', x => stKl(x, true), 'Zuerst rechnest du die Klammer aus.'],
+    ['Hoch', stPow, 'Dann die Potenzen: Zähler und Nenner werden potenziert.'],
+    ['Punkt', stPunkt, 'Punkt vor Strich: Jetzt wird mal und geteilt gerechnet. Beim Teilen mal den Kehrwert nehmen, vorher kürzen.'],
+    ['Strich', x => numN(val(x)), 'Zum Schluss plus und minus: gleichnamig machen, dann die Zähler verrechnen.'],
+  ];
+  for (const [lab, f, cap] of stages) {
+    const b = f(unmark(a));
+    if (fmt(unmark(b)) !== fmt(unmark(a))) { steps.push({ lab, h: fmt(b), cap }); a = b; }
+  }
+  const value = val(a0);
+  steps[steps.length - 1].cap += ` Das Ergebnis ist <b>${qH(value)}</b>.`;
+  return { steps, value };
+}
+
+// ---------- Bilder: Bruchstreifen, Kreis, Punkte, Rechteck, Zahlengerade ----------
+// n Teile von d (n > d ergibt mehrere Streifen); o.cls Farbe, o.group dicke Linie nach je group Teilen, o.mark(i) eigene Farbe
+function barH(n, d, o = {}) {
+  const bars = Math.max(1, Math.ceil(n / d)), g = o.group || 1;
+  let h = '<div class="bars">';
+  for (let k = 0; k < bars; k++) {
+    h += `<div class="bar" style="grid-template-columns:repeat(${d},minmax(0,1fr))">`;
+    for (let i = 0; i < d; i++) {
+      const idx = k * d + i, on = idx < n, c = on ? (o.mark ? o.mark(idx) : '') || o.cls || 'a' : '';
+      h += `<i class="${c}${(i + 1) % g === 0 && i < d - 1 ? ' m' : ''}"></i>`;
+    }
+    h += '</div>';
+  }
+  h += '</div>';
+  return o.lab !== undefined ? `<div class="barrow"><span class="barl">${o.lab}</span>${h}</div>` : h;
+}
+function pieH(n, d, o = {}) {
+  const r = 62, c = 70, P = a => [c + r * Math.cos(a), c + r * Math.sin(a)].map(x => x.toFixed(2)).join(' ');
+  let s = `<svg class="pie" viewBox="0 0 140 140" role="img" aria-label="Kreis mit ${d} Teilen, ${n} gefärbt">`;
+  if (d === 1) s += `<circle cx="${c}" cy="${c}" r="${r}" class="${n ? o.cls || 'a' : 'e'}"/>`;
+  else for (let i = 0; i < d; i++) {
+    const a0 = -Math.PI / 2 + 2 * Math.PI * i / d, a1 = -Math.PI / 2 + 2 * Math.PI * (i + 1) / d;
+    const cls = i < n ? (o.mark ? o.mark(i) : '') || o.cls || 'a' : 'e';
+    s += `<path class="${cls}" d="M${c} ${c} L${P(a0)} A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${P(a1)} Z"/>`;
+  }
+  return s + '</svg>';
+}
+function dotsH(total, groups, take) {
+  const per = total / groups;
+  return `<div class="dots">${Array.from({ length: groups }, (_, g) => `<div class="dg${g < take ? ' on' : ''}" style="grid-template-columns:repeat(${Math.min(per, 6)},14px)">${'<i></i>'.repeat(per)}</div>`).join('')}</div>`;
+}
+// a/b von c/d als Rechteck: c von d Spalten, a von b Zeilen; step 0 leer, 1 Spalten, 2 beide, 3 nur Überlappung
+function areaH(a, b, c, d, step) {
+  let h = `<div class="area" style="grid-template-columns:repeat(${d},1fr);grid-template-rows:repeat(${b},1fr)">`;
+  for (let r = 0; r < b; r++) for (let k = 0; k < d; k++) {
+    const x = step >= 1 && k < c, y = step >= 2 && r < a;
+    h += `<i class="${step === 3 ? (x && y ? 'xy' : 'f') : (x ? 'x' : '') + (y ? ' y' : '')}${x && y ? ' xy' : ''}"></i>`;
+  }
+  return h + '</div>';
+}
+function svgQ(x, y, q, cls = '') {
+  if (q[1] === 1) return `<text class="${cls}" x="${x.toFixed(1)}" y="${y + 6}" text-anchor="middle">${nH(q[0])}</text>`;
+  const n = abs(q[0]), w = Math.max(String(n).length, String(q[1]).length) * 10 + 6;
+  return `<g class="sq ${cls}">${q[0] < 0 ? `<text x="${(x - w / 2 - 8).toFixed(1)}" y="${y + 6}" text-anchor="middle">−</text>` : ''}<text x="${x.toFixed(1)}" y="${y - 3}" text-anchor="middle">${n}</text>`
+    + `<line x1="${(x - w / 2).toFixed(1)}" y1="${y + 2}" x2="${(x + w / 2).toFixed(1)}" y2="${y + 2}"/><text x="${x.toFixed(1)}" y="${y + 20}" text-anchor="middle">${q[1]}</text></g>`;
+}
+// Zahlengerade mit Brüchen: o = { lo, hi, den, frl (Bruch an jedem Strich), pts:[{q, lab:true|'?', cls}] }
+function nlF(o) {
+  const lo = o.lo, hi = o.hi, den = o.den || 1, W = 720, H = 200, ay = 104, L = 40, R = W - 40;
+  const X = v => L + (v - lo) * (R - L) / (hi - lo);
+  let s = `<svg class="nl" viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.aria || 'Zahlengerade'}">`;
+  if (lo < 0) s += `<rect class="nl-nz" x="${L - 18}" y="${ay - 6}" width="${(X(Math.min(0, hi)) - L + 18).toFixed(1)}" height="12" rx="3"/>`;
+  s += `<line class="nl-ax" x1="${L - 22}" y1="${ay}" x2="${R + 20}" y2="${ay}"/><path class="nl-ah" d="M${R + 32} ${ay} l-13 -7 v14z"/>`;
+  for (let k = lo * den; k <= hi * den; k++) {
+    const x = X(k / den).toFixed(1), whole = k % den === 0;
+    s += `<line class="nl-t${whole ? ' z' : ''}" x1="${x}" y1="${ay - (whole ? 12 : 7)}" x2="${x}" y2="${ay + (whole ? 12 : 7)}"/>`;
+    if (whole) s += `<text class="nl-l z${k < 0 ? ' n' : ''}" x="${x}" y="${ay + 36}" text-anchor="middle">${nH(k / den)}</text>`;
+    else if (o.frl) s += svgQ(+x, ay + 34, [k, den], 'nl-fl');
+  }
+  for (const pt of o.pts || []) {
+    const x = X(pt.q[0] / pt.q[1]), y0 = ay - (pt.high ? 74 : 40);
+    s += `<g class="nl-p ${pt.cls || 'hop'}"><circle cx="${x.toFixed(1)}" cy="${ay}" r="8.5"/>`
+      + (pt.lab === '?' ? `<text class="nl-pl" x="${x.toFixed(1)}" y="${y0 + 6}" text-anchor="middle">?</text>` : pt.lab ? svgQ(x, y0, pt.q, 'nl-pl') : '') + '</g>';
+  }
+  return s + '</svg>';
+}
+const K3 = ['', 'k1', 'k2', 'k3'];
+function phraseH(parts, on) {
+  return `<p class="phrase">${parts.map(([t, id]) => `<span class="sg${id && on.includes(id) ? ' on ' + K3[id] : ''}">${t}</span>`).join('')}</p>`;
+}
+
+// ---------- Prüfen ----------
+function formIssue(task, L, v) {
+  if (!L) return 'Der Wert stimmt, aber rechne noch ganz aus. Gib das Ergebnis als eine einzige Zahl oder einen einzigen Bruch an.';
+  if (L.kind === 'dec') return 'Der Wert stimmt. Gib das Ergebnis aber als Bruch an, nicht als Dezimalzahl.';
+  if (task.form === 'exact') {
+    const [wn, wd] = task.want;
+    if (L.kind === 'frac' && L.n === abs(wn) && L.d === wd && L.neg === (wn < 0)) return null;
+    return task.exactMsg;
+  }
+  if (task.form === 'free') return null;
+  if (L.kind === 'mixed' && L.n >= L.d) return 'Bei einer gemischten Zahl muss der Bruchteil kleiner als 1 sein.';
+  if ((L.kind === 'frac' || L.kind === 'mixed') && gcd(L.n, L.d) > 1) { const g = gcd(L.n, L.d); return `Fast! Kürze noch vollständig: ${L.n} und ${L.d} sind beide durch ${g} teilbar.`; }
+  if (L.kind === 'frac' && L.d === 1) return `Ein Bruch mit dem Nenner 1 ist eine ganze Zahl. Schreib einfach ${nH(v[0])}.`;
+  if (task.form === 'mixed' && v[1] !== 1 && abs(v[0]) > v[1] && L.kind !== 'mixed') return 'Schreib das Ergebnis als gemischte Zahl, zum Beispiel 2 1/3.';
+  if (task.form === 'improper' && L.kind === 'mixed') return 'Schreib das Ergebnis als unechten Bruch, zum Beispiel 7/3.';
+  return null;
+}
+function check(task, input) {
+  if (task.kind === 'mc') {
+    const o = task.opts[input];
+    return o.ok ? { ok: true } : { ok: false, msg: o.msg || 'Das passt nicht.' };
+  }
+  if (task.kind === 'list') {
+    const it = splitList(input);
+    if (!it.length) return { ok: false, syntax: true, msg: 'Gib zuerst die Brüche ein.' };
+    let got;
+    try { got = it.map(x => val(parse(x))); }
+    catch (e) { if (!e.user) throw e; return { ok: false, syntax: true, msg: e.message + ' Trenne die Brüche mit Strichpunkt, zum Beispiel 1/2; 3/4.' }; }
+    const want = task.vals;
+    if (got.length !== want.length) return { ok: false, syntax: true, msg: `Es sind ${want.length} Zahlen. Du hast ${got.length} eingegeben. Trenne sie mit Strichpunkt.` };
+    const srt = [...got].sort(qcmp);
+    if (!srt.every((x, i) => qeq(x, want[i]))) return { ok: false, msg: 'Da stimmt eine Zahl nicht mit der Aufgabe überein. Schreib alle Brüche genau ab.' };
+    if (got.every((x, i) => qeq(x, want[i]))) return { ok: true };
+    if (got.every((x, i) => qeq(x, want[want.length - 1 - i]))) return { ok: false, msg: 'Du hast von groß nach klein geordnet. Gefragt ist von klein nach groß.' };
+    return { ok: false, msg: 'Die Reihenfolge stimmt noch nicht. Mach die Brüche gleichnamig und vergleiche die Zähler.' };
+  }
+  let ast, c;
+  try { ast = parse(input); c = val(ast); }
+  catch (e) { if (!e.user) throw e; return { ok: false, syntax: true, msg: e.message }; }
+  if (qeq(c, task.val)) {
+    const issue = formIssue(task, lit(ast), c);
+    return issue ? { ok: false, near: true, msg: issue } : { ok: true };
+  }
+  for (const t of task.traps || []) if (qeq(c, t.val)) return { ok: false, msg: t.msg };
+  if (!qzero(task.val) && qeq(c, qneg(task.val))) return { ok: false, msg: task.signMsg || 'Der Betrag stimmt, aber das Vorzeichen nicht.' };
+  return { ok: false, msg: task.wrongMsg || 'Das stimmt noch nicht. Rechne Schritt für Schritt.' };
+}
+
+// ---------- Bausteine ----------
+function numTask(o) {
+  const v = Array.isArray(o.val) ? o.val : Q(o.val);
+  const t = Object.assign({ kind: 'number', after: '', lines: [], form: 'any' }, o);
+  t.val = v;
+  if (t.form === 'exact') { t.sol = `${t.want[0]}/${t.want[1]}`; t.solH = sF(t.want[0], t.want[1]); }
+  else if (t.form === 'mixed') { t.sol = mixS(v); t.solH = mixH(v); }
+  else { t.sol = qS(v); t.solH = t.form === 'improper' ? qH(v) : qmH(v); }
+  t.traps = (o.traps || []).filter(x => x && x[0] !== null).map(([x, msg]) => [Array.isArray(x) ? x : Q(x), msg]).filter(([x]) => !qeq(x, v)).map(([x, msg]) => ({ val: x, msg }));
+  return t;
+}
+const safeQ = (n, d) => (d === 0 ? null : Q(n, d));
+function lineH(lines) {
+  return `<div class="lines">${lines.map((l, i) => `<div class="ln"><span class="lm">${i && !l.noeq ? '= ' : ''}${l.m}</span>${l.c ? `<span class="lc">${l.c}</span>` : ''}</div>`).join('')}</div>`;
+}
+const exT = list => list.map(t => ({ label: t.label || t.q, x: t }));
+const resLines = v => [{ m: qmH(v) }];
+function cmpTask(st, A, B, ah, bh, why) {
+  const c = qcmp(A, B), rel = c < 0 ? '<' : c > 0 ? '>' : '=';
+  return {
+    st, kind: 'mc', sym: true, prompt: 'Setze das richtige Zeichen ein: <, > oder =', q: `${ah}${BOX}${bh}`,
+    opts: ['<', '>', '='].map(r => ({ h: relH(r), ok: r === rel, msg: why })), sol: rel, solH: relH(rel),
+    lines: [{ m: `${ah} ${relH(rel)} ${bh}`, noeq: true }, { m: why, noeq: true }], data: {},
+  };
+}
+const SIGNT = `<div class="vz"><span class="p">(+) · (+) = <b>+</b></span><span class="n">(+) · (−) = <b>−</b></span><span class="n">(−) · (+) = <b>−</b></span><span class="p">(−) · (−) = <b>+</b></span></div>`;
+const UNITS = [['€', 'Euro'], ['kg', 'kg'], ['m', 'm'], ['min', 'Minuten'], ['l', 'Liter']];
+
+// =====================================================================
+// Station 1: Brüche verstehen
+// =====================================================================
+function pic1(n, d, shape) {
+  const fig = shape === 'pie' ? pieH(n, d) : barH(n, d);
+  return numTask({
+    st: 1, prompt: 'Welcher Bruchteil ist gefärbt?', q: `<div class="fig">${fig}</div>`, val: Q(n, d), form: 'free', data: {},
+    traps: [[Q(d, n), 'Oben steht der Zähler: die gefärbten Teile. Unten steht der Nenner: alle Teile.'], [safeQ(n, d - n), 'Der Nenner zählt alle Teile, nicht nur die weißen.']],
+    wrongMsg: 'Zähle zuerst alle gleich großen Teile (das ist der Nenner), dann die gefärbten Teile (das ist der Zähler).',
+    lines: [{ m: `${n} von ${d} gleich großen Teilen sind gefärbt.`, noeq: true }, { m: F(n, d), noeq: true, c: 'Zähler: gefärbte Teile · Nenner: alle Teile' }],
+  });
+}
+function part1(a, b, c, unit) {
+  const one = c / b, v = one * a;
+  const lines = [{ m: `${F(1, b)} von ${c} ${unit[0]} = ${c} : ${b} = ${one} ${unit[0]}`, noeq: true, c: 'durch den Nenner teilen' }];
+  lines.push(a > 1 ? { m: `${F(a, b)} von ${c} ${unit[0]} = ${one} · ${a} = ${v} ${unit[0]}`, noeq: true, c: 'mal den Zähler' } : { m: `Ergebnis: ${v} ${unit[0]}`, noeq: true });
+  return numTask({
+    st: 1, prompt: 'Berechne den Bruchteil', q: `${F(a, b)} von ${c} ${unit[0]}`, after: 'Gib nur die Zahl ein.', val: v, data: {},
+    traps: [[one, `Das ist erst ${F(1, b)}. Nimm das Ergebnis noch mal ${a}.`], [c * a, `Teile zuerst durch den Nenner ${b}, dann nimm mal den Zähler.`], [Q(c, a), 'Teile durch den Nenner (unten), nicht durch den Zähler.']],
+    wrongMsg: `Teile ${c} durch den Nenner ${b}. Das Ergebnis nimmst du mal den Zähler ${a}.`, lines,
+  });
+}
+function toMixed1(n, d, s = 1) {
+  const w = Math.floor(n / d), r = n % d, m = s < 0 ? MI : '';
+  return numTask({
+    st: 1, prompt: 'Schreib als gemischte Zahl', q: sF(s * n, d), val: Q(s * n, d), form: 'mixed', data: {},
+    traps: [[sq(Q(w * d + r + d, d), s), `${n} : ${d} = ${w} Rest ${r}. Es sind ${w} Ganze.`], [sq(qadd(Q(w), Q(r, n)), s), 'Der Rest kommt in den Zähler, der Nenner bleibt gleich.']],
+    signMsg: 'Das Vorzeichen bleibt: Ein negativer Bruch wird eine negative gemischte Zahl.',
+    wrongMsg: `Teile den Zähler durch den Nenner: ${n} : ${d}. Das Ergebnis sind die Ganzen, der Rest kommt in den Zähler.`,
+    lines: [{ m: `${n} : ${d} = ${w} Rest ${r}`, noeq: true, c: `${w} Ganze, ${r} ${d}-tel bleiben übrig${s < 0 ? ', das Minus bleibt davor' : ''}` }, { m: `${sF(s * n, d)} = ${m}${mixRaw(w, r, d)}`, noeq: true }],
+  });
+}
+function toImp1(w, n, d, s = 1) {
+  const z = w * d + n, m = s < 0 ? MI : '';
+  return numTask({
+    st: 1, prompt: 'Schreib als unechten Bruch', q: m + mixRaw(w, n, d), val: Q(s * z, d), form: 'improper', data: {},
+    traps: [[Q(s * (w + n), d), `Rechne zuerst die Ganzen in ${d}-tel um: ${w} = ${F(w * d, d)}.`], [Q(s * w * n, d), `Die Ganzen werden mit dem Nenner multipliziert: ${w} · ${d} = ${w * d}. Dann kommt der Zähler dazu.`], [Q(s * w * d * n, d), `${w} · ${d} + ${n}: Der Zähler wird addiert, nicht multipliziert.`], [Q(s * (w * d - n), d), `Bei ${m}${mixRaw(w, n, d)} gehört das Minus zur ganzen Zahl: Es sind ${w} Ganze und ${F(n, d)}, zusammen ${F(z, d)}, und davor das Minus.`]],
+    signMsg: 'Das Vorzeichen bleibt: Eine negative gemischte Zahl wird ein negativer Bruch.',
+    lines: [{ m: m + mixRaw(w, n, d) }, { m: m + F(`${w} · ${d} + ${n}`, d), c: `${w} Ganze sind ${w * d} ${d}-tel` }, { m: sF(s * z, d) }],
+  });
+}
+function nlRead1(den, hi, lo = 0) {
+  let k; do k = ri(lo * den + 1, hi * den - 1); while (k % den === 0 || gcd(k, den) !== 1);
+  const q = Q(k, den);
+  return numTask({
+    st: 1, prompt: 'Welche Zahl ist markiert?', q: nlF({ lo, hi, den, pts: [{ q, lab: '?', cls: 'hop' }], aria: 'Zahlengerade mit markiertem Punkt' }), val: q, form: 'free', data: {},
+    traps: [[Q(k, den + 1), `Zähle die Abstände zwischen zwei ganzen Zahlen, nicht die Striche: Es sind ${den}.`], [Q(den * Math.sign(k), abs(k)), 'Der Nenner sagt, in wie viele Teile jedes Ganze geteilt ist.']],
+    signMsg: k < 0 ? 'Der Punkt liegt links von der 0. Dort liegen die negativen Brüche.' : 'Der Punkt liegt rechts von der 0. Dort liegen die positiven Brüche.',
+    wrongMsg: `Zwischen zwei ganzen Zahlen sind ${den} gleich große Abstände. Ein Abstand ist ${F(1, den)}. Zähle von 0 aus bis zum Punkt.`,
+    lines: [{ m: `Ein Abstand ist ${F(1, den)}. Von 0 bis zum Punkt sind es ${abs(k)} Abstände nach ${k < 0 ? 'links' : 'rechts'}.`, noeq: true }, { m: `${sF(k, den)}${abs(k) > den ? ' = ' + mixH(q) : ''}`, noeq: true }],
+  });
+}
+function whole1(a, b, k, unit) {
+  const x = a * k, v = k * b;
+  return numTask({
+    st: 1, prompt: 'Berechne das Ganze', q: `${F(a, b)} einer Strecke sind ${x} ${unit}. Wie lang ist die ganze Strecke?`, qText: true, after: `Gib nur die Zahl ein (in ${unit}).`, val: v, data: {},
+    traps: [[Q(x * a, b), 'Hier ist ein Teil gegeben, gesucht ist das Ganze. Das Ganze ist größer als der Teil.'], [k, `Das ist erst ${F(1, b)} der Strecke. Das Ganze sind ${F(b, b)}.`]],
+    lines: [{ m: `${F(a, b)} sind ${x} ${unit}`, noeq: true }, { m: `${F(1, b)} sind ${x} : ${a} = ${k} ${unit}`, noeq: true, c: 'durch den Zähler teilen' }, { m: `${F(b, b)} sind ${k} · ${b} = ${v} ${unit}`, noeq: true, c: 'mal den Nenner' }],
+  });
+}
+function gen1(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.45) { const d = ri(2, 8), n = ri(1, d - 1); return pic1(n, d, rnd() < 0.5 ? 'pie' : 'bar'); }
+    if (r < 0.7) { const b = ri(2, 8); return part1(1, b, b * ri(2, 10), pick(UNITS)); }
+    return nlRead1(ri(2, 4), 1, -1);
+  }
+  if (l === 2) {
+    if (r < 0.3) { let a, b; do { b = ri(3, 10); a = ri(2, b - 1); } while (gcd(a, b) !== 1); return part1(a, b, b * ri(2, 12), pick(UNITS)); }
+    if (r < 0.55) { let n, d; do { d = ri(2, 9); n = ri(d + 1, 5 * d); } while (n % d === 0 || gcd(n, d) !== 1); return toMixed1(n, d, sg()); }
+    if (r < 0.8) { let n, d; do { d = ri(2, 9); n = ri(1, d - 1); } while (gcd(n, d) !== 1); return toImp1(ri(1, 5), n, d, sg()); }
+    return nlRead1(ri(3, 5), 1, -2);
+  }
+  if (r < 0.35) return nlRead1(ri(3, 6), pick([1, 2, 2]), pick([-2, -1, 0]));
+  if (r < 0.7) { let a, b; do { b = ri(3, 9); a = ri(2, b - 1); } while (gcd(a, b) !== 1); return whole1(a, b, ri(2, 9), pick(['m', 'km'])); }
+  let a, b; do { b = ri(5, 12); a = ri(2, b - 1); } while (gcd(a, b) !== 1); return part1(a, b, b * ri(5, 25), pick(UNITS));
+}
+const S1EX = [
+  { label: 'Was ist ¾?', mode: 'pie' }, { label: 'Mehr als ein Ganzes: 7/4', mode: 'unecht' },
+  { label: '¾ von 20', mode: 'menge' }, { label: 'Brüche auf der Zahlengerade', mode: 'nl' }, { label: 'Negative Brüche', mode: 'neg' },
+];
+function explore1(e) {
+  if (e.mode === 'pie') return [
+    { lab: 'Ganzes', h: `<div class="fig">${pieH(0, 1)}</div>`, cap: 'Das ist ein Ganzes, zum Beispiel eine Pizza.' },
+    { lab: 'Teilen', h: `<div class="fig">${pieH(0, 4)}</div>`, cap: `Teile das Ganze in 4 <b>gleich große</b> Teile. Jedes Teil ist ein Viertel: ${F(1, 4)}.` },
+    { lab: 'Nehmen', h: `<div class="fig">${pieH(3, 4)}</div>`, cap: 'Davon nimmst du 3 Teile.' },
+    { lab: 'Bruch', h: `<div class="anat">${pieH(3, 4)}<div class="anat-r">${eqbig(F(3, 4))}<p class="run">oben: <b class="pv">Zähler</b> 3, so viele Teile nimmst du<br>unten: <b class="pv">Nenner</b> 4, in so viele gleiche Teile ist das Ganze geteilt</p></div></div>`, cap: 'So schreibt man das als Bruch: drei Viertel. Der Strich in der Mitte heißt Bruchstrich.' },
+  ];
+  if (e.mode === 'unecht') return [
+    { lab: 'Sieben Viertel', h: barH(7, 4, { lab: F(7, 4) }), cap: 'Sieben Viertel sind mehr Teile, als in ein Ganzes passen. So ein Bruch heißt <b>unechter Bruch</b>: Der Zähler ist größer als der Nenner.' },
+    { lab: 'Ein Ganzes', h: barH(7, 4, { lab: F(7, 4), mark: i => (i < 4 ? 'b' : 'a') }), cap: '4 Viertel ergeben genau 1 Ganzes. Übrig bleiben 3 Viertel.' },
+    { lab: 'Gemischte Zahl', h: eqbig(`${F(7, 4)} = ${mixRaw(1, 3, 4)}`), cap: `Als <b>gemischte Zahl</b>: 1 Ganzes und ${F(3, 4)}. Rechnung: 7 : 4 = 1 Rest 3.` },
+  ];
+  if (e.mode === 'menge') return [
+    { lab: '20 Stück', h: dotsH(20, 1, 0), cap: `Gesucht ist ${F(3, 4)} von 20 Bonbons.` },
+    { lab: 'Teilen', h: dotsH(20, 4, 0), cap: `Der Nenner 4 sagt: Teile in 4 gleich große Gruppen. 20 : 4 = 5. Ein Viertel sind 5 Stück.` },
+    { lab: 'Nehmen', h: dotsH(20, 4, 3), cap: 'Der Zähler 3 sagt: Nimm 3 Gruppen. 3 · 5 = 15.' },
+    { lab: 'Ergebnis', h: eqbig(`${F(3, 4)} von 20 = 20 : 4 · 3 = <b>15</b>`, 'sm'), cap: 'Merke: Durch den Nenner teilen, mal den Zähler nehmen.' },
+  ];
+  if (e.mode === 'neg') return [
+    { lab: 'Zahlengerade', h: nlF({ lo: -2, hi: 2, den: 4, pts: [{ q: Q(3, 4), lab: true, cls: 'pos' }] }), cap: `Rechts von der 0 liegt ${F(3, 4)}: 3 Viertel-Schritte nach rechts.` },
+    { lab: 'Gegenzahl', h: nlF({ lo: -2, hi: 2, den: 4, pts: [{ q: Q(3, 4), lab: true, cls: 'pos' }, { q: Q(-3, 4), lab: true, cls: 'neg' }] }), cap: `Gleich weit links von der 0 liegt die Gegenzahl ${MI}${F(3, 4)}. Negative Brüche liegen links von der 0, genau wie negative ganze Zahlen.` },
+    { lab: 'Gemischt', h: nlF({ lo: -2, hi: 2, den: 4, pts: [{ q: Q(-3, 4), lab: true, cls: 'neg' }, { q: Q(-3, 2), lab: true, cls: 'neg', high: true }] }), cap: `${MI}${F(3, 2)} = ${MI}${mixRaw(1, 1, 2)}: 1 Ganzes und ein halbes nach links. Das Minus gilt für die ganze gemischte Zahl.` },
+    { lab: 'Ordnen', h: eqbig(`${MI}${mixRaw(1, 1, 2)} ${LT} ${MI}${F(3, 4)} ${LT} 0 ${LT} ${F(3, 4)}`, 'sm'), cap: `Weiter links heißt kleiner. Darum ist ${MI}${mixRaw(1, 1, 2)} kleiner als ${MI}${F(3, 4)}.` },
+  ];
+  return [
+    { lab: 'Ganze', h: nlF({ lo: 0, hi: 2, den: 1 }), cap: 'Auf der Zahlengerade liegen zwischen den ganzen Zahlen noch viele Brüche.' },
+    { lab: 'Drittel', h: nlF({ lo: 0, hi: 2, den: 3, frl: true }), cap: `Teile jede Strecke von einer ganzen Zahl zur nächsten in 3 gleiche Teile. Jeder Schritt ist ${F(1, 3)}.` },
+    { lab: 'Ablesen', h: nlF({ lo: 0, hi: 2, den: 3, pts: [{ q: Q(2, 3), lab: true, cls: 'pos' }, { q: Q(4, 3), lab: true, cls: 'hop' }] }), cap: `${F(2, 3)}: 2 Schritte von 0 aus. ${F(4, 3)}: 4 Schritte, also schon hinter der 1. Darum ist ${F(4, 3)} = ${mixRaw(1, 1, 3)}.` },
+  ];
+}
+
+// =====================================================================
+// Station 2: Erweitern und Kürzen
+// =====================================================================
+const VZ2 = 'Das Vorzeichen bleibt beim Erweitern und Kürzen gleich.';
+function erw2(a, b, k, s = 1) {
+  const m = s < 0 ? MI : '';
+  return numTask({
+    st: 2, prompt: 'Erweitere', q: `${sF(s * a, b)} mit ${k}`, val: Q(s * a, b), form: 'exact', want: [s * a * k, b * k], data: {},
+    exactMsg: `Der Wert ist gleich, aber erweitere genau mit ${k}: Zähler mal ${k} und Nenner mal ${k}.`, signMsg: VZ2,
+    traps: [[Q(s * a * k, b), `Auch der Nenner wird mit ${k} multipliziert.`], [Q(s * a, b * k), `Auch der Zähler wird mit ${k} multipliziert.`], [Q(s * (a + k), b + k), 'Erweitern heißt multiplizieren, nicht addieren.']],
+    lines: [{ m: `${sF(s * a, b)} = ${m}${F(`${a} · ${k}`, `${b} · ${k}`)}` }, { m: sF(s * a * k, b * k) }],
+  });
+}
+function kby2(a, b, k, s = 1) {
+  const m = s < 0 ? MI : '';
+  return numTask({
+    st: 2, prompt: 'Kürze', q: `${sF(s * a * k, b * k)} durch ${k}`, val: Q(s * a, b), form: 'exact', want: [s * a, b], data: {},
+    exactMsg: `Der Wert ist gleich, aber kürze genau durch ${k}: Zähler durch ${k} und Nenner durch ${k}.`, signMsg: VZ2,
+    traps: [[Q(s * (a * k - k), b * k - k), 'Kürzen heißt teilen, nicht subtrahieren.'], [Q(s * a, b * k), `Auch der Nenner wird durch ${k} geteilt.`], [Q(s * a * k, b), `Auch der Zähler wird durch ${k} geteilt.`]],
+    lines: [{ m: `${sF(s * a * k, b * k)} = ${m}${F(`${a * k} : ${k}`, `${b * k} : ${k}`)}` }, { m: sF(s * a, b) }],
+  });
+}
+function kfull2(n, d, s = 1) {
+  const g = gcd(n, d), v = Q(s * n, d), m = s < 0 ? MI : '';
+  return numTask({
+    st: 2, prompt: 'Kürze vollständig', q: sF(s * n, d), val: v, data: {}, signMsg: VZ2,
+    traps: [[Q(s * (n - 1), d - 1), 'Kürzen heißt: Zähler und Nenner durch die gleiche Zahl teilen.']],
+    lines: [{ m: sF(s * n, d) }, { m: m + F(`${n} : ${g}`, `${d} : ${g}`), c: `größter gemeinsamer Teiler: ggT(${n}, ${d}) = ${g}` }, { m: qmH(v) }],
+  });
+}
+function miss2(a, b, k, inDen) {
+  const q = inDen ? `${F(a, b)} = ${F(a * k, BOX)}` : `${F(a, b)} = ${F(BOX, b * k)}`;
+  const v = inDen ? b * k : a * k;
+  return numTask({
+    st: 2, prompt: 'Welche Zahl fehlt?', q, val: v, data: {},
+    traps: [[inDen ? b + (a * k - a) : a + (b * k - b), 'Beim Erweitern wird multipliziert, nicht addiert.']],
+    lines: [{ m: inDen ? `${a} · ${k} = ${a * k}` : `${b} · ${k} = ${b * k}`, noeq: true, c: `mit ${k} erweitert` }, { m: inDen ? `${b} · ${k} = ${v}` : `${a} · ${k} = ${v}`, noeq: true, c: 'beim anderen Teil genauso' }],
+  });
+}
+function missR2(a, b, g1, g2) {        // F(a·g1, b·g1) = F(?, b·g2)
+  const v = a * g2;
+  return numTask({
+    st: 2, prompt: 'Welche Zahl fehlt?', q: `${F(a * g1, b * g1)} = ${F(BOX, b * g2)}`, val: v, data: {},
+    traps: [[a * g1 + (b * g2 - b * g1), 'Beim Erweitern und Kürzen wird multipliziert und geteilt, nicht addiert.']],
+    lines: [{ m: `${F(a * g1, b * g1)} = ${F(a, b)}`, noeq: true, c: `zuerst durch ${g1} kürzen` }, { m: `${F(a, b)} = ${F(a * g2, b * g2)}`, noeq: true, c: `dann mit ${g2} erweitern` }],
+  });
+}
+function erwAuf2(a, b, D) {
+  const k = D / b;
+  return numTask({
+    st: 2, prompt: `Erweitere auf den Nenner ${D}`, q: F(a, b), val: Q(a, b), form: 'exact', want: [a * k, D], data: {},
+    exactMsg: `Der Nenner soll ${D} sein. ${D} : ${b} = ${k}, also erweitere mit ${k}.`,
+    traps: [[Q(a, D), `Auch der Zähler wird erweitert: mal ${k}.`], [Q(a + (D - b), D), 'Erweitern heißt multiplizieren, nicht addieren.']],
+    lines: [{ m: `${D} : ${b} = ${k}`, noeq: true, c: 'womit wird erweitert?' }, { m: `${F(a, b)} = ${F(`${a} · ${k}`, `${b} · ${k}`)} = ${F(a * k, D)}`, noeq: true }],
+  });
+}
+function mcNot2(a, b) {
+  const k1 = ri(2, 4), k2 = k1 + ri(1, 3);
+  const wrong = pick([[a + k1, b + k1], [a * k2, b + k2], [a + 1, b * 2]]);
+  const opts = shuffle([
+    { h: F(a * k1, b * k1), msg: `${F(a * k1, b * k1)} ist ${F(a, b)} mit ${k1} erweitert, also gleich groß.` },
+    { h: F(a * k2, b * k2), msg: `${F(a * k2, b * k2)} ist ${F(a, b)} mit ${k2} erweitert, also gleich groß.` },
+    { h: F(wrong[0], wrong[1]), ok: true },
+  ]);
+  return { st: 2, kind: 'mc', prompt: 'Welcher Bruch ist NICHT gleich groß?', q: `gleich groß wie ${F(a, b)}?`, opts, sol: '', solH: F(wrong[0], wrong[1]), data: {},
+    lines: [{ m: `${F(a * k1, b * k1)} und ${F(a * k2, b * k2)} kann man auf ${F(a, b)} kürzen.`, noeq: true }, { m: `${F(wrong[0], wrong[1])} nicht: Zähler und Nenner wurden nicht mit der gleichen Zahl multipliziert.`, noeq: true }] };
+}
+const cop = (dmin, dmax) => { for (;;) { const b = ri(dmin, dmax), a = ri(1, b - 1); if (gcd(a, b) === 1) return [a, b]; } };
+function gen2(l) {
+  const r = rnd();
+  if (l === 1) {
+    const [a, b] = cop(2, 9);
+    if (r < 0.4) return erw2(a, b, ri(2, 6), sg());
+    if (r < 0.7) return kby2(a, b, ri(2, 6), sg());
+    return miss2(a, b, ri(2, 5), rnd() < 0.3);
+  }
+  if (l === 2) {
+    if (r < 0.45) { const [a, b] = cop(2, 9), g = ri(2, 9); return kfull2(a * g, b * g, sg()); }
+    if (r < 0.75) { const [a, b] = cop(2, 8), D = b * ri(2, 6); return erwAuf2(a, b, D); }
+    const [a, b] = cop(2, 6); return missR2(a, b, ri(2, 4), ri(2, 5));
+  }
+  if (r < 0.45) { const [a, b] = rnd() < 0.3 ? cop(9, 15).map((x, i) => i ? x : x) : cop(2, 12), g = pick([6, 8, 9, 10, 12, 14, 15, 18, 21]); return kfull2(a * g, b * g, sg()); }
+  if (r < 0.75) { const [a, b] = cop(2, 7); let g1, g2; do { g1 = ri(2, 6); g2 = ri(2, 6); } while (g1 === g2); return missR2(a, b, g1, g2); }
+  const [a, b] = cop(2, 9); return mcNot2(a, b);
+}
+function primes(n) { const out = []; for (let p = 2; p * p <= n; p++) while (n % p === 0) { out.push(p); n /= p; } if (n > 1) out.push(n); return out; }
+const S2EX = [
+  { label: '⅔ erweitern mit 2', mode: 'erw' }, { label: '6/8 kürzen', mode: 'kurz' },
+  { label: '12/18 vollständig kürzen', mode: 'ggt' }, { label: '¾ = ?/20', mode: 'miss' },
+];
+function explore2(e) {
+  if (e.mode === 'erw') return [
+    { lab: 'Bruch', h: barH(2, 3, { lab: F(2, 3) }), cap: `Das sind ${F(2, 3)}: 2 von 3 Teilen sind gefärbt.` },
+    { lab: 'Feiner teilen', h: barH(2, 3, { lab: F(2, 3) }) + barH(4, 6, { lab: F(4, 6), group: 2 }), cap: 'Teile jedes Drittel in 2 gleiche Teile. Jetzt sind es 6 Teile, und 4 davon sind gefärbt. Die gefärbte Fläche bleibt gleich groß!' },
+    { lab: 'Erweitern', h: eqbig(`${F(2, 3)} = ${F('2 · 2', '3 · 2')} = ${F(4, 6)}`), cap: '<b>Erweitern</b> heißt: Zähler und Nenner mit der gleichen Zahl multiplizieren. Der Wert des Bruchs ändert sich nicht.' },
+  ];
+  if (e.mode === 'kurz') return [
+    { lab: 'Bruch', h: barH(6, 8, { lab: F(6, 8) }), cap: `Das sind ${F(6, 8)}.` },
+    { lab: 'Zusammenfassen', h: barH(6, 8, { lab: F(6, 8), group: 2 }) + barH(3, 4, { lab: F(3, 4) }), cap: 'Fasse immer 2 Teile zusammen. Aus 8 Teilen werden 4 Teile, aus 6 gefärbten werden 3.' },
+    { lab: 'Kürzen', h: eqbig(`${F(6, 8)} = ${F('6 : 2', '8 : 2')} = ${F(3, 4)}`), cap: '<b>Kürzen</b> heißt: Zähler und Nenner durch die gleiche Zahl teilen. Auch hier bleibt der Wert gleich.' },
+  ];
+  if (e.mode === 'ggt') {
+    const row = (n, com) => `<div class="dec"><span class="dl">${n}</span><span class="eqs">=</span>${chipRow(primes(n).map((p, i) => `<span class="fc${com && com.includes(i) ? ' com' : ''}">${p}</span>`))}</div>`;
+    return [
+      { lab: 'Aufgabe', h: eqbig(F(12, 18)), cap: 'Kürze so weit wie möglich. Dafür brauchst du die größte Zahl, durch die Zähler und Nenner beide teilbar sind.' },
+      { lab: 'Zerlegen', h: `<div class="decs">${row(12)}${row(18)}</div>`, cap: 'Zerlege Zähler und Nenner in Primzahlen.' },
+      { lab: 'Gemeinsam', h: `<div class="decs">${row(12, [0, 2])}${row(18, [0, 1])}</div>`, cap: 'Beide enthalten 2 und 3. Zusammen ist das 2 · 3 = 6. Das ist der <b>größte gemeinsame Teiler</b> (ggT).' },
+      { lab: 'Kürzen', h: eqbig(`${F(12, 18)} = ${F('12 : 6', '18 : 6')} = ${F(2, 3)}`), cap: `Kürze durch 6. ${F(2, 3)} kann man nicht weiter kürzen: Der Bruch ist <b>vollständig gekürzt</b>. Du kannst auch in mehreren Schritten kürzen, erst durch 2, dann durch 3.` },
+    ];
+  }
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${F(3, 4)} = ${F(BOX, 20)}`), cap: 'Welche Zahl fehlt im Zähler?' },
+    { lab: 'Nenner', h: eqbig(`${F(3, 4)} = ${F(BOX, `<span class="hl">20</span>`)}`) + '<p class="run">4 · <b>5</b> = 20</p>', cap: 'Schau auf die Nenner: Aus 4 wurde 20. Es wurde mit 5 erweitert.' },
+    { lab: 'Zähler', h: eqbig(`${F(3, 4)} = ${F(hl('15'), 20)}`) + '<p class="run">3 · <b>5</b> = 15</p>', cap: 'Den Zähler erweiterst du genauso: 3 · 5 = 15.' },
+  ];
+}
+
+// =====================================================================
+// Station 3: Vergleichen und Ordnen
+// =====================================================================
+function why3(A, B) {
+  if ((A[0] < 0) !== (B[0] < 0)) return 'Jede negative Zahl ist kleiner als jede positive Zahl.';
+  if (A[1] === B[1]) return 'Gleiche Nenner: Der Bruch mit dem größeren Zähler ist größer.';
+  if (A[0] === B[0] && A[0] > 0) return 'Gleiche Zähler: Je größer der Nenner, desto kleiner sind die Teile.';
+  const H = lcm(A[1], B[1]);
+  return `Mach die Brüche gleichnamig (Hauptnenner ${H}): ${sF(A[0] * H / A[1], H)} und ${sF(B[0] * H / B[1], H)}. Dann vergleiche die Zähler.`;
+}
+function cmp3(A, B, ah, bh) { return cmpTask(3, A, B, ah || qH(A), bh || qH(B), why3(A, B) + (A[0] < 0 && B[0] < 0 ? ' Bei negativen Zahlen ist die Zahl mit dem größeren Betrag kleiner.' : '')); }
+function ord3(list) {
+  const s = [...list].sort(qcmp), H = s.reduce((h, q) => lcm(h, q[1]), 1);
+  return {
+    st: 3, kind: 'list', prompt: 'Ordne von klein nach groß (mit Strichpunkt trennen)', q: list.map(qH).join('<span class="op"> ; </span>'), vals: s,
+    sol: s.map(qS).join('; '), solH: s.map(qH).join(` ${LT} `), data: {},
+    lines: [{ m: s.map(q => `${qH(q)} = ${sF(q[0] * H / q[1], H)}`).join(', '), noeq: true, c: `Hauptnenner ${H}` }, { m: s.map(qH).join(` ${LT} `), noeq: true }],
+  };
+}
+function gen3(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.55) { const d = ri(3, 12); let a, b; do { a = ri(1, d - 1); b = ri(1, d - 1); } while (a === b); if (rnd() < 0.4) { a = -a; if (rnd() < 0.5) b = -b; } return cmpTask(3, [a, d], [b, d], sF(a, d), sF(b, d), why3([a, d], [b, d]) + (a < 0 && b < 0 ? ' Bei negativen Zahlen ist die Zahl mit dem größeren Betrag kleiner.' : '')); }
+    const n = ri(1, 5); let d1, d2; do { d1 = ri(n + 1, 12); d2 = ri(n + 1, 12); } while (d1 === d2); return cmpTask(3, Q(n, d1), Q(n, d2), F(n, d1), F(n, d2), why3([n, d1], [n, d2]));
+  }
+  if (l === 2) {
+    if (r < 0.2) { const [a, b] = cop(2, 6), k = ri(2, 4); return rnd() < 0.5 ? cmp3(Q(a, b), Q(a, b), F(a, b), F(a * k, b * k)) : cmp3(Q(a, b), Q(a, b), F(a * k, b * k), F(a, b)); }
+    for (;;) { const A = sfrac(2, 10, 0.35), B = sfrac(2, 12, 0.35); if (!qeq(A, B) && A[1] !== B[1]) return cmp3(A, B); }
+  }
+  if (r < 0.45) {
+    for (;;) { const set = []; while (set.length < 4) { const q = Q(ri(-11, 11), pick([2, 3, 4, 5, 6, 8, 12])); if (q[0] && abs(q[0]) < q[1] * 2 && !set.some(x => qeq(x, q))) set.push(q); } if (!set.some(q => q[0] < 0)) continue; if (set.reduce((h, q) => lcm(h, q[1]), 1) <= 48) return ord3(set); }
+  }
+  if (r < 0.7) { for (;;) { const A = qneg(frac(2, 9)), B = qneg(frac(2, 9)); if (!qeq(A, B)) return cmp3(A, B); } }
+  for (;;) { const s = sg(), w = ri(1, 3), A = sq(qadd(Q(w), frac(2, 6)), s), B = sq(frac(2, 6, false), s); if (!qeq(A, B)) return cmp3(A, B, mixH(A), qH(B)); }
+}
+const S3EX = [
+  { label: '3/7 oder 5/7', mode: 'gn' }, { label: '¾ oder ⅜', mode: 'gz' },
+  { label: '⅔ oder ¾', mode: 'hn' }, { label: 'Ordnen', mode: 'ord' },
+];
+function explore3(e) {
+  if (e.mode === 'gn') return [
+    { lab: 'Streifen', h: barH(3, 7, { lab: F(3, 7) }) + barH(5, 7, { lab: F(5, 7), cls: 'b' }), cap: 'Beide Brüche haben den Nenner 7. Die Teile sind gleich groß.' },
+    { lab: 'Vergleich', h: eqbig(`${F(3, 7)} ${LT} ${F(5, 7)}`), cap: 'Gleiche Nenner: Wer mehr Teile hat, ist größer. Vergleiche einfach die Zähler: 3 < 5.' },
+  ];
+  if (e.mode === 'gz') return [
+    { lab: 'Streifen', h: barH(3, 4, { lab: F(3, 4) }) + barH(3, 8, { lab: F(3, 8), cls: 'b' }), cap: 'Beide Brüche haben 3 Teile. Aber die Achtel sind viel kleiner als die Viertel.' },
+    { lab: 'Vergleich', h: eqbig(`${F(3, 4)} ${GT} ${F(3, 8)}`), cap: 'Gleiche Zähler: Je größer der Nenner, desto kleiner die Teile und desto kleiner der Bruch.' },
+  ];
+  if (e.mode === 'hn') return [
+    { lab: 'Streifen', h: barH(2, 3, { lab: F(2, 3) }) + barH(3, 4, { lab: F(3, 4), cls: 'b' }), cap: 'Drittel und Viertel sind verschieden groß. So kann man schlecht vergleichen.' },
+    { lab: 'Hauptnenner', h: eqbig('3: 3, 6, 9, <b>12</b> · 4: 4, 8, <b>12</b>', 'sm'), cap: 'Suche eine Zahl, die in beiden Einmaleins-Reihen vorkommt: 12. Das ist der <b>Hauptnenner</b>.' },
+    { lab: 'Gleichnamig', h: barH(8, 12, { lab: F(8, 12), group: 4 }) + barH(9, 12, { lab: F(9, 12), cls: 'b', group: 3 }), cap: `Erweitere beide auf den Nenner 12: ${F(2, 3)} = ${F(8, 12)} und ${F(3, 4)} = ${F(9, 12)}. Jetzt sind alle Teile gleich groß.` },
+    { lab: 'Vergleich', h: eqbig(`${F(2, 3)} = ${F(8, 12)} ${LT} ${F(9, 12)} = ${F(3, 4)}`, 'sm'), cap: `8 < 9, also ist ${F(2, 3)} kleiner als ${F(3, 4)}.` },
+  ];
+  const L = [Q(1, 2), Q(3, 8), Q(5, 6), Q(2, 3)];
+  return [
+    { lab: 'Brüche', h: eqbig(L.map(qH).join(' ; ')), cap: 'Diese Brüche sollen von klein nach groß geordnet werden.' },
+    { lab: 'Gleichnamig', h: eqbig(L.map(q => sF(q[0] * 24 / q[1], 24)).join(' ; '), 'sm'), cap: 'Mach alle gleichnamig mit dem Hauptnenner 24. Dann vergleichst du nur noch die Zähler.' },
+    { lab: 'Zahlengerade', h: nlF({ lo: 0, hi: 1, den: 24, pts: L.map((q, i) => ({ q, lab: true, cls: 'pos', high: i % 2 === 1 })) }), cap: 'Auf der Zahlengerade siehst du: Weiter links heißt kleiner.' },
+    { lab: 'Ergebnis', h: eqbig([...L].sort(qcmp).map(qH).join(` ${LT} `)), cap: 'Das ist die Reihenfolge von klein nach groß.' },
+  ];
+}
+
+// =====================================================================
+// Station 4: Addieren und Subtrahieren
+// =====================================================================
+function as4(A, op, B, o = {}) {
+  const v = op === '+' ? qadd(A, B) : qsub(A, B), H = lcm(A[1], B[1]);
+  const dA = o.mixed ? mixH(A) : qH(A), dB = o.mixed ? (B[0] < 0 ? `(${mixH(B)})` : mixH(B)) : qP(B), q = `${dA} ${op} ${dB}`;
+  const nA = A[0] * H / A[1], nB = B[0] * H / B[1], nR = op === '+' ? nA + nB : nA - nB;
+  const lines = [{ m: q }];
+  if (o.mixed) lines.push({ m: `${qH(A)} ${op} ${qP(B)}`, c: 'in unechte Brüche umwandeln' });
+  if (A[1] !== B[1]) lines.push({ m: `${sF(nA, H)} ${op} ${nB < 0 ? `(${sF(nB, H)})` : sF(nB, H)}`, c: `Hauptnenner ${H}: erweitern` });
+  lines.push({ m: F(`${nH(nA)} ${op} ${nB < 0 ? `(${nH(nB)})` : nB}`, H), c: 'Zähler verrechnen, Nenner bleibt' });
+  if (gcd(nR, H) > 1 && nR !== 0) lines.push({ m: sF(nR, H) });
+  lines.push({ m: qmH(v) });
+  const traps = [];
+  if (A[1] === B[1]) traps.push([safeQ(nR, 2 * H), 'Bei gleichem Nenner bleibt der Nenner gleich. Nur die Zähler werden verrechnet.']);
+  else traps.push([safeQ(op === '+' ? A[0] + B[0] : A[0] - B[0], op === '+' ? A[1] + B[1] : A[1] - B[1]), 'Zähler und Nenner darf man nicht einfach addieren oder subtrahieren. Mach die Brüche zuerst gleichnamig.'],
+    [safeQ(op === '+' ? A[0] + B[0] : A[0] - B[0], H), 'Beim Gleichnamig-Machen musst du auch die Zähler erweitern.']);
+  return numTask({ st: 4, prompt: 'Berechne', q, val: v, traps, data: { A, B, op }, lines,
+    signMsg: 'Prüfe das Vorzeichen: Ist der abgezogene Teil größer, wird das Ergebnis negativ.',
+    wrongMsg: A[1] === B[1] ? 'Gleiche Nenner: Rechne nur mit den Zählern, der Nenner bleibt gleich.' : `Mach die Brüche zuerst gleichnamig. Der Hauptnenner ist ${H}.` });
+}
+const PAIRS = [[2, 3], [3, 4], [2, 5], [3, 5], [4, 5], [2, 7], [3, 8], [5, 6], [4, 9], [6, 8], [4, 6], [6, 9], [10, 4], [8, 12]];
+function gen4(l) {
+  if (l === 1) {
+    const d = ri(3, 12); let a, b; do { a = ri(1, d - 1); b = ri(1, d - 1); } while (a === b);
+    const r1 = rnd();
+    if (r1 < 0.35) return as4(Q(a, d), '+', Q(b, d));
+    if (r1 < 0.6) return as4(Q(Math.max(a, b), d), '−', Q(Math.min(a, b), d));
+    if (r1 < 0.8) return as4(Q(a, d), '−', Q(b, d));
+    return as4(Q(-a, d), rnd() < 0.5 ? '+' : '−', Q(sg() * b, d));
+  }
+  if (l === 2) {
+    for (;;) {
+      let b1, b2;
+      if (rnd() < 0.45) { b1 = ri(2, 6); b2 = b1 * ri(2, 4); } else [b1, b2] = pick(PAIRS);
+      if (rnd() < 0.5) [b1, b2] = [b2, b1];
+      const A = Q(ri(1, b1 - 1), b1), B = Q(ri(1, b2 - 1), b2);
+      if (A[1] === B[1]) continue;
+      if (rnd() < 0.4) return as4(sq(A, sg()), rnd() < 0.5 ? '+' : '−', sq(B, rnd() < 0.5 ? -1 : 1));
+      if (rnd() < 0.5) return as4(A, '+', B);
+      if (qeq(A, B)) continue;
+      return qcmp(A, B) > 0 ? as4(A, '−', B) : as4(B, '−', A);
+    }
+  }
+  const r = rnd();
+  if (r < 0.55) {
+    for (;;) {
+      const A = qadd(Q(ri(1, 4)), frac(2, 6)), B = qadd(Q(ri(1, 3)), frac(2, 6));
+      if (A[1] === B[1] && rnd() < 0.7) continue;
+      if (rnd() < 0.35) return as4(sq(A, -1), rnd() < 0.5 ? '+' : '−', sq(B, sg()), { mixed: true });
+      if (rnd() < 0.5) return as4(A, '+', B, { mixed: true });
+      if (qcmp(A, B) <= 0) continue;
+      return as4(A, '−', B, { mixed: true });
+    }
+  }
+  for (;;) { const A = qmul(frac(2, 8), [sgn(), 1]), B = qmul(frac(2, 8), [-1, 1]); if (A[1] !== B[1] && (A[0] < 0 || B[0] < 0)) return as4(A, rnd() < 0.5 ? '+' : '−', B); }
+}
+const S4EX = [
+  { label: '2/7 + 3/7', mode: 'gn' }, { label: '½ + ⅓', mode: 'hn' }, { label: '¾ − ⅙', mode: 'sub' }, { label: '−⅔ + ¼', mode: 'neg' }, { label: '1⅔ + 2½', mode: 'mix' },
+];
+function explore4(e) {
+  if (e.mode === 'gn') return [
+    { lab: 'Aufgabe', h: barH(2, 7, { lab: F(2, 7) }) + barH(3, 7, { lab: F(3, 7), cls: 'b' }), cap: 'Beide Brüche haben den Nenner 7: Die Teile sind gleich groß. Man nennt sie <b>gleichnamig</b>.' },
+    { lab: 'Zusammen', h: barH(5, 7, { lab: F(5, 7), mark: i => (i < 2 ? 'a' : 'b') }), cap: '2 Siebtel und 3 Siebtel sind zusammen 5 Siebtel. Du zählst nur die Teile.' },
+    { lab: 'Regel', h: eqbig(`${F(2, 7)} + ${F(3, 7)} = ${F('2 + 3', 7)} = ${F(5, 7)}`, 'sm'), cap: 'Gleichnamige Brüche: Zähler addieren, der Nenner bleibt gleich. Der Nenner sagt nur, wie groß die Teile sind.' },
+  ];
+  if (e.mode === 'hn') return [
+    { lab: 'Aufgabe', h: barH(1, 2, { lab: F(1, 2) }) + barH(1, 3, { lab: F(1, 3), cls: 'b' }), cap: 'Halbe und Drittel sind verschieden große Teile. Man kann sie nicht einfach zusammenzählen.' },
+    { lab: 'Hauptnenner', h: eqbig('2: 2, 4, <b>6</b> · 3: 3, <b>6</b>', 'sm'), cap: 'Suche den <b>Hauptnenner</b>: die kleinste Zahl, die in beiden Reihen vorkommt. Hier 6.' },
+    { lab: 'Erweitern', h: barH(3, 6, { lab: F(3, 6), group: 3 }) + barH(2, 6, { lab: F(2, 6), cls: 'b', group: 2 }), cap: `Erweitere beide auf Sechstel: ${F(1, 2)} = ${F(3, 6)} und ${F(1, 3)} = ${F(2, 6)}.` },
+    { lab: 'Addieren', h: barH(5, 6, { lab: F(5, 6), mark: i => (i < 3 ? 'a' : 'b') }) + eqbig(`${F(1, 2)} + ${F(1, 3)} = ${F(3, 6)} + ${F(2, 6)} = <b>${F(5, 6)}</b>`, 'sm'), cap: 'Jetzt sind die Teile gleich groß: 3 + 2 = 5 Sechstel.' },
+  ];
+  if (e.mode === 'sub') return [
+    { lab: 'Aufgabe', h: eqbig(`${F(3, 4)} − ${F(1, 6)}`), cap: 'Verschiedene Nenner: Zuerst gleichnamig machen.' },
+    { lab: 'Hauptnenner', h: eqbig('4: 4, 8, <b>12</b> · 6: 6, <b>12</b>', 'sm') + eqbig(`${F(9, 12)} − ${F(2, 12)}`, 'sm'), cap: `Der Hauptnenner ist 12. ${F(3, 4)} = ${F(9, 12)}, ${F(1, 6)} = ${F(2, 12)}.` },
+    { lab: 'Wegnehmen', h: barH(9, 12, { lab: F(9, 12), mark: i => (i >= 7 ? 'x' : 'a'), group: 3 }), cap: 'Von 9 Zwölfteln nimmst du 2 weg.' },
+    { lab: 'Ergebnis', h: barH(7, 12, { lab: F(7, 12) }) + eqbig(`${F(3, 4)} − ${F(1, 6)} = <b>${F(7, 12)}</b>`, 'sm'), cap: '9 − 2 = 7 Zwölftel. Kann man kürzen? 7 und 12 haben keinen gemeinsamen Teiler, also nicht.' },
+  ];
+  if (e.mode === 'neg') return [
+    { lab: 'Aufgabe', h: eqbig(`${MI}${F(2, 3)} + ${F(1, 4)}`), cap: 'Ein negativer und ein positiver Bruch. Zuerst wie immer gleichnamig machen.' },
+    { lab: 'Gleichnamig', h: eqbig(`${MI}${F(8, 12)} + ${F(3, 12)} = ${F(`${MI}8 + 3`, 12)}`, 'sm'), cap: `Hauptnenner 12: ${MI}${F(2, 3)} = ${MI}${F(8, 12)}, ${F(1, 4)} = ${F(3, 12)}. Das Minus wandert mit in den Zähler.` },
+    { lab: 'Zahlengerade', h: nlF({ lo: -1, hi: 1, den: 12, pts: [{ q: Q(-2, 3), lab: true, cls: 'neg' }, { q: Q(-5, 12), lab: true, cls: 'hop', high: true }] }), cap: 'Die Zähler rechnest du wie ganze Zahlen: −8 + 3 = −5. Auf der Zahlengerade: 3 Zwölftel-Schritte nach rechts.' },
+    { lab: 'Ergebnis', h: eqbig(`${MI}${F(2, 3)} + ${F(1, 4)} = <b>${MI}${F(5, 12)}</b>`), cap: 'Verschiedene Vorzeichen: Der Bruch mit dem größeren Betrag bestimmt das Vorzeichen, hier −8/12.' },
+  ];
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${mixRaw(1, 2, 3)} + ${mixRaw(2, 1, 2)}`), cap: 'Gemischte Zahlen: Ganze und Brüche getrennt addieren.' },
+    { lab: 'Ganze', h: eqbig(`${hl('1 + 2')} = 3`, 'sm'), cap: 'Zuerst die Ganzen: 1 + 2 = 3.' },
+    { lab: 'Brüche', h: eqbig(`${F(2, 3)} + ${F(1, 2)} = ${F(4, 6)} + ${F(3, 6)} = ${F(7, 6)} = ${mixRaw(1, 1, 6)}`, 'sm'), cap: `Dann die Brüche mit Hauptnenner 6. ${F(7, 6)} ist mehr als ein Ganzes: noch 1 Ganzes dazu.` },
+    { lab: 'Ergebnis', h: eqbig(`3 + ${mixRaw(1, 1, 6)} = <b>${mixRaw(4, 1, 6)}</b>`), cap: `Zusammen ${mixRaw(4, 1, 6)}. Du kannst auch alles in unechte Brüche umwandeln: ${F(5, 3)} + ${F(5, 2)} = ${F(25, 6)}.` },
+  ];
+}
+
+// =====================================================================
+// Station 5: Multiplizieren
+// =====================================================================
+function mul5(A, B, o = {}) {
+  const mP = q => (q[0] < 0 ? `(${mixH(q)})` : mixH(q)), v = qmul(A, B), q = `${o.mixed ? mP(A) : qP(A)} · ${o.mixed ? mP(B) : qP(B)}`;
+  const lines = [{ m: q }];
+  if (o.mixed) lines.push({ m: `${qP(A)} · ${qP(B)}`, c: 'in unechte Brüche umwandeln' });
+  const neg = v[0] < 0, s = neg ? MI : '';
+  const [a, b] = [abs(A[0]), A[1]], [c, d] = [abs(B[0]), B[1]];
+  if (isInt(B) && !isInt(A)) lines.push({ m: s + F(`${a} · ${c}`, b), c: 'nur den Zähler mal die Zahl' });
+  else if (isInt(A) && !isInt(B)) lines.push({ m: s + F(`${a} · ${c}`, d), c: 'nur den Zähler mal die Zahl' });
+  else {
+    lines.push({ m: s + F(`${a} · ${c}`, `${b} · ${d}`), c: 'Zähler mal Zähler, Nenner mal Nenner' });
+    const g1 = gcd(a, d), g2 = gcd(c, b);
+    if (g1 > 1 || g2 > 1) lines.push({ m: s + F(`${a / g1} · ${c / g2}`, `${b / g2} · ${d / g1}`), c: 'vorher kürzen' });
+  }
+  lines.push({ m: qmH(v) });
+  const traps = [];
+  if (isInt(B) || isInt(A)) traps.push([isInt(B) ? A : B, 'Bei Bruch mal ganze Zahl wird nur der Zähler mit der Zahl multipliziert, nicht auch der Nenner.'], [qdiv(A, B), 'Du hast geteilt statt multipliziert.']);
+  else traps.push([qdiv(A, B), 'Du hast mit dem Kehrwert gerechnet. Das macht man nur beim Dividieren.'], [safeQ(A[0] + B[0], A[1] + B[1]), 'Beim Multiplizieren: Zähler mal Zähler und Nenner mal Nenner.']);
+  if (o.mixed) { const wA = Math.trunc(A[0] / A[1]), wB = Math.trunc(B[0] / B[1]); traps.push([qadd(Q(wA * wB), qmul(qsub(A, Q(wA)), qsub(B, Q(wB)))), 'Wandle gemischte Zahlen zuerst in unechte Brüche um. Ganze und Brüche getrennt malnehmen ist falsch.']); }
+  return numTask({ st: 5, prompt: 'Berechne', q, val: v, traps, data: { A, B }, lines,
+    signMsg: 'Prüfe das Vorzeichen: Plus mal Minus gibt Minus, Minus mal Minus gibt Plus.',
+    wrongMsg: 'Rechne Zähler mal Zähler und Nenner mal Nenner. Kürze am besten schon vorher.' });
+}
+function gen5(l) {
+  if (l === 1) { const A = sfrac(2, 9, 0.35), k = ri(2, 9) * (rnd() < 0.3 ? -1 : 1); return rnd() < 0.5 ? mul5(A, Q(k)) : mul5(Q(k), A); }
+  if (l === 2) { for (;;) { const A = sfrac(2, 12, 0.4), B = sfrac(2, 12, 0.4); const g = gcd(A[0], B[1]) * gcd(B[0], A[1]); if (g > 1 || rnd() < 0.25) return mul5(A, B); } }
+  const r = rnd();
+  if (r < 0.6) { for (;;) { const A = sq(qadd(Q(ri(1, 3)), frac(2, 5)), sg()), B = sq(rnd() < 0.5 ? qadd(Q(ri(1, 2)), frac(2, 5)) : frac(2, 6), sg()); if (qmul(A, B)[1] <= 24) return mul5(A, B, { mixed: true }); } }
+  for (;;) { const A = qmul(frac(2, 10), [sgn(), 1]), B = qmul(frac(2, 10), [-1, 1]); if (gcd(A[0], B[1]) * gcd(B[0], A[1]) > 1) return mul5(A, B); }
+}
+const S5EX = [
+  { label: '3 · 2/7', mode: 'zahl' }, { label: '⅔ · ¾', mode: 'flaeche' }, { label: '4/9 · ⅜', mode: 'kuerzen' }, { label: '(−⅔) · (−¾)', mode: 'vz' }, { label: '1½ · ⅔', mode: 'gem' },
+];
+function explore5(e) {
+  if (e.mode === 'zahl') return [
+    { lab: 'Aufgabe', h: eqbig(`3 · ${F(2, 7)} = ${F(2, 7)} + ${F(2, 7)} + ${F(2, 7)}`, 'sm'), cap: `3 · ${F(2, 7)} heißt: 3-mal ${F(2, 7)}.` },
+    { lab: 'Streifen', h: barH(2, 7, { lab: F(2, 7) }) + barH(2, 7, { lab: F(2, 7), cls: 'b' }) + barH(2, 7, { lab: F(2, 7), cls: 'c' }), cap: 'Drei Streifen mit je 2 Siebteln.' },
+    { lab: 'Ergebnis', h: barH(6, 7, { lab: F(6, 7), mark: i => ['a', 'a', 'b', 'b', 'c', 'c'][i] }) + eqbig(`3 · ${F(2, 7)} = ${F('3 · 2', 7)} = <b>${F(6, 7)}</b>`, 'sm'), cap: 'Zusammen 6 Siebtel. Bei Bruch mal Zahl wird nur der Zähler malgenommen, der Nenner bleibt.' },
+  ];
+  if (e.mode === 'flaeche') return [
+    { lab: 'Ganzes', h: areaH(2, 3, 3, 4, 0), cap: `Das Quadrat ist ein Ganzes. ${F(2, 3)} · ${F(3, 4)} heißt: ${F(2, 3)} von ${F(3, 4)}.` },
+    { lab: F(3, 4), h: areaH(2, 3, 3, 4, 1), cap: `Färbe ${F(3, 4)}: 3 von 4 Spalten.` },
+    { lab: `${F(2, 3)} davon`, h: areaH(2, 3, 3, 4, 2), cap: `Nimm davon ${F(2, 3)}: Teile in 3 Zeilen, nimm 2. Wo beide Farben sind, liegt das Ergebnis.` },
+    { lab: 'Ergebnis', h: areaH(2, 3, 3, 4, 3) + eqbig(`${F(2, 3)} · ${F(3, 4)} = ${F('2 · 3', '3 · 4')} = ${F(6, 12)} = <b>${F(1, 2)}</b>`, 'sm'), cap: '6 von 12 Kästchen. Genau das rechnest du: Zähler mal Zähler (2 · 3 = 6), Nenner mal Nenner (3 · 4 = 12).' },
+  ];
+  if (e.mode === 'kuerzen') return [
+    { lab: 'Aufgabe', h: eqbig(`${F(4, 9)} · ${F(3, 8)} = ${F('4 · 3', '9 · 8')}`), cap: 'Schreib alles auf einen Bruchstrich. Noch nicht ausrechnen!' },
+    { lab: '4 und 8', h: eqbig(F(`${hl('4')} · 3`, `9 · ${hl('8')}`)), cap: '4 oben und 8 unten sind beide durch 4 teilbar. 4 : 4 = 1, 8 : 4 = 2.' },
+    { lab: '3 und 9', h: eqbig(F(`1 · ${hl('3')}`, `${hl('9')} · 2`)), cap: '3 oben und 9 unten sind beide durch 3 teilbar. 3 : 3 = 1, 9 : 3 = 3.' },
+    { lab: 'Ergebnis', h: eqbig(`${F('1 · 1', '3 · 2')} = <b>${F(1, 6)}</b>`), cap: 'Vorher kürzen macht die Zahlen klein. Ohne Kürzen: 12/72, das müsstest du noch durch 12 kürzen.' },
+  ];
+  if (e.mode === 'vz') return [
+    { lab: 'Aufgabe', h: eqbig(`(${MI}${F(2, 3)}) · (${MI}${F(3, 4)})`), cap: 'Zwei negative Brüche werden multipliziert. Vorzeichen und Betrag kannst du getrennt bestimmen.' },
+    { lab: 'Vorzeichen', h: SIGNT, cap: 'Die Vorzeichen-Regeln sind die gleichen wie bei ganzen Zahlen: Minus mal Minus gibt Plus.' },
+    { lab: 'Betrag', h: eqbig(`${F(2, 3)} · ${F(3, 4)} = ${F('2 · 3', '3 · 4')} = ${F(6, 12)} = ${F(1, 2)}`, 'sm'), cap: 'Ohne Vorzeichen rechnen: Zähler mal Zähler, Nenner mal Nenner, kürzen.' },
+    { lab: 'Ergebnis', h: eqbig(`(${MI}${F(2, 3)}) · (${MI}${F(3, 4)}) = <b>${F(1, 2)}</b>`), cap: `Das Ergebnis ist positiv. Bei (${MI}${F(2, 3)}) · ${F(3, 4)} käme ${MI}${F(1, 2)} heraus.` },
+  ];
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${mixRaw(1, 1, 2)} · ${F(2, 3)}`), cap: 'Bei gemischten Zahlen darfst du nicht Ganze und Bruch getrennt malnehmen.' },
+    { lab: 'Umwandeln', h: eqbig(`${F(3, 2)} · ${F(2, 3)}`), cap: `Wandle zuerst um: ${mixRaw(1, 1, 2)} = ${F(3, 2)}.` },
+    { lab: 'Ergebnis', h: eqbig(`${F('3 · 2', '2 · 3')} = ${F(6, 6)} = <b>1</b>`), cap: `Ergebnis: 1. ${F(3, 2)} und ${F(2, 3)} sind Kehrwerte voneinander. Ein Bruch mal sein Kehrwert ist immer 1.` },
+  ];
+}
+
+// =====================================================================
+// Station 6: Dividieren
+// =====================================================================
+function div6(A, B, o = {}) {
+  const mP = q => (q[0] < 0 ? `(${mixH(q)})` : mixH(q)), v = qdiv(A, B), q = `${o.mixed ? mP(A) : qP(A)} : ${o.mixed ? mP(B) : qP(B)}`, K = qinv(B);
+  const lines = [{ m: q }];
+  if (o.mixed) lines.push({ m: `${qP(A)} : ${qP(B)}`, c: 'in unechte Brüche umwandeln' });
+  lines.push({ m: `${qP(A)} · ${qP(K)}`, c: `mal den Kehrwert von ${qH(B)}` });
+  const s = v[0] < 0 ? MI : '', [a, b] = [abs(A[0]), A[1]], [c, d] = [abs(K[0]), K[1]];
+  lines.push({ m: s + F(`${a} · ${c}`, `${b} · ${d}`) });
+  const g1 = gcd(a, d), g2 = gcd(c, b);
+  if (g1 > 1 || g2 > 1) lines.push({ m: s + F(`${a / g1} · ${c / g2}`, `${b / g2} · ${d / g1}`), c: 'vorher kürzen' });
+  lines.push({ m: qmH(v) });
+  return numTask({ st: 6, prompt: 'Berechne', q, val: v, data: { A, B }, lines,
+    traps: [[qmul(A, B), 'Du hast multipliziert, ohne den Kehrwert zu bilden. Beim Teilen nimmst du mal den Kehrwert.'], [qmul(qinv(A), B), 'Den Kehrwert bildest du nur vom zweiten Bruch, dem Teiler.'], [qinv(v), 'Den Kehrwert bildest du vom zweiten Bruch, nicht vom ersten.']],
+    signMsg: 'Prüfe das Vorzeichen: Die Vorzeichen-Regeln sind die gleichen wie beim Malnehmen.',
+    wrongMsg: `Teilen durch einen Bruch heißt: mal den Kehrwert. Der Kehrwert von ${qH(B)} ist ${qH(K)}.` });
+}
+function gen6(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.55) return div6(sfrac(2, 9, 0.35), Q(ri(2, 6) * (rnd() < 0.3 ? -1 : 1)));
+    return div6(Q(ri(2, 9) * sg()), Q(1, ri(2, 6)));
+  }
+  if (l === 2) { for (;;) { const A = sfrac(2, 10, 0.4), B = sfrac(2, 10, 0.4); if (!qeq(A, B)) return div6(A, B); } }
+  if (r < 0.6) { for (;;) { const A = sq(qadd(Q(ri(1, 4)), frac(2, 5)), sg()), B = sq(rnd() < 0.5 ? qadd(Q(ri(1, 2)), frac(2, 4)) : frac(2, 5), sg()); if (qdiv(A, B)[1] <= 30) return div6(A, B, { mixed: true }); } }
+  const B = sfrac(2, 6), k = ri(2, 6) * sg(); return div6(qmul(B, Q(k)), B);
+}
+const S6EX = [
+  { label: '3 : ¼', mode: 'oft' }, { label: '¾ : ⅛', mode: 'oft2' }, { label: '⅔ : ⅘', mode: 'kehr' }, { label: '⅗ : 2', mode: 'halb' },
+];
+function explore6(e) {
+  if (e.mode === 'oft') return [
+    { lab: 'Frage', h: eqbig(`3 : ${F(1, 4)} = ?`), cap: `3 : ${F(1, 4)} fragt: Wie oft passt ${F(1, 4)} in 3 Ganze?` },
+    { lab: 'Streifen', h: barH(12, 4, { mark: i => (i % 2 ? 'b' : 'a') }), cap: 'In jedes Ganze passen 4 Viertel. In 3 Ganze passen 3 · 4 = 12 Viertel.' },
+    { lab: 'Ergebnis', h: eqbig(`3 : ${F(1, 4)} = 3 · 4 = <b>12</b>`), cap: `Durch ${F(1, 4)} teilen ist dasselbe wie mal 4 nehmen. Das Ergebnis ist größer als 3!` },
+  ];
+  if (e.mode === 'oft2') return [
+    { lab: 'Frage', h: barH(3, 4, { lab: F(3, 4) }), cap: `Wie oft passt ${F(1, 8)} in ${F(3, 4)}?` },
+    { lab: 'Achtel', h: barH(6, 8, { lab: F(6, 8), group: 2, mark: i => (i % 2 ? 'b' : 'a') }), cap: `${F(3, 4)} = ${F(6, 8)}. Das sind 6 Achtel.` },
+    { lab: 'Ergebnis', h: eqbig(`${F(3, 4)} : ${F(1, 8)} = ${F(3, 4)} · ${F(8, 1)} = <b>6</b>`, 'sm'), cap: `${F(1, 8)} passt 6-mal hinein. Mit dem Kehrwert gerechnet kommt das Gleiche heraus.` },
+  ];
+  if (e.mode === 'kehr') return [
+    { lab: 'Aufgabe', h: eqbig(`${F(2, 3)} : ${F(4, 5)}`), cap: 'Zwei Brüche werden geteilt.' },
+    { lab: 'Kehrwert', h: eqbig(`${F(4, 5)} → ${F(5, 4)}`), cap: 'Bilde den <b>Kehrwert</b> des zweiten Bruchs: Zähler und Nenner tauschen.' },
+    { lab: 'Malnehmen', h: eqbig(`${F(2, 3)} : ${F(4, 5)} = ${F(2, 3)} · ${F(5, 4)} = ${F('2 · 5', '3 · 4')}`, 'sm'), cap: 'Statt durch den Bruch zu teilen, nimmst du mal den Kehrwert.' },
+    { lab: 'Kürzen', h: eqbig(`${F(`${hl('2')} · 5`, `3 · ${hl('4')}`)} = ${F('1 · 5', '3 · 2')} = <b>${F(5, 6)}</b>`, 'sm'), cap: `2 und 4 kürzen (durch 2). Ergebnis: ${F(5, 6)}.` },
+    { lab: 'Probe', h: eqbig(`${F(5, 6)} · ${F(4, 5)} = ${F(20, 30)} = ${F(2, 3)} ✓`, 'sm'), cap: 'Probe: Ergebnis mal Teiler muss die erste Zahl geben. Stimmt!' },
+  ];
+  return [
+    { lab: 'Aufgabe', h: barH(3, 5, { lab: F(3, 5) }), cap: `${F(3, 5)} sollen in 2 gleiche Teile geteilt werden.` },
+    { lab: 'Halbieren', h: barH(6, 10, { lab: F(6, 10), group: 2, mark: i => (i % 2 ? 'a' : 'b') }), cap: 'Teile jedes Fünftel in 2 Hälften. Jede Hälfte ist ein Zehntel. Eine Hälfte von allem sind 3 Zehntel (dunkel).' },
+    { lab: 'Ergebnis', h: eqbig(`${F(3, 5)} : 2 = ${F(3, 5)} · ${F(1, 2)} = <b>${F(3, 10)}</b>`, 'sm'), cap: `Durch 2 teilen heißt mal ${F(1, 2)}: Der Nenner wird mit 2 multipliziert.` },
+  ];
+}
+
+// =====================================================================
+// Station 7: Potenzen
+// =====================================================================
+function pw7(A, e) {
+  const v = qpow(A, e), [a, b] = [abs(A[0]), A[1]], q = `(${qH(A)})${supH(e)}`;
+  const sign = A[0] < 0 && e % 2 ? MI : '';
+  return numTask({
+    st: 7, prompt: 'Berechne', q, val: v, data: { A, e },
+    traps: [[Q(A[0] ** e, b), 'Auch der Nenner wird potenziert.'], [Q(A[0], b ** e), 'Auch der Zähler wird potenziert.'], [Q(A[0] * e, b), `Hoch ${e} heißt nicht mal ${e}.`], [A, `Hoch ${e} heißt: ${e}-mal mit sich selbst malnehmen.`], [Q(A[0] * e, b * e), `Hoch ${e} heißt: ${e}-mal mit sich selbst malnehmen.`]],
+    signMsg: e % 2 ? `Ungerade Hochzahl: Ein Minus bleibt übrig. Das Ergebnis ist negativ.` : 'Gerade Hochzahl: Die Minuszeichen bilden Paare. Das Ergebnis ist positiv.',
+    lines: [{ m: q }, { m: sign + F(Array(e).fill(a).join(' · '), Array(e).fill(b).join(' · ')), c: A[0] < 0 ? (e % 2 ? 'ungerade Hochzahl → minus' : 'gerade Hochzahl → plus') : 'Zähler und Nenner potenzieren' }, { m: qmH(v) }],
+  });
+}
+function out7(A, e) {
+  const v = qneg(qpow(A, e)), q = `${MI}(${qH(A)})${supH(e)}`;
+  return numTask({ st: 7, prompt: 'Berechne', q, val: v, data: {},
+    signMsg: 'Das Minus steht vor der Klammer. Es wird nicht mitpotenziert, sondern bleibt stehen.',
+    traps: [[Q(-(A[0] ** e), A[1]), 'Auch der Nenner wird potenziert.']],
+    lines: [{ m: q }, { m: `${MI}${F(Array(e).fill(A[0]).join(' · '), Array(e).fill(A[1]).join(' · '))}`, c: 'zuerst potenzieren, das Minus vor der Klammer bleibt' }, { m: qmH(v) }] });
+}
+function mixpow7(w, n, d) {
+  const A = Q(w * d + n, d), v = qpow(A, 2), q = `(${mixRaw(w, n, d)})${supH(2)}`;
+  return numTask({ st: 7, prompt: 'Berechne', q, val: v, data: {},
+    traps: [[qadd(Q(w * w), Q(n * n, d * d)), 'Wandle die gemischte Zahl zuerst in einen unechten Bruch um. Ganze und Bruch getrennt quadrieren ist falsch.']],
+    lines: [{ m: q }, { m: `(${qH(A)})${supH(2)}`, c: 'in einen unechten Bruch umwandeln' }, { m: F(`${A[0]} · ${A[0]}`, `${d} · ${d}`) }, { m: qmH(v) }] });
+}
+function mix7(src, traps) {
+  const { steps, value } = evalSteps(src);
+  return numTask({ st: 7, prompt: 'Berechne', q: srcH(src), val: value, traps, data: { src },
+    signMsg: 'Prüfe die Vorzeichen: Gerade Hochzahl mit Klammer gibt plus. Ein Minus vor der Klammer bleibt stehen.',
+    lines: steps.map((s, i) => ({ m: s.h, c: i ? s.lab : '' })) });
+}
+function gen7(l) {
+  const r = rnd();
+  if (l === 1) return r < 0.6 ? pw7(sfrac(2, 9, 0.35), 2) : pw7(sfrac(2, 5, 0.35), 3);
+  if (l === 2) {
+    if (r < 0.2) return pw7(Q(1, 2), ri(3, 6));
+    if (r < 0.5) return pw7(qneg(frac(2, 6)), ri(2, 3));
+    if (r < 0.75) return out7(frac(2, 7), 2);
+    let n, d; do { d = ri(2, 4); n = ri(1, d - 1); } while (gcd(n, d) !== 1); return mixpow7(ri(1, 2), n, d);
+  }
+  for (;;) { const t = gen7L3(); if (t.val[1] <= 144) return t; }
+}
+function gen7L3() {
+  const A = frac(2, 5), B = pick([Q(1, 2), Q(1, 3), Q(2, 3)]), k = ri(2, 4);
+  return pick([
+    () => mix7(`(${qS(A)})^2 * ${A[1] ** 2}/${k}`, [[qmul(qmul(A, Q(2)), Q(A[1] ** 2, k)), 'Hoch 2 heißt nicht mal 2.']]),
+    () => mix7(`(${qS(A)})^2 + (${qS(B)})^3`, [[qadd(Q(A[0] * A[0], A[1]), Q(B[0] ** 3, B[1])), 'Auch die Nenner werden potenziert.']]),
+    () => mix7(`(${qS(A)})^2 : (${qS(B)})^2`, [[qmul(qpow(A, 2), qpow(B, 2)), 'Beim Teilen mal den Kehrwert nehmen.']]),
+    () => mix7(`1 - (${qS(A)})^2`, [[qsub(Q(1), qmul(A, Q(2))), 'Hoch 2 heißt nicht mal 2.'], [qneg(qpow(qsub(Q(1), A), 2)), 'Hoch vor Strich: Zuerst wird potenziert.'], [qpow(qsub(Q(1), A), 2), 'Hoch vor Strich: Zuerst wird potenziert, dann abgezogen.']]),
+    () => mix7(`(-${qS(B)})^3 * ${B[1] ** 2}`, [[qmul(qpow(B, 3), Q(B[1] ** 2)), 'Ungerade Hochzahl: Das Ergebnis der Potenz ist negativ.']]),
+  ])();
+}
+const S7EX = [
+  { label: '(⅔)²', mode: 'flaeche' }, { label: '(½)ⁿ', mode: 'halb' }, { label: '(−⅔)³', mode: 'neg' }, { label: '−(¾)² oder (−¾)²?', mode: 'ohne' },
+];
+function explore7(e) {
+  if (e.mode === 'flaeche') return [
+    { lab: 'Aufgabe', h: eqbig(`(${F(2, 3)})${supH(2)} = ${F(2, 3)} · ${F(2, 3)}`), cap: `Hoch 2 heißt: zweimal ${F(2, 3)} als Faktor.` },
+    { lab: F(2, 3), h: areaH(2, 3, 2, 3, 1), cap: `Zeichne ein Quadrat und färbe ${F(2, 3)} davon (2 von 3 Spalten).` },
+    { lab: 'davon ' + F(2, 3), h: areaH(2, 3, 2, 3, 2), cap: `Nimm davon noch einmal ${F(2, 3)} (2 von 3 Zeilen).` },
+    { lab: 'Ergebnis', h: areaH(2, 3, 2, 3, 3) + eqbig(`(${F(2, 3)})${supH(2)} = ${F(`2${supH(2)}`, `3${supH(2)}`)} = <b>${F(4, 9)}</b>`, 'sm'), cap: '4 von 9 Kästchen. Merke: Zähler und Nenner werden beide potenziert. Das Ergebnis ist kleiner als der Bruch selbst.' },
+  ];
+  if (e.mode === 'halb') return [1, 2, 3, 4].map(n => ({
+    lab: `hoch ${n}`, h: barH(1, 2 ** n, { lab: `(${F(1, 2)})${supH(n)}` }) + eqbig(`(${F(1, 2)})${supH(n)} = ${F(1, 2 ** n)}`, 'sm'),
+    cap: n === 1 ? `Ein halber Streifen: ${F(1, 2)}.` : `Noch einmal halbieren: ${F(1, 2 ** (n - 1))} · ${F(1, 2)} = ${F(1, 2 ** n)}. Bei jeder Potenz wird der Teil kleiner.`,
+  }));
+  if (e.mode === 'neg') {
+    const f = i => `<span class="fc neg" data-k="f${i}">(${MI}${F(2, 3)})</span>`;
+    return [
+      { lab: 'Aufgabe', h: eqbig(`(${MI}${F(2, 3)})${supH(3)}`), cap: `Die Grundzahl ist ${MI}${F(2, 3)}, mit Minus. Die Klammer zeigt: Das Minus wird mitpotenziert.` },
+      { lab: 'Faktoren', h: chipRow([0, 1, 2].map(f)), cap: 'Drei Faktoren, jeder mit einem Minuszeichen.' },
+      { lab: 'Paare', h: `<div class="row"><span class="pair"><span class="row">${f(0)}<span class="op">·</span>${f(1)}</span><span class="gl">= +${F(4, 9)}</span></span><span class="op">·</span><span class="grp neg"><span class="row">${f(2)}</span><span class="gl">ein Minus bleibt</span></span></div>`, cap: 'Je zwei Minus ergeben Plus. Bei ungerader Hochzahl bleibt ein Minus übrig.' },
+      { lab: 'Ergebnis', h: eqbig(`(${MI}${F(2, 3)})${supH(3)} = <b>${MI}${F(8, 27)}</b>`), cap: 'Zähler hoch 3: 8, Nenner hoch 3: 27. Vorzeichen: minus, weil die Hochzahl ungerade ist.' },
+    ];
+  }
+  return [
+    { lab: 'Zwei Aufgaben', h: `<div class="duo"><div>${eqbig(`(${MI}${F(3, 4)})${supH(2)}`)}<span class="gl">Minus in der Klammer</span></div><div>${eqbig(`${MI}(${F(3, 4)})${supH(2)}`)}<span class="gl">Minus vor der Klammer</span></div></div>`, cap: 'Der Unterschied ist, wo das Minus steht.' },
+    { lab: 'Auflösen', h: `<div class="duo"><div>${eqbig(`(${MI}${F(3, 4)}) · (${MI}${F(3, 4)})`, 'sm')}<span class="gl">Minus mal Minus</span></div><div>${eqbig(`${MI}(${F(3, 4)} · ${F(3, 4)})`, 'sm')}<span class="gl">das Minus bleibt draußen</span></div></div>`, cap: 'In der Klammer wird das Minus mitpotenziert. Vor der Klammer bleibt es einfach stehen.' },
+    { lab: 'Ergebnis', h: `<div class="duo"><div>${eqbig(`= <b>${F(9, 16)}</b>`)}</div><div>${eqbig(`= <b>${MI}${F(9, 16)}</b>`)}</div></div>`, cap: 'Achte immer genau auf die Klammer!' },
+  ];
+}
+
+// =====================================================================
+// Station 8: Rechenreihenfolge
+// =====================================================================
+function make8(src, traps) {
+  const { steps, value } = evalSteps(src);
+  return numTask({ st: 8, prompt: 'Berechne', q: srcH(src), val: value, traps, data: { src },
+    signMsg: 'Der Betrag stimmt, aber das Vorzeichen nicht. Prüfe jeden Schritt.',
+    lines: steps.map((s, i) => ({ m: s.h, c: i ? s.lab : '' })) });
+}
+const PVS = 'Punkt vor Strich: Zuerst wird mal oder geteilt gerechnet.';
+const ok8 = v => v[1] <= 72 && abs(v[0]) <= 400;
+function gen8(l) {
+  for (let tries = 0; ; tries++) {
+    const p = l < 3 ? 0.3 : 0.15, A = sfrac(2, 6, p), B = sfrac(2, 6, p), C = sfrac(2, 6, p), k = ri(2, 6);
+    const a = qSP(A), b = qSP(B), c = qSP(C), Ap = qmul(A, [Math.sign(A[0]), 1]), Bp = qmul(B, [Math.sign(B[0]), 1]);
+    let t;
+    if (l === 1) t = pick([
+      () => make8(`${qS(A)} + ${b} * ${c}`, [[qmul(qadd(A, B), C), PVS]]),
+      () => (qcmp(A, qdiv(B, C)) === 0 ? null : make8(`${qS(A)} - ${b} : ${c}`, [[qdiv(qsub(A, B), C), PVS]])),
+      () => make8(`${k} * ${a} - ${b}`, [[qmul(Q(k), qsub(A, B)), PVS]]),
+    ])();
+    else if (l === 2) t = pick([
+      () => make8(`(${qS(A)} + ${b}) * ${c}`, [[qadd(A, qmul(B, C)), 'Zuerst die Klammer ausrechnen.']]),
+      () => (qeq(B, C) ? null : make8(`${a} : (${qS(B)} - ${c})`, [[qsub(qdiv(A, B), C), 'Zuerst die Klammer ausrechnen.']])),
+      () => make8(`-${qS(Ap)} + ${b} * ${c}`, [[qmul(qadd(qneg(Ap), B), C), PVS]]),
+      () => make8(`(${qS(A)} - ${b}) * ${k}`, [[qsub(A, qmul(B, Q(k))), 'Zuerst die Klammer ausrechnen.']]),
+    ])();
+    else t = pick([
+      () => make8(`(${qS(A)})^2 + ${b} * ${c}`, [[qmul(qadd(qpow(A, 2), B), C), PVS]]),
+      () => make8(`-(${qS(Ap)})^2 + ${b}`, [[qadd(qpow(A, 2), B), 'Das Minus vor der Klammer bleibt stehen: Es wird nicht mitpotenziert.']]),
+      () => (qeq(A, B) ? null : make8(`(${qS(A)} - ${b})^2 : ${c}`, [[qdiv(qsub(qpow(A, 2), qpow(B, 2)), C), 'Rechne zuerst die Klammer aus, dann quadriere.']])),
+      () => make8(`${qS(A)} : (-${qS(Bp)})^2`, [[qdiv(A, qneg(qpow(B, 2))), '(−a)² ist positiv: Minus mal Minus gibt Plus.']]),
+    ])();
+    if (t && (ok8(t.val) || tries > 30)) return t;
+  }
+}
+function explore8(t) {
+  const { steps } = evalSteps(t.data.src);
+  return steps.map((s, i) => ({
+    lab: s.lab, cap: s.cap,
+    h: `<div class="calc">${steps.slice(0, i + 1).map((x, j) => `<div class="ln${j === i ? ' now' : ''}"><span class="lm">${j ? '= ' : ''}${x.h}</span><span class="lc">${j ? x.lab : ''}</span></div>`).join('')}</div>`,
+  }));
+}
+
+// =====================================================================
+// Station 9: Sachaufgaben
+// =====================================================================
+const S9 = {
+  1: [
+    () => { const [a, b] = pick([[1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [2, 5], [3, 5], [3, 8], [5, 6]]), n = b * ri(4, 8); return { text: `In einer Klasse sind ${n} Kinder. ${F(a, b)} davon kommen mit dem Rad zur Schule. Wie viele Kinder kommen mit dem Rad?`, src: `${a}/${b} * ${n}`, unit: 'Kinder', say: v => `${qH(v)} Kinder kommen mit dem Rad.`, traps: [[n / b, `Das ist erst ${F(1, b)} der Klasse. Nimm das noch mal ${a}.`]] }; },
+    () => { const d = pick([4, 6, 8, 10, 12]); let a, c; do { a = ri(1, d - 2); c = ri(1, d - 1 - a); } while (a < 1 || c < 1); return { text: `Anna isst ${F(a, d)} einer Pizza, Ben isst ${F(c, d)}. Welchen Teil der Pizza essen beide zusammen?`, src: `${a}/${d} + ${c}/${d}`, unit: 'Bruchteil', say: v => `Zusammen essen sie ${qH(v)} der Pizza.`, traps: [[Q(a + c, 2 * d), 'Bei gleichem Nenner werden nur die Zähler addiert.']] }; },
+    () => { const [w, n, d] = pick([[2, 1, 2], [1, 3, 4], [3, 1, 4], [4, 1, 2], [1, 1, 2]]), [w2, n2, d2] = pick([[3, 3, 4], [5, 1, 2], [4, 1, 4], [2, 1, 2], [6, 3, 4]]); return { text: `Am Morgen zeigt das Thermometer ${MI}${mixRaw(w, n, d)} °C. Bis zum Mittag steigt die Temperatur um ${mixRaw(w2, n2, d2)} °C. Wie warm ist es am Mittag?`, src: `-${w} ${n}/${d} + ${w2} ${n2}/${d2}`, unit: '°C', say: v => `Am Mittag hat es ${mixH(v)} °C.`, traps: [[qsub(Q(-(w * d + n), d), Q(w2 * d2 + n2, d2)), '„Steigt“ heißt: Es wird wärmer, also plus.'], [qadd(Q(w * d + n, d), Q(w2 * d2 + n2, d2)), `Der Startwert ist negativ: ${MI}${mixRaw(w, n, d)} °C.`]] }; },
+    () => { const d = pick([12, 16, 18, 20, 24]); let k; do k = ri(2, d - 2); while (gcd(k, d) === 1); return { text: `Eine Tafel Schokolade hat ${d} Stücke. Lisa isst ${k} Stücke. Welcher Bruchteil der Tafel ist das? Kürze vollständig.`, src: `${k}/${d}`, unit: 'Bruchteil', say: v => `Lisa isst ${qH(v)} der Tafel.`, traps: [[Q(d, k), 'Oben steht der Teil (gegessene Stücke), unten das Ganze (alle Stücke).']] }; },
+  ],
+  2: [
+    () => { const [p, q] = pick([[2, 3], [3, 4], [2, 5], [3, 5], [4, 6], [3, 6], [4, 5], [2, 7]]); return { text: `Tom gibt ${F(1, p)} seines Taschengelds für das Kino aus und ${F(1, q)} für Essen. Welcher Bruchteil bleibt übrig?`, src: `1 - 1/${p} - 1/${q}`, unit: 'Bruchteil', say: v => `Es bleibt ${qH(v)} des Taschengelds übrig.`, traps: [[qadd(Q(1, p), Q(1, q)), 'Das ist der Teil, den Tom ausgibt. Gefragt ist, was übrig bleibt.']] }; },
+    () => { const n = ri(3, 5), k = ri(2, 6); return { text: `Wie viele Gläser zu je ${F(1, n)} Liter kann man aus ${k} Litern Saft füllen?`, src: `${k} : 1/${n}`, unit: 'Gläser', say: v => `Man kann ${qH(v)} Gläser füllen.`, traps: [[Q(k, n), `Gefragt ist, wie oft ${F(1, n)} in ${k} hineinpasst. Teile durch den Bruch.`]] }; },
+    () => { const [w, n, d] = pick([[4, 1, 2], [3, 3, 4], [5, 1, 4], [2, 1, 2]]), [w2, n2, d2] = pick([[2, 3, 4], [1, 1, 2], [3, 1, 4], [6, 1, 2]]); return { text: `Ein Taucher ist ${mixRaw(w, n, d)} m unter der Wasseroberfläche, also bei ${MI}${mixRaw(w, n, d)} m. Er taucht noch ${mixRaw(w2, n2, d2)} m tiefer. Wo ist er jetzt?`, src: `-${w} ${n}/${d} - ${w2} ${n2}/${d2}`, unit: 'm', say: v => `Er ist jetzt bei ${mixH(v)} m.`, traps: [[qadd(Q(-(w * d + n), d), Q(w2 * d2 + n2, d2)), '„Tiefer“ heißt nach unten, also minus.']] }; },
+    () => { const [a, b] = pick([[3, 4], [2, 3], [1, 2], [3, 8], [5, 8]]), p = pick([2, 4]), q = pick([3, 6, 8].filter(x => x !== p)); return { text: `Für ${p} Personen braucht man ${F(a, b)} Liter Milch. Wie viel Liter braucht man für ${q} Personen?`, src: `${a}/${b} : ${p} * ${q}`, unit: 'Liter', say: v => `Für ${q} Personen braucht man ${mixH(v)} Liter Milch.`, traps: [[qmul(Q(a, b), Q(q)), `Rechne zuerst aus, wie viel für 1 Person nötig ist: durch ${p} teilen.`]] }; },
+  ],
+  3: [
+    () => { const A = pick([Q(3, 4), Q(1, 2), Q(2, 3), Q(5, 8), Q(3, 5)]), B = pick([Q(2, 3), Q(1, 2), Q(3, 4), Q(4, 5), Q(1, 3)]); return { text: `In einer Packung sind ${qH(A)} kg Mehl. Für einen Kuchen braucht man ${qH(B)} davon. Wie viel kg Mehl braucht man?`, src: `${qS(B)} * ${qS(A)}`, unit: 'kg', say: v => `Man braucht ${qH(v)} kg Mehl.`, traps: [[qsub(A, B), `„${qH(B)} davon“ heißt: ${qH(B)} mal ${qH(A)}.`], [qdiv(A, B), `„${qH(B)} davon“ heißt mal, nicht geteilt.`]] }; },
+    () => { const [a, b] = pick([[2, 5], [3, 4], [2, 3], [3, 5], [4, 7], [5, 6]]), k = ri(2, 6), x = a * k; return { text: `${F(a, b)} einer Wanderung sind ${x} km. Wie lang ist die ganze Wanderung?`, src: `${x} : ${a}/${b}`, unit: 'km', say: v => `Die ganze Wanderung ist ${qH(v)} km lang.`, traps: [[Q(x * a, b), 'Gesucht ist das Ganze. Teile die Strecke durch den Bruch.'], [k, `Das ist erst ${F(1, b)} der Wanderung.`]] }; },
+    () => { const m = pick([60, 72, 48, 36, 120]), [p, q] = pick([[3, 4], [4, 3], [3, 2], [2, 3], [6, 4], [4, 6]]); const r1 = m - m / p, v = r1 - r1 / q; if (!Number.isInteger(r1 / q)) return S9[3][2]();
+      return { text: `Lena hat ${m} €. Sie gibt ${F(1, p)} davon aus. Vom Rest gibt sie noch ${F(1, q)} aus. Wie viel Euro hat sie dann noch?`, val: v, unit: '€', say: () => `Lena hat noch ${v} €.`,
+        traps: [[m - m / p - m / q, `Der zweite Bruchteil ${F(1, q)} wird vom Rest berechnet, nicht von ${m} €.`]],
+        lines: [{ m: `${F(1, p)} von ${m} € = ${m / p} €`, noeq: true }, { m: `Rest: ${m} € − ${m / p} € = ${r1} €`, noeq: true }, { m: `${F(1, q)} von ${r1} € = ${r1 / q} €`, noeq: true }, { m: `Rest: ${r1} € − ${r1 / q} € = ${v} €`, noeq: true }] }; },
+    () => { const s = pick([Q(3, 2), Q(5, 2), Q(7, 4), Q(9, 4)]), r = pick([Q(3, 4), Q(1, 2), Q(5, 4)]), h = pick([3, 4, 5]); return { text: `Um 18 Uhr sind es ${mixH(s)} °C. Danach sinkt die Temperatur jede Stunde um ${qH(r)} °C. Wie viel Grad sind es um ${18 + h} Uhr?`, src: `${qS(s)} + ${h} * (-${qS(r)})`, unit: '°C', say: v => `Um ${18 + h} Uhr sind es ${mixH(v)} °C.`, traps: [[qadd(s, qmul(Q(h), r)), '„Sinkt“ heißt minus.'], [qsub(s, r), `Von 18 bis ${18 + h} Uhr sind es ${h} Stunden.`]] }; },
+    () => { const w = ri(1, 2), d = pick([2, 3, 4]), n = d === 4 ? pick([1, 3]) : 1; return { text: `Ein quadratisches Beet hat die Seitenlänge ${mixRaw(w, n, d)} m. Wie groß ist die Fläche in m²?`, src: `(${w} ${n}/${d})^2`, unit: 'm²', say: v => `Das Beet hat ${mixH(v)} m² Fläche.`, traps: [[qadd(Q(w * w), Q(n * n, d * d)), 'Wandle die gemischte Zahl zuerst in einen unechten Bruch um.'], [qmul(Q(w * d + n, d), Q(4)), 'Gesucht ist die Fläche, nicht der Umfang.']] }; },
+  ],
+};
+function make9(o) {
+  let lines, v;
+  if (o.lines) { lines = o.lines; v = Q(o.val); }
+  else { const r = evalSteps(o.src); v = r.value; lines = [{ m: r.steps[0].h, c: 'als Rechnung', noeq: true }].concat(r.steps.slice(1).map(s => ({ m: s.h }))); }
+  lines = lines.concat([{ m: o.say(v), noeq: true, c: 'Antwort' }]);
+  return numTask({ st: 9, prompt: 'Löse die Sachaufgabe', q: o.text, qText: true, after: o.unit === 'Bruchteil' ? 'Gib das Ergebnis als Bruch ein.' : `Gib nur die Zahl oder den Bruch ein (in ${o.unit}).`,
+    val: v, traps: o.traps, data: o, lines, wrongMsg: 'Das stimmt noch nicht. Überlege: Was ist das Ganze? Welcher Teil davon ist gesucht? Schreib zuerst eine Rechnung.' });
+}
+function gen9(l) { return make9(pick(S9[l])()); }
+const S9EX = [
+  { label: 'Pizza', mode: 'pizza', parts: [['Anna isst ', 0], ['¼ einer Pizza', 1], [', Ben isst ', 0], ['⅜', 2], ['. ', 0], ['Wie viel essen beide zusammen?', 3]] },
+  { label: 'Klasse', mode: 'klasse', parts: [['In einer Klasse sind ', 0], ['24 Kinder', 1], ['. ', 0], ['⅜ davon', 2], [' kommen mit dem Rad. Wie viele sind das?', 0]] },
+  { label: 'Was bleibt übrig?', mode: 'rest', parts: [['Tom gibt ', 0], ['⅓ seines Geldes', 1], [' für Kino und ', 0], ['¼', 2], [' für Essen aus. ', 0], ['Welcher Teil bleibt übrig?', 3]] },
+  { label: 'Mehl', mode: 'mehl', parts: [['In der Packung sind ', 0], ['¾ kg Mehl', 1], ['. Man braucht ', 0], ['⅔ davon', 2], ['. Wie viel kg sind das?', 0]] },
+];
+function explore9(e) {
+  const P = on => phraseH(e.parts, on);
+  if (e.mode === 'pizza') return [
+    { lab: 'Lesen', h: P([]), cap: 'Lies den Text. Zwei Teile einer Pizza werden zusammengezählt.' },
+    { lab: 'Bild', h: P([1, 2]) + `<div class="row">${pieH(2, 8)}${pieH(3, 8, { cls: 'b' })}</div>`, cap: `Anna: ${F(1, 4)} = ${F(2, 8)}. Ben: ${F(3, 8)}. Mit Achteln kann man gut zählen.` },
+    { lab: 'Zusammen', h: P([1, 2, 3]) + `<div class="fig">${pieH(5, 8, { mark: i => (i < 2 ? 'a' : 'b') })}</div>`, cap: '2 Achtel + 3 Achtel = 5 Achtel.' },
+    { lab: 'Antwort', h: eqbig(`${F(1, 4)} + ${F(3, 8)} = ${F(2, 8)} + ${F(3, 8)} = <b>${F(5, 8)}</b>`, 'sm'), cap: `Antwortsatz: Zusammen essen sie ${F(5, 8)} der Pizza.` },
+  ];
+  if (e.mode === 'klasse') return [
+    { lab: 'Lesen', h: P([]), cap: 'Lies den Text. Gesucht ist ein Bruchteil einer Anzahl.' },
+    { lab: 'Ganzes', h: P([1]) + dotsH(24, 8, 0), cap: 'Das Ganze sind 24 Kinder. Der Nenner 8 sagt: Teile in 8 Gruppen. 24 : 8 = 3.' },
+    { lab: 'Teil', h: P([1, 2]) + dotsH(24, 8, 3), cap: 'Der Zähler 3 sagt: Nimm 3 Gruppen. 3 · 3 = 9.' },
+    { lab: 'Antwort', h: eqbig(`${F(3, 8)} · 24 = 24 : 8 · 3 = <b>9</b>`, 'sm'), cap: 'Antwortsatz: 9 Kinder kommen mit dem Rad.' },
+  ];
+  if (e.mode === 'rest') return [
+    { lab: 'Lesen', h: P([]), cap: 'Das ganze Taschengeld ist 1 Ganzes. Davon wird zweimal etwas weggenommen.' },
+    { lab: 'Zwölftel', h: P([1, 2]) + barH(7, 12, { mark: i => (i < 4 ? 'a' : 'b'), group: 1 }), cap: `Hauptnenner 12: ${F(1, 3)} = ${F(4, 12)} (Kino), ${F(1, 4)} = ${F(3, 12)} (Essen).` },
+    { lab: 'Rest', h: P([1, 2, 3]) + barH(12, 12, { mark: i => (i < 4 ? 'a' : i < 7 ? 'b' : 'c') }), cap: 'Die hellen Teile bleiben übrig: 12 − 4 − 3 = 5 Zwölftel.' },
+    { lab: 'Antwort', h: eqbig(`1 − ${F(1, 3)} − ${F(1, 4)} = ${F(12, 12)} − ${F(4, 12)} − ${F(3, 12)} = <b>${F(5, 12)}</b>`, 'sm'), cap: `Antwortsatz: Es bleiben ${F(5, 12)} des Taschengelds übrig.` },
+  ];
+  return [
+    { lab: 'Lesen', h: P([]), cap: '„⅔ davon“ heißt: ⅔ von ¾ kg. „Von“ bedeutet mal.' },
+    { lab: F(3, 4) + ' kg', h: P([1]) + areaH(2, 3, 3, 4, 1), cap: `Das Quadrat ist 1 kg. ${F(3, 4)} kg sind gefärbt.` },
+    { lab: F(2, 3) + ' davon', h: P([1, 2]) + areaH(2, 3, 3, 4, 2), cap: `Davon ${F(2, 3)}: 2 von 3 Zeilen.` },
+    { lab: 'Antwort', h: areaH(2, 3, 3, 4, 3) + eqbig(`${F(2, 3)} · ${F(3, 4)} = ${F(6, 12)} = <b>${F(1, 2)}</b> kg`, 'sm'), cap: `Antwortsatz: Man braucht ${F(1, 2)} kg Mehl.` },
+  ];
+}
+
+// =====================================================================
+// Stationen
+// =====================================================================
+const s2 = supH(2), s3 = supH(3);
+const STATIONS = [
+  {
+    id: 1, title: 'Brüche verstehen', short: 'Zähler, Nenner, Bruchteile', sample: '¾ von 20 = 15',
+    lvl: ['ablesen, Stammbruch', 'Bruchteil, gemischte Zahl', 'Zahlengerade, Ganzes'],
+    intro: `<p>Ein <b>Bruch</b> beschreibt einen Teil von einem Ganzen. Das Ganze wird in gleich große Teile geteilt. Der <b>Nenner</b> (unten) sagt, in wie viele Teile. Der <b>Zähler</b> (oben) sagt, wie viele Teile du nimmst.</p>
+      <div class="row">${pieH(3, 4)}${eqbig(F(3, 4))}</div>
+      <p>Ist der Zähler größer als der Nenner, ist der Bruch mehr als ein Ganzes, zum Beispiel ${F(7, 4)}. So einen Bruch kann man auch als <b>gemischte Zahl</b> schreiben: ${F(7, 4)} = ${mixRaw(1, 3, 4)}.</p>
+      <p>Wie bei den ganzen Zahlen gibt es auch <b>negative Brüche</b>. Sie liegen auf der Zahlengerade links von der 0: ${MI}${F(3, 4)} ist die Gegenzahl von ${F(3, 4)}.</p>
+      <p>Im Eingabefeld schreibst du Brüche mit dem Schrägstrich: 3/4. Eine gemischte Zahl schreibst du mit Leerzeichen: 1 3/4. Ein Minus kommt nach vorne: −1 3/4.</p>`,
+    merke: ul(['Nenner = in wie viele gleiche Teile das Ganze geteilt ist.', 'Zähler = wie viele Teile du nimmst.', `Bruchteil einer Menge: durch den Nenner teilen, mal den Zähler. ${F(3, 4)} von 20 = 20 : 4 · 3 = 15.`, `Unechter Bruch → gemischte Zahl: Zähler durch Nenner teilen. ${F(11, 4)}: 11 : 4 = 2 Rest 3, also ${mixRaw(2, 3, 4)}.`]),
+    falle: ul(['Die Teile müssen gleich groß sein!', `${F(3, 4)} von 20 ist 15, nicht 5. 5 ist erst ${F(1, 4)}.`, `${mixRaw(2, 1, 3)} ist ${F(7, 3)}, nicht ${F(3, 3)}: 2 · 3 + 1 = 7.`]),
+    hint: () => 'Nenner unten: in wie viele gleiche Teile. Zähler oben: wie viele Teile. Bei einer Menge: durch den Nenner teilen, mal den Zähler.',
+    gen: gen1, examples: () => S1EX.map(e => ({ label: e.label, x: e })), explore: explore1,
+    bsp: () => [part1(3, 5, 40, ['€']), toMixed1(17, 5, -1), toImp1(3, 2, 7)],
+  },
+  {
+    id: 2, title: 'Erweitern und Kürzen', short: 'Gleicher Wert, andere Zahlen', sample: '6/8 = 3/4',
+    lvl: ['erweitern, kürzen', 'vollständig kürzen', 'große Zahlen'],
+    intro: `<p>Ein Bruch kann verschieden aussehen und trotzdem gleich groß sein: ${F(1, 2)} = ${F(2, 4)} = ${F(3, 6)}.</p>
+      <p><b>Erweitern</b> heißt: Zähler und Nenner mit der gleichen Zahl multiplizieren. <b>Kürzen</b> heißt: Zähler und Nenner durch die gleiche Zahl teilen. Der Wert bleibt dabei immer gleich, nur die Teile werden feiner oder gröber.</p>`,
+    merke: ul([`Erweitern mit 3: ${F(2, 5)} = ${F('2 · 3', '5 · 3')} = ${F(6, 15)}.`, `Das Vorzeichen bleibt: ${MI}${F(6, 8)} = ${MI}${F(3, 4)}.`, `Kürzen durch 4: ${F(12, 16)} = ${F('12 : 4', '16 : 4')} = ${F(3, 4)}.`, 'Vollständig gekürzt ist ein Bruch, wenn Zähler und Nenner keinen gemeinsamen Teiler mehr haben.', 'Hilfe: Sind beide Zahlen gerade, kannst du durch 2 kürzen. Ist die Quersumme beider durch 3 teilbar, durch 3.']),
+    falle: ul(['Erweitern heißt multiplizieren, nicht addieren: Aus ¾ wird nicht 5/6.', 'Immer Zähler UND Nenner verändern.', `${F(8, 12)} durch 2 gekürzt gibt ${F(4, 6)}. Das kann man noch weiter kürzen: ${F(2, 3)}.`]),
+    hint: () => 'Erweitern: Zähler und Nenner mal die gleiche Zahl. Kürzen: Zähler und Nenner durch die gleiche Zahl.',
+    gen: gen2, examples: () => S2EX.map(e => ({ label: e.label, x: e })), explore: explore2,
+    bsp: () => [erw2(3, 7, 4), kfull2(36, 48, -1), missR2(2, 3, 3, 5)],
+  },
+  {
+    id: 3, title: 'Vergleichen und Ordnen', short: 'Welcher Bruch ist größer?', sample: '⅔ < ¾',
+    lvl: ['gleiche Nenner oder Zähler', 'verschiedene Nenner', 'ordnen, gemischte Zahlen'],
+    intro: `<p>Brüche mit gleichem Nenner kannst du direkt vergleichen: Wer mehr Teile hat, ist größer. Bei verschiedenen Nennern machst du die Brüche zuerst <b>gleichnamig</b>: Du erweiterst beide auf einen gemeinsamen Nenner, den <b>Hauptnenner</b>.</p>
+      <p>Den Hauptnenner findest du so: Schreib die Vielfachen des größeren Nenners auf, bis eine Zahl kommt, die auch durch den anderen Nenner teilbar ist.</p>`,
+    merke: ul(['Gleicher Nenner: größerer Zähler → größerer Bruch.', 'Gleicher Zähler: größerer Nenner → kleinerer Bruch (die Teile sind kleiner).', `Sonst gleichnamig machen: ${F(2, 3)} = ${F(8, 12)} und ${F(3, 4)} = ${F(9, 12)}, also ${F(2, 3)} < ${F(3, 4)}.`]),
+    falle: ul([`${F(1, 8)} ist kleiner als ${F(1, 4)}, obwohl 8 größer als 4 ist.`, `Bei negativen Brüchen dreht es sich um: ${MI}${F(3, 4)} < ${MI}${F(2, 3)}.`]),
+    hint: () => 'Gleiche Nenner? Dann Zähler vergleichen. Sonst beide auf den Hauptnenner erweitern und dann die Zähler vergleichen.',
+    gen: gen3, examples: () => S3EX.map(e => ({ label: e.label, x: e })), explore: explore3,
+    bsp: () => [cmp3(Q(5, 6), Q(7, 9)), cmp3(Q(-2, 3), Q(-3, 4)), ord3([Q(3, 4), Q(-1, 3), Q(5, 8), Q(-1, 2)])],
+  },
+  {
+    id: 4, title: 'Addieren und Subtrahieren', short: 'Gleichnamig machen', sample: '½ + ⅓ = ⅚',
+    lvl: ['gleiche Nenner', 'verschiedene Nenner', 'gemischte Zahlen'],
+    intro: `<p>Brüche kann man nur addieren oder subtrahieren, wenn die Teile gleich groß sind, also wenn die Nenner gleich sind. Dann rechnest du nur mit den Zählern. Der Nenner bleibt gleich.</p>
+      <p>Bei verschiedenen Nennern machst du die Brüche zuerst gleichnamig. Am Ende kürzt du so weit wie möglich.</p>
+      <p>Bei negativen Brüchen nimmst du das Minus in den Zähler mit und rechnest die Zähler wie ganze Zahlen: ${MI}${F(5, 9)} + ${F(2, 9)} = ${F(`${MI}5 + 2`, 9)} = ${MI}${F(3, 9)} = ${MI}${F(1, 3)}.</p>`,
+    merke: ol(['Hauptnenner suchen.', 'Beide Brüche auf den Hauptnenner erweitern.', 'Zähler addieren oder subtrahieren, der Nenner bleibt.', 'Kürzen. Unechte Brüche darfst du als gemischte Zahl schreiben.']),
+    falle: ul([`${F(1, 2)} + ${F(1, 3)} ist nicht ${F(2, 5)}! Nenner werden nie addiert.`, `${F(2, 7)} − ${F(5, 7)} ist ${MI}${F(3, 7)}, nicht ${F(3, 7)}.`, `− (${MI}${F(1, 4)}) wird zu + ${F(1, 4)}: Minus minus gibt plus.`, `${F(2, 7)} + ${F(3, 7)} = ${F(5, 7)}, nicht ${F(5, 14)}.`, 'Gemischte Zahlen: Ganze und Brüche getrennt rechnen, oder alles in unechte Brüche umwandeln.']),
+    hint: t => `Sind die Nenner gleich? Dann nur die Zähler verrechnen. Sonst zuerst auf den Hauptnenner erweitern${t.data && t.data.A ? ` (hier ${lcm(t.data.A[1], t.data.B[1])})` : ''}.`,
+    gen: gen4, examples: () => S4EX.map(e => ({ label: e.label, x: e })), explore: explore4,
+    bsp: () => [as4(Q(5, 9), '−', Q(7, 9)), as4(Q(-5, 6), '−', Q(-3, 8)), as4(Q(13, 4), '−', Q(5, 3), { mixed: true })],
+  },
+  {
+    id: 5, title: 'Multiplizieren', short: 'Zähler mal Zähler, Nenner mal Nenner', sample: '⅔ · ¾ = ½',
+    lvl: ['Bruch mal Zahl', 'Bruch mal Bruch', 'gemischte Zahlen'],
+    intro: `<p>Beim Multiplizieren brauchst du keinen Hauptnenner. Du rechnest einfach <b>Zähler mal Zähler</b> und <b>Nenner mal Nenner</b>. Bei Bruch mal ganze Zahl wird nur der Zähler malgenommen.</p>
+      <p>„Von“ bedeutet mal: ${F(2, 3)} von ${F(3, 4)} ist ${F(2, 3)} · ${F(3, 4)}. Tipp: Kürze schon, bevor du ausrechnest. Dann bleiben die Zahlen klein.</p>`,
+    merke: ul([`Bruch mal Bruch: ${F(2, 3)} · ${F(4, 5)} = ${F('2 · 4', '3 · 5')} = ${F(8, 15)}.`, `Bruch mal Zahl: ${F(2, 9)} · 3 = ${F('2 · 3', 9)} = ${F(6, 9)} = ${F(2, 3)}.`, 'Vorher kürzen: Ein Zähler und ein Nenner dürfen auch über Kreuz gekürzt werden.', 'Gemischte Zahlen zuerst in unechte Brüche umwandeln.', 'Vorzeichen wie bei ganzen Zahlen: gleiche Vorzeichen → plus, verschiedene → minus.']),
+    falle: ul([`${F(2, 9)} · 3 ist nicht ${F(6, 27)}. Nur der Zähler wird malgenommen.`, `${mixRaw(2, 1, 2)} · ${mixRaw(1, 1, 2)} ist nicht ${mixRaw(2, 1, 4)}. Erst umwandeln: ${F(5, 2)} · ${F(3, 2)} = ${F(15, 4)}.`]),
+    hint: () => 'Zähler mal Zähler, Nenner mal Nenner. Kürze vorher über Kreuz. Gemischte Zahlen zuerst umwandeln.',
+    gen: gen5, examples: () => S5EX.map(e => ({ label: e.label, x: e })), explore: explore5,
+    bsp: () => [mul5(Q(5, 12), Q(-4)), mul5(Q(-6, 7), Q(-14, 15)), mul5(Q(9, 4), Q(5, 3), { mixed: true })],
+  },
+  {
+    id: 6, title: 'Dividieren', short: 'Mal den Kehrwert', sample: '⅔ : ⅘ = ⅚',
+    lvl: ['durch Zahl, durch Stammbruch', 'Bruch durch Bruch', 'gemischte Zahlen'],
+    intro: `<p>Teilen fragt: Wie oft passt das eine ins andere? 3 : ${F(1, 4)} = 12, denn ${F(1, 4)} passt 12-mal in 3 Ganze.</p>
+      <p>Die Regel dafür: <b>Durch einen Bruch teilen heißt: mal den Kehrwert nehmen.</b> Den <b>Kehrwert</b> bekommst du, indem du Zähler und Nenner tauschst. Der Kehrwert von ${F(4, 5)} ist ${F(5, 4)}, der Kehrwert von 3 ist ${F(1, 3)}.</p>`,
+    merke: ul([`${F(2, 3)} : ${F(4, 5)} = ${F(2, 3)} · ${F(5, 4)} = ${F(10, 12)} = ${F(5, 6)}.`, `Der Kehrwert behält sein Vorzeichen: Kehrwert von ${MI}${F(2, 5)} ist ${MI}${F(5, 2)}. Vorzeichen-Regeln wie beim Malnehmen.`, `Bruch durch Zahl: ${F(3, 5)} : 2 = ${F(3, 5)} · ${F(1, 2)} = ${F(3, 10)}.`, 'Nur vom zweiten Bruch (dem Teiler) den Kehrwert bilden.', 'Probe: Ergebnis mal Teiler gibt die erste Zahl.']),
+    falle: ul(['Den Kehrwert nicht vergessen! Sonst rechnest du mal statt geteilt.', 'Beim Teilen durch einen Bruch kleiner als 1 wird das Ergebnis größer.']),
+    hint: t => `Bilde den Kehrwert des Teilers${t.data && t.data.B ? ` (${qH(t.data.B)} → ${qH(qinv(t.data.B))})` : ''} und nimm mal. Dann kürzen.`,
+    gen: gen6, examples: () => S6EX.map(e => ({ label: e.label, x: e })), explore: explore6,
+    bsp: () => [div6(Q(-4, 7), Q(2)), div6(Q(5, 8), Q(-15, 16)), div6(Q(7, 2), Q(7, 4), { mixed: true })],
+  },
+  {
+    id: 7, title: 'Potenzen', short: 'Brüche hoch 2, hoch 3', sample: `(⅔)${s2} = 4/9`,
+    lvl: ['hoch 2 und hoch 3', 'Vorzeichen, gemischte Zahlen', 'Potenzen in Rechnungen'],
+    intro: `<p>Eine Potenz ist eine Kurzschrift für Malnehmen mit gleichen Faktoren: (${F(2, 3)})${s3} = ${F(2, 3)} · ${F(2, 3)} · ${F(2, 3)}. Weil Zähler mal Zähler und Nenner mal Nenner gerechnet wird, gilt:</p>
+      ${eqbig(`(${F('a', 'b')})${supH('n')} = ${F(`a${supH('n')}`, `b${supH('n')}`)}`, 'sm')}
+      <p>Zähler und Nenner werden beide potenziert. Bei negativen Brüchen gilt wie bei ganzen Zahlen: Gerade Hochzahl → plus, ungerade → minus. Und die Klammer entscheidet, ob das Minus mitpotenziert wird.</p>`,
+    merke: ul([`(${F(3, 4)})${s2} = ${F(9, 16)}: Zähler und Nenner potenzieren.`, `(${MI}${F(1, 2)})${s3} = ${MI}${F(1, 8)}: ungerade Hochzahl, also minus.`, `${MI}(${F(2, 3)})${s2} = ${MI}${F(4, 9)}: Das Minus vor der Klammer bleibt.`, 'Gemischte Zahlen zuerst in unechte Brüche umwandeln.']),
+    falle: ul([`(${F(2, 3)})${s2} ist nicht ${F(4, 3)}. Auch der Nenner wird quadriert.`, `(${F(2, 5)})${s2} ist nicht ${F(4, 10)}. Hoch 2 heißt nicht mal 2.`, `(${mixRaw(1, 1, 2)})${s2} ist ${F(9, 4)}, nicht ${mixRaw(1, 1, 4)}.`]),
+    hint: () => 'Schreib die Potenz als Produkt. Zähler und Nenner werden beide potenziert. Achte auf das Vorzeichen und die Klammer.',
+    gen: gen7, examples: () => S7EX.map(e => ({ label: e.label, x: e })), explore: explore7,
+    bsp: () => [pw7(Q(3, 5), 2), pw7(Q(-2, 3), 3), mixpow7(2, 1, 3)],
+  },
+  {
+    id: 8, title: 'Rechenreihenfolge', short: 'Klammer, Hoch, Punkt, Strich', sample: '½ + ⅓ · ¾',
+    lvl: ['Punkt vor Strich', 'mit Klammern', 'mit Potenzen'],
+    intro: `<p>Auch mit Brüchen gilt die feste Reihenfolge:</p>
+      <div class="ladder"><span>1. Klammer</span><i>→</i><span>2. Hoch</span><i>→</i><span>3. Punkt (·, :)</span><i>→</i><span>4. Strich (+, −)</span></div>
+      <p>Bei jedem Schritt verwendest du die Regeln aus den Stationen vorher. Kürze, sobald es geht. Dann bleiben die Zahlen klein.</p>`,
+    merke: ol(['Zuerst die Klammern.', 'Dann die Potenzen.', 'Dann mal und geteilt (Kehrwert!).', 'Zum Schluss plus und minus (gleichnamig machen!).']),
+    falle: ul([`${F(1, 2)} + ${F(1, 3)} · ${F(3, 4)} = ${F(1, 2)} + ${F(1, 4)} = ${F(3, 4)}. Nicht von links nach rechts rechnen!`, 'Schreib jeden Schritt in eine neue Zeile.']),
+    hint: () => 'Klammer, Hoch, Punkt, Strich. Rechne Schritt für Schritt, kürze früh.',
+    gen: gen8, examples: () => exT([make8('1/2 + 1/3 * 3/4', []), make8('(2/3 - 1/6) : (-3/4)', []), make8('(1/2)^2 + 3/4 * 2/3', []), make8('-(2/3)^2 + 1/6', [])]), explore: explore8,
+    bsp: () => [make8('5/6 - 1/4 : 3/8', []), make8('(3/4 + 1/2) * 2/5', [])],
+  },
+  {
+    id: 9, title: 'Sachaufgaben', short: 'Pizza, Geld, Temperatur', sample: '⅜ von 24 Kindern',
+    lvl: ['ein Schritt', 'Rest, Rezept, wie oft', 'von, Ganzes, Rest vom Rest'],
+    intro: `<p>In Sachaufgaben übersetzt du den Text in eine Rechnung. Diese Wörter helfen dir:</p>
+      <div class="dictwrap"><table class="dict"><thead><tr><th>Wörter im Text</th><th>Rechnung</th><th>Beispiel</th></tr></thead><tbody>
+      <tr><td>„von“, „davon“</td><td class="z">·</td><td>${F(3, 4)} von 20 = ${F(3, 4)} · 20</td></tr>
+      <tr><td>zusammen, dazu</td><td class="z">+</td><td>${F(1, 4)} + ${F(3, 8)}</td></tr>
+      <tr><td>übrig, Rest</td><td class="z">−</td><td>1 − ${F(1, 3)}</td></tr>
+      <tr><td>wie oft passt, wie viele zu je</td><td class="z">:</td><td>3 : ${F(1, 4)}</td></tr>
+      <tr><td>Teil gegeben, Ganzes gesucht</td><td class="z">:</td><td>12 : ${F(2, 5)}</td></tr>
+      <tr><td>unter null, tiefer, sinkt</td><td class="z">−</td><td>${MI}${mixRaw(2, 1, 2)} − ${F(3, 4)}</td></tr>
+      </tbody></table></div>`,
+    merke: ol(['Was ist das Ganze?', 'Welcher Teil ist gegeben, was ist gesucht?', 'Rechnung aufschreiben und ausrechnen.', 'Antwortsatz mit Einheit.']),
+    falle: ul(['„Vom Rest“ heißt: Der Bruchteil wird vom Rest berechnet, nicht vom Anfang.', 'Gib im Eingabefeld nur die Zahl oder den Bruch ein, ohne Einheit.']),
+    hint: () => 'Was ist das Ganze? „Von“ heißt mal, „übrig“ heißt minus, „wie oft“ heißt geteilt.',
+    gen: gen9, examples: () => S9EX.map(e => ({ label: e.label, x: e })), explore: explore9,
+    bsp: () => [make9(S9[2][0]()), make9(S9[3][1]())],
+  },
+];
+const MIX = {
+  id: 10, title: 'Gemischtes Training', short: 'Aufgaben aus allen Stationen', sample: 'alles', mix: true,
+  lvl: ['leicht', 'mittel', 'schwer'],
+  hint: t => byId(t.st).hint(t),
+  gen(l) { const s = pick(STATIONS); const t = s.gen(l); t.tag = `${s.id} · ${s.title}`; return t; },
+};
+function byId(id) { return id === 10 ? MIX : STATIONS.find(s => s.id === id); }
+
+// ---------- Selbsttest (Node: TL.runTests()) ----------
+function runTests(n = 150) {
+  const fails = [];
+  const ok = (c, m) => { if (!c) fails.push(m); };
+  const V = s => qS(val(parse(s)));
+  const cases = [['3/4', '3/4'], ['1 3/4', '7/4'], ['-1 1/2', '-3/2'], ['1/2 + 1/3', '5/6'], ['2/3 : 4/5', '5/6'], ['(2/3)^2', '4/9'], ['(-2/3)³', '-8/27'], ['-(3/4)^2', '-9/16'], ['2/3^2', '2/9'], ['1/2 + 1/3 * 3/4', '3/4'], ['0,5', '1/2'], ['(1 1/2)^2', '9/4']];
+  for (const [a, b] of cases) ok(V(a) === b, `Wert ${a} → ${V(a)} statt ${b}`);
+  for (const bad of ['', '3x', '3/', '/4', '(2+1', '2 3', '3/0', '=5', '1/2 3']) {
+    try { val(parse(bad)); fails.push('kein Fehler bei: ' + bad); } catch (e) { ok(e.user, 'Fehlerart bei: ' + bad + ' ' + e.message); }
+  }
+  ok(fmt(parse('(2/3)^2')).startsWith('(<span class="fr">'), 'fmt Potenz');
+  const t4 = as4(Q(1, 2), '+', Q(1, 3));
+  ok(check(t4, '5/6').ok && !check(t4, '2/5').ok && /gleichnamig/.test(check(t4, '2/5').msg), 'st4');
+  ok(check(t4, '10/12').near && /Kürze/.test(check(t4, '10/12').msg), 'st4 kürzen');
+  ok(check(t4, '0.8333').ok === false && check(t4, '1/2+1/3').near, 'st4 near');
+  const tm = toMixed1(11, 4); ok(check(tm, '2 3/4').ok && check(tm, '11/4').near && !check(tm, '2 3/4').near, 'gemischt');
+  const ti = toImp1(2, 1, 3); ok(check(ti, '7/3').ok && check(ti, '2 1/3').near && /unechten/.test(check(ti, '2 1/3').msg), 'unecht');
+  const te = erw2(3, 4, 5); ok(check(te, '15/20').ok && check(te, '3/4').near && check(te, '6/8').near, 'erweitern');
+  const t7 = pw7(Q(2, 3), 2); ok(check(t7, '4/9').ok && /Nenner/.test(check(t7, '4/3').msg), 'st7');
+  const tl = ord3([Q(3, 4), Q(1, 3), Q(5, 8), Q(1, 2)]); ok(check(tl, '1/3; 1/2; 5/8; 3/4').ok && /groß nach klein/.test(check(tl, '3/4;5/8;1/2;1/3').msg), 'Liste');
+  ok(check(tl, '2/6; 1/2; 5/8; 3/4').ok, 'Liste gleichwertig');
+  for (const s of STATIONS.concat([MIX])) for (const l of [1, 2, 3]) for (let i = 0; i < n; i++) {
+    let t;
+    try { t = s.gen(l); } catch (e) { fails.push(`gen ${s.id}/${l}: ${e.stack}`); break; }
+    const tag = `S${t.st} L${l} ${String(t.q).replace(/<[^>]+>/g, ' ').slice(0, 70)}`;
+    if (t.kind === 'mc') {
+      const i0 = t.opts.findIndex(o => o.ok);
+      ok(i0 >= 0 && t.opts.filter(o => o.ok).length === 1 && t.opts.length >= 2, 'mc ' + tag);
+      ok(check(t, i0).ok && t.opts.every((o, k) => k === i0 || !check(t, k).ok), 'mc prüfen ' + tag);
+    } else {
+      const r = check(t, t.sol);
+      ok(r.ok, `Lösung nicht akzeptiert: ${tag} / ${t.sol} → ${r.msg}`);
+      if (t.kind === 'number') {
+        ok(t.val[1] <= 1000 && abs(t.val[0]) <= 100000, 'zu groß: ' + tag + ' ' + t.sol);
+        if (t.form === 'any') { ok(check(t, mixS(t.val)).ok, 'gemischt nicht akzeptiert: ' + tag); }
+        for (const tr of t.traps) ok(!check(t, qS(tr.val)).ok, `Falle akzeptiert: ${tag} / ${qS(tr.val)}`);
+      }
+    }
+    ok(t.lines.length >= 2, 'Lösungsweg ' + tag);
+    ok(typeof s.hint(t) === 'string', 'Tipp ' + tag);
+  }
+  for (const s of STATIONS) {
+    for (const ex of s.examples()) {
+      try { const st = s.explore(ex.x); ok(st.length >= 2 && st.every(x => x.h && x.cap && x.lab), 'explore ' + s.id); }
+      catch (e) { fails.push(`explore ${s.id}: ${e.stack}`); }
+    }
+    try { s.bsp().forEach(t => ok(t.lines.length >= 2 && (t.kind === 'mc' || check(t, t.sol).ok), 'bsp ' + s.id)); } catch (e) { fails.push(`bsp ${s.id}: ${e.stack}`); }
+  }
+  return fails;
+}
+
+global.TL = { stations: STATIONS, mix: MIX, byId, check, preview, previewList, runTests, seed, parse, fmt, val, lineH, evalSteps, nlF, barH, pieH };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<!-- =====================================================================
+     OBERFLÄCHE: Lernpfad, Stationen (Verstehen / Üben), Fortschritt.
+     Test-Haken für den Durchklick: window.TLUI
+     ===================================================================== -->
+<script>
+(function () {
+'use strict';
+const T = window.TL;
+const $ = (s, r = document) => r.querySelector(s);
+const main = $('#main');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ohne Speicher geht es auch */ } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* egal */ } },
+};
+const PER = 3, SLOTS = 9, MAXW = 5;       // je Station 3 Stufen × 3 Aufgaben; Lösung beim 5. Fehlversuch
+const LV = ['Leicht', 'Mittel', 'Schwer'];
+const STAR = 'M12 2.8l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.36l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93z';
+const starSvg = on => `<svg viewBox="0 0 24 24" class="${on ? 'on' : 'off'}" aria-hidden="true"><path d="${STAR}" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+const TLUI = window.TLUI = {};
+const nice = s => String(s).replace(/-/g, '−');
+
+// ---------- Fortschritt ----------
+// br-v1 = { v: 1, salt, off, st: { Station: { Platz 0–8: { s: "free"|"hint"|"shown", w: Fehlversuche } } } }
+const KEY = 'br-v1', POS = 'br-pos';
+const migrate = d => d, remapPos = p => p;
+function loadData() {
+  const d = store.get(KEY, null);
+  if (d && d.st && d.salt) return d;
+  const nd = { v: 1, salt: 1 + Math.floor(Math.random() * 1e9), st: {} };
+  store.set(KEY, nd); return nd;
+}
+let data = loadData();
+const save = () => store.set(KEY, data);
+const slot = (id, i) => (data.st[id] || {})[i] || {};
+const setSlot = (id, i, v) => { (data.st[id] = data.st[id] || {})[i] = v; save(); };
+const isDone = x => x.s === 'free' || x.s === 'hint' || x.s === 'shown';
+function stats(ids) {
+  const c = { free: 0, hint: 0, shown: 0, total: ids.length * SLOTS };
+  ids.forEach(id => { for (let i = 0; i < SLOTS; i++) { const x = slot(id, i); if (isDone(x)) c[x.s]++; } });
+  c.done = c.free + c.hint + c.shown; return c;
+}
+const ALL = () => T.stations.map(s => s.id);
+const PCT = (x, t) => (t ? Math.round(100 * x / t) : 0);
+const levelStar = (id, l) => [0, 1, 2].every(k => { const x = slot(id, (l - 1) * PER + k); return x.s === 'free' || x.s === 'hint'; });
+const starCount = id => [1, 2, 3].filter(l => levelStar(id, l)).length;
+const starsH = id => { const n = starCount(id); return `<span class="stars" role="img" aria-label="${n} von 3 Sternen">${[0, 1, 2].map(i => starSvg(i < n)).join('')}</span>`; };
+const stackH = c => `<i class="stack" role="img" aria-label="${PCT(c.done, c.total)} Prozent bearbeitet, ${PCT(c.free, c.total)} Prozent ohne Hilfe"><b class="f" style="width:${100 * c.free / c.total}%"></b><b class="h" style="width:${100 * c.hint / c.total}%"></b><b class="s" style="width:${100 * c.shown / c.total}%"></b></i>`;
+const legendH = c => { const v = x => `${x} (${PCT(x, c.total)} %)`;
+  return `<div class="legend"><span><i class="f"></i>ohne Hilfe: ${v(c.free)}</span><span><i class="h"></i>mit Tipps: ${v(c.hint)}</span><span><i class="s"></i>Lösung angezeigt: ${v(c.shown)}</span><span><i class="o"></i>offen: ${v(c.total - c.done)}</span></div>`; };
+const progLine = c => `${PCT(c.done, c.total)} % bearbeitet · davon ${PCT(c.free, c.total)} % ohne Hilfe`;
+function genSlot(s, i) {
+  T.seed((data.salt + (s.sid || s.id) * 7919 + i * 104729 + ((data.off || {})[s.id] || 0) * 31337) | 0);
+  const t = s.gen(Math.floor(i / PER) + 1);
+  T.seed(1 + Math.floor(Math.random() * 1e9));
+  return t;
+}
+const firstOpen = id => { for (let i = 0; i < SLOTS; i++) if (!isDone(slot(id, i))) return i; return -1; };
+// Knopf, der erst beim zweiten Klick auslöst (Dialogfenster gehen nicht überall)
+function twoClick(b, label, ask, fn) {
+  b.onclick = () => {
+    if (b.dataset.s !== '1') { b.dataset.s = '1'; b.textContent = ask; setTimeout(() => { if (b.isConnected) { b.dataset.s = ''; b.textContent = label; } }, 4000); return; }
+    fn();
+  };
+}
+
+// ---------- Bewegung: Elemente mit gleichem data-k gleiten an ihren neuen Platz ----------
+function morph(el, html) {
+  const old = new Map();
+  const anim = !reduce && typeof el.animate === 'function';
+  if (anim) el.querySelectorAll('[data-k]').forEach(n => old.set(n.dataset.k, n.getBoundingClientRect()));
+  el.innerHTML = html;
+  if (!anim) return;
+  if (!old.size) { el.animate([{ opacity: 0.35 }, { opacity: 1 }], { duration: 250 }); return; }
+  el.querySelectorAll('[data-k]').forEach(n => {
+    const o = old.get(n.dataset.k), r = n.getBoundingClientRect();
+    if (o) {
+      const dx = o.left - r.left, dy = o.top - r.top;
+      if (Math.abs(dx) + Math.abs(dy) > 1) n.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 650, easing: 'cubic-bezier(.5,0,.25,1)' });
+    } else n.animate([{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'ease-out' });
+  });
+}
+
+// ---------- Startseite ----------
+function home() {
+  const all = T.stations.concat([T.mix]), c = stats(ALL());
+  const open = T.stations.find(s => firstOpen(s.id) >= 0);
+  const pos = store.get(POS, null);
+  const posS = pos && /^#s(\d+)/.exec(pos), posSt = posS && T.byId(+posS[1]);
+  main.innerHTML = `
+  <section class="card hero">
+    <div>
+      <p class="lbl">Lernpfad</p>
+      <h2>Rechnen mit Brüchen</h2>
+      <p>In neun Stationen wiederholst und übst du das Rechnen mit Brüchen: mit positiven und negativen Brüchen, gemischten Zahlen und Potenzen. Jede Station beginnt mit einer kurzen <b>Erklärung</b> mit Bruchstreifen, Kreisen, Zahlengerade und Beispielen. Danach kommen <b>9 Übungsaufgaben</b> in drei Stufen.</p>
+      <p>Nach jedem Fehlversuch bekommst du einen neuen, genaueren Tipp. Beim ${MAXW}. Fehlversuch wird die richtige Lösung angezeigt. Das wird im Fortschritt vermerkt. Einen Stern pro Stufe gibt es, wenn du alle 3 Aufgaben der Stufe selbst gelöst hast.</p>
+      <p class="btns">${posSt && pos !== '#start' ? `<a class="btn primary" href="${pos}">▶ Weiter, wo du aufgehört hast</a>` : ''}${open ? `<a class="btn${posSt ? '' : ' primary'}" href="#s${open.id}${c.done ? '-ueben' : ''}">${c.done ? `Nächste offene Aufgabe: Station ${open.id}` : 'Los geht’s mit Station 1'} →</a>` : ''}</p>
+      ${posSt && pos !== '#start' ? `<p class="goalinfo">Zuletzt: Station ${posSt.id} · ${posSt.title} (${/-ueben$/.test(pos) ? 'Üben' : 'Verstehen'})</p>` : ''}
+    </div>
+    <div class="herofx" aria-hidden="true">
+      <p class="lbl">Am Ende kannst du das</p>
+      <div class="row">${T.pieH(3, 4)}${T.barH(5, 6, { mark: i => (i < 3 ? 'a' : 'b') })}</div>
+      <p class="eqbig sm"><span class="fr"><span>1</span><span>2</span></span> + <span class="fr"><span>1</span><span>3</span></span> = <span class="fr"><span>5</span><span>6</span></span></p>
+      <p class="eqbig sm"><span class="fr"><span>2</span><span>3</span></span> : <span class="fr"><span>4</span><span>5</span></span> = <span class="fr"><span>2</span><span>3</span></span> · <span class="fr"><span>5</span><span>4</span></span> = <span class="fr"><span>5</span><span>6</span></span></p>
+      <p class="eqbig sm">(<span class="fr"><span>2</span><span>3</span></span>)<sup>2</sup> = <span class="fr"><span>4</span><span>9</span></span></p>
+    </div>
+  </section>
+  <section class="card prog"><div class="ptop2"><h3>Dein Fortschritt: ${progLine(c)}</h3><span class="lbl">${c.done} von ${c.total} Aufgaben</span></div>${stackH(c)}${legendH(c)}</section>
+  <ol class="path">${all.map(s => { const x = s.mix ? null : stats([s.id]); return `
+    <li><a class="stn${!s.mix && x.done === x.total ? ' done' : ''}${s.mix ? ' goal' : ''}" href="#s${s.id}${s.mix ? '-ueben' : ''}">
+      <span class="num" aria-hidden="true">${s.mix ? '∑' : s.id}</span>
+      <span class="st-t"><b>${s.mix ? '' : `<span class="sr">Station ${s.id}: </span>`}${s.title}</b><small>${s.mix ? 'freies Training mit Aufgaben aus allen Stationen (zählt nicht zum Fortschritt)' : s.short}</small></span>
+      <span class="st-ex">${s.mix ? '' : `${PCT(x.done, x.total)} % bearbeitet<br><small>${PCT(x.free, x.total)} % ohne Hilfe</small>`}</span>
+      ${s.mix ? '' : `<span class="st-r">${starsH(s.id)}${stackH(x)}</span>`}
+    </a></li>`; }).join('')}
+  </ol>
+  <section class="card"><h3>Fortschritt sichern und zurücksetzen</h3>
+    <p>Dein Fortschritt wird <b>automatisch in diesem Browser auf diesem Gerät</b> gespeichert, auch wenn du die Datei schließt und später wieder öffnest. Öffne die Datei dafür immer vom selben Ort und im selben Browser. Mit einer Sicherungsdatei kannst du den Stand aufheben oder auf ein anderes Gerät mitnehmen.</p>
+    <div class="btns"><button class="btn" type="button" id="h-exp">💾 Fortschritt als Datei sichern</button><label class="btn">📂 Sicherung laden<input type="file" id="h-imp" accept=".json,application/json" hidden></label><button class="btn danger" type="button" id="h-reset">🗑 Gesamten Fortschritt löschen</button></div>
+    <p class="goalinfo" id="h-msg" aria-live="polite"></p>
+    <p class="goalinfo">Einzelne Stationen setzt du auf ihrer Üben-Seite zurück. Beim Zurücksetzen bekommst du neue Aufgaben mit anderen Zahlen.</p>
+  </section>`;
+  $('#h-exp').onclick = exportData;
+  $('#h-imp').onchange = e => { const f = e.target.files[0]; if (f) importData(f); e.target.value = ''; };
+  twoClick($('#h-reset'), '🗑 Gesamten Fortschritt löschen', 'Wirklich alles löschen? Nochmal klicken.', () => {
+    store.del(KEY); store.del(POS); for (let i = 1; i <= 11; i++) store.del('br-lvl-' + i);
+    data = loadData(); home(); $('#h-msg').textContent = 'Der gesamte Fortschritt wurde gelöscht.';
+  });
+}
+function exportData() {
+  const blob = new Blob([JSON.stringify({ app: 'bruch-lernpfad', saved: new Date().toISOString(), data, pos: store.get(POS, null) }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Bruchrechnen_Fortschritt_' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function importData(file) {
+  const r = new FileReader();
+  r.onload = () => {
+    let j = null; try { j = JSON.parse(r.result); } catch (e) { /* unten */ }
+    const msg = $('#h-msg');
+    if (!j || j.app !== 'bruch-lernpfad' || !j.data || !j.data.st) { msg.textContent = 'Das ist keine gültige Sicherungsdatei des Lernpfads Bruchrechnen.'; return; }
+    const old = false; data = migrate(j.data); save(); if (j.pos) store.set(POS, old ? remapPos(j.pos) : j.pos); home();
+    $('#h-msg').textContent = 'Sicherung vom ' + new Date(j.saved).toLocaleString('de-DE') + ' geladen.';
+  };
+  r.readAsText(file);
+}
+
+// ---------- Station ----------
+function station(id, mode) {
+  const s = T.byId(id);
+  if (s.mix) mode = 'ueben';
+  main.innerHTML = `
+  <nav class="shead" aria-label="Station">
+    <a class="btn" href="#start">← Lernpfad</a>
+    <div class="stitle"><span class="num" aria-hidden="true">${s.mix ? '∑' : id}</span><div><p class="lbl">${s.mix ? 'Zum Schluss' : `Station ${id} von ${T.stations.length}`}</p><h2>${s.title}</h2></div></div>
+    ${s.mix ? '' : `<div class="seg"><a href="#s${id}"${mode !== 'ueben' ? ' aria-current="page"' : ''}>1. Verstehen</a><a href="#s${id}-ueben"${mode === 'ueben' ? ' aria-current="page"' : ''}>2. Üben</a></div>`}
+  </nav>
+  <div id="pane" class="view"></div>`;
+  const pane = $('#pane');
+  if (mode === 'ueben') practice(s, pane); else learn(s, pane);
+}
+
+function learn(s, pane) {
+  const c = stats([s.id]);
+  pane.innerHTML = `
+  <section class="card intro"><h3>Worum geht es?</h3>${s.intro}</section>
+  <section class="card" id="ex">
+    <div class="exhead"><h3>Schritt für Schritt</h3><span class="lbl">Wähle ein Beispiel</span></div>
+    <div class="chips" id="ex-chips"></div>
+    <div class="stagebox" id="ex-stage"></div>
+    <p class="cap" id="ex-cap" aria-live="polite"></p>
+    <div class="player">
+      <div class="chain" id="ex-chain"></div>
+      <div class="btns"><button class="btn" type="button" id="ex-prev">Zurück</button><button class="btn primary" type="button" id="ex-next">Weiter</button></div>
+    </div>
+  </section>
+  <div class="two"><section class="card merke"><h3>Merke</h3>${s.merke}</section><section class="card falle"><h3>Vorsicht, Falle!</h3>${s.falle}</section></div>
+  <section class="card"><h3>Beispiele mit Lösungsweg</h3>
+    <div class="bsp">${s.bsp().map(t => `<div class="wk"><p class="wq">${t.prompt}${t.qText ? ': ' + t.q : ''}</p>${T.lineH(t.lines)}</div>`).join('')}</div>
+  </section>
+  <div class="nextrow"><span class="goalinfo">Übungen dieser Station: ${progLine(c)}</span><a class="btn primary" href="#s${s.id}-ueben">Jetzt üben →</a></div>`;
+  explorer(s);
+}
+
+function explorer(s) {
+  const items = s.examples();
+  let cur = 0, step = 0, steps = [];
+  const chips = $('#ex-chips'), stage = $('#ex-stage'), cap = $('#ex-cap'), chain = $('#ex-chain');
+  const prev = $('#ex-prev'), next = $('#ex-next');
+  chips.innerHTML = items.map((it, i) => `<button type="button" class="chip" data-i="${i}" aria-pressed="${i === 0}">${it.label}</button>`).join('');
+  function draw() {
+    morph(stage, steps[step].h);
+    cap.innerHTML = steps[step].cap;
+    chain.innerHTML = steps.map((x, i) => (i ? '<span class="ar" aria-hidden="true">→</span>' : '')
+      + `<button type="button" class="cv${i < step ? ' past' : ''}" data-s="${i}"${i === step ? ' aria-current="step"' : ''}>${x.lab}</button>`).join('');
+    prev.disabled = step === 0;
+    next.textContent = step === steps.length - 1 ? 'Nochmal' : 'Weiter';
+  }
+  function load(i) {
+    cur = i; steps = s.explore(items[i].x); step = 0; draw();
+    chips.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === i)));
+  }
+  chips.onclick = e => { const b = e.target.closest('[data-i]'); if (b) load(+b.dataset.i); };
+  chain.onclick = e => { const b = e.target.closest('[data-s]'); if (b) { step = +b.dataset.s; draw(); } };
+  prev.onclick = () => { if (step > 0) { step--; draw(); } };
+  next.onclick = () => { step = step === steps.length - 1 ? 0 : step + 1; draw(); };
+  load(0);
+  TLUI.explorer = { steps: () => steps.length, step: () => step, next: () => next.click(), load, count: items.length };
+}
+
+// ---------- Üben ----------
+function helpStages(t) {
+  const base = T.byId(t.st);
+  const st = [base.hint(t), 'Erinnere dich an die Regeln:' + base.merke, 'Achte auf diese typischen Fehler:' + base.falle];
+  st.push(t.lines.length >= 3
+    ? 'So beginnt der Lösungsweg – rechne ab hier selbst weiter:' + T.lineH(t.lines.slice(0, -1))
+    : `Schau dir die <a href="#s${t.st}">Erklärung und die Beispiele mit Lösungsweg</a> dieser Station noch einmal an.`);
+  return st.slice(0, MAXW - 1);
+}
+function practice(s, pane) {
+  const counted = !s.mix;
+  let cur = counted ? Math.max(0, firstOpen(s.id)) : -1;
+  let t, w = 0, status = null, extraLvl = Math.min(3, Math.max(1, +store.get('br-lvl-' + s.id, 1) || 1));
+  pane.innerHTML = `
+  ${counted ? `<div class="card ptop">
+    <div class="slots" id="p-slots" role="group" aria-label="Aufgaben dieser Station"></div>
+    <div class="pstat"><span id="p-stars"></span><span class="score" id="p-score" aria-live="polite"></span></div>
+  </div>` : `<div class="card ptop"><div class="seg" id="p-level" role="group" aria-label="Stufe">${LV.map((n, i) => `<button type="button" data-l="${i + 1}" aria-pressed="${extraLvl === i + 1}">${n}<small>${s.lvl[i]}</small></button>`).join('')}</div><p class="goalinfo">Freies Training: Diese Aufgaben zählen nicht zum Fortschritt.</p></div>`}
+  <form class="card task" id="p-form" autocomplete="off" novalidate>
+    <div class="tq"><p class="lbl" id="p-prompt"></p><span class="tag" id="p-tag" hidden></span><span class="tries" id="p-tries"></span></div>
+    <div class="qline" id="p-q"></div>
+    <div id="p-ans"></div>
+    <div class="actions">
+      <button class="btn primary" type="submit" id="p-check">Prüfen</button>
+      <button class="btn" type="button" id="p-next">Nächste Aufgabe</button>
+      <button class="btn" type="button" id="p-sol" hidden>Lösungsweg</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite" hidden></div>
+    <ul class="hints" id="p-hints"></ul>
+    <div class="solbox" id="p-solbox" hidden></div>
+  </form>
+  <p class="goalinfo">Nach jedem Fehlversuch erscheint ein neuer Tipp. Beim ${MAXW}. Fehlversuch wird die richtige Lösung angezeigt. Eingaben, die ich nicht lesen kann, und fast richtige Ergebnisse (zum Beispiel noch nicht vollständig gekürzt) zählen nicht als Fehlversuch.</p>
+  ${counted ? `<section class="card prog" id="p-prog"></section>` : ''}
+  ${s.mix ? '' : `<div class="nextrow"><a class="btn" href="#s${s.id}">← Zur Erklärung</a>${s.id < T.stations.length
+    ? `<a class="btn primary" href="#s${s.id + 1}">Nächste Station →</a>`
+    : `<a class="btn primary" href="#s${T.mix.id}-ueben">Gemischtes Training →</a>`}</div>`}`;
+  const form = $('#p-form'), fb = $('#p-fb'), solbox = $('#p-solbox'), ans = $('#p-ans'), checkBtn = $('#p-check'), hintsEl = $('#p-hints'), solBtn = $('#p-sol');
+  let inp = null, prevEl = null, stages = [];
+
+  function paintStats() {
+    if (!counted) return;
+    const c = stats([s.id]);
+    $('#p-slots').innerHTML = LV.map((n, l) => `<span class="slv"><span class="lbl">${n}</span>${[0, 1, 2].map(k => { const i = l * PER + k, x = slot(s.id, i);
+      return `<button type="button" class="sl${x.s ? ' ' + x.s : x.w ? ' tried' : ''}${i === cur ? ' cur' : ''}" data-i="${i}" title="${x.s === 'free' ? 'ohne Hilfe gelöst' : x.s === 'hint' ? 'mit Tipps gelöst' : x.s === 'shown' ? 'Lösung angezeigt' : x.w ? x.w + ' Fehlversuch(e)' : 'offen'}">${i + 1}</button>`; }).join('')}</span>`).join('')
+      + `<button type="button" class="sl extra${cur < 0 ? ' cur' : ''}" data-i="-1" title="Extra-Aufgabe, zählt nicht">+</button>`;
+    $('#p-stars').innerHTML = starsH(s.id);
+    $('#p-score').textContent = `${c.done} von ${c.total} bearbeitet`;
+    $('#p-prog').innerHTML = `<div class="ptop2"><h3>Station ${s.id}: ${progLine(c)}</h3><button class="btn danger sm" type="button" id="p-reset">Fortschritt dieser Station löschen</button></div>${stackH(c)}${legendH(c)}`;
+    twoClick($('#p-reset'), 'Fortschritt dieser Station löschen', 'Wirklich löschen? Nochmal klicken.', () => {
+      delete data.st[s.id]; data.off = data.off || {}; data.off[s.id] = (data.off[s.id] || 0) + 1; save();
+      cur = 0; openTask();
+    });
+  }
+  function showFb(cls, html) { fb.className = 'fb' + (cls ? ' ' + cls : ''); fb.innerHTML = html; fb.hidden = false; }
+  function paintHints() { hintsEl.innerHTML = stages.slice(0, Math.min(w, stages.length)).map((h, i) => `<li><b>Tipp ${i + 1}:</b> ${h}</li>`).join(''); }
+  function paintTries() { $('#p-tries').textContent = status || !w ? '' : 'Fehlversuche ' + '●'.repeat(w) + '○'.repeat(MAXW - w); }
+  const right = () => (t.kind === 'mc' ? `„${t.opts.find(o => o.ok).h}“` : t.solH);
+  const showSolution = () => { solbox.innerHTML = `<p class="lbl">Lösungsweg</p>${T.lineH(t.lines)}<p>Lösung: <b>${right()}</b></p>`; solbox.hidden = false; };
+  function keysFor() {
+    const d = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '/', '␣', '−'];
+    return t.kind === 'list' ? d.concat([';', '⌫']) : d.concat(['(', ')', '⌫']);
+  }
+  function lockInput() { if (inp) inp.disabled = true; ans.querySelectorAll('button').forEach(b => { b.disabled = true; }); }
+  function openTask() {
+    const st = cur >= 0 ? slot(s.id, cur) : {};
+    const fo = firstOpen(s.id);
+    t = cur >= 0 ? genSlot(s, cur) : s.gen(counted ? (fo < 0 ? 3 : Math.floor(fo / PER) + 1) : extraLvl);
+    w = st.w || 0; status = st.s || null; stages = helpStages(t);
+    $('#p-prompt').textContent = (cur >= 0 ? `Aufgabe ${cur + 1} von ${SLOTS} · ${LV[Math.floor(cur / PER)]} · ` : counted ? 'Extra-Aufgabe (zählt nicht) · ' : '') + t.prompt;
+    const tag = $('#p-tag'); tag.hidden = !t.tag; tag.textContent = t.tag || '';
+    const q = $('#p-q');
+    q.className = 'qline' + (t.qText ? ' text' : '');
+    q.innerHTML = t.q + (t.after ? `<span class="for">${t.after}</span>` : '');
+    fb.hidden = true; solbox.hidden = true; hintsEl.innerHTML = '';
+    checkBtn.textContent = 'Prüfen'; checkBtn.hidden = false; checkBtn.disabled = false;
+    solBtn.hidden = cur >= 0;
+    if (t.kind === 'mc') {
+      inp = null; prevEl = null; checkBtn.hidden = true;
+      ans.innerHTML = `<div class="opts${t.sym ? ' sym' : ''}" role="group" aria-label="Antworten">${t.opts.map((o, i) => `<button type="button" class="opt" data-i="${i}">${o.h}</button>`).join('')}</div>`;
+    } else {
+      const list = t.kind === 'list';
+      ans.innerHTML = `<div class="ansrow">
+        <input id="p-in" class="tin" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false"
+          aria-label="Deine Antwort" placeholder="${list ? 'zum Beispiel 1/3; 1/2; 3/4' : 'zum Beispiel 3/4 oder 1 1/2'}">
+        <div class="preview" id="p-prev" aria-live="polite"></div>
+        <div class="keypad" role="group" aria-label="Bildschirmtasten">${keysFor().map(k => `<button type="button" class="key${k === '−' ? ' mi' : ''}${k === '/' || k === '␣' ? ' fk' : ''}" data-key="${k}" aria-label="${k === '⌫' ? 'Löschen' : k === '−' ? 'Minus' : k === ';' ? 'Strichpunkt' : k === '/' ? 'Bruchstrich' : k === '␣' ? 'Leerzeichen für gemischte Zahl' : k}">${k === '/' ? 'Bruch /' : k === '␣' ? 'Leer ␣' : k}</button>`).join('')}</div>
+      </div>`;
+      inp = $('#p-in'); prevEl = $('#p-prev');
+      inp.addEventListener('input', onInput);
+    }
+    if (status === 'free' || status === 'hint') {
+      if (inp) { inp.value = nice(t.sol); inp.classList.add('good'); onInput(); }
+      else ans.querySelector(`.opt[data-i="${t.opts.findIndex(o => o.ok)}"]`).classList.add('good');
+      lockInput(); checkBtn.hidden = false; checkBtn.textContent = 'Nächste Aufgabe';
+      showFb('ok', `<p class="head">Schon gelöst – ${status === 'free' ? 'ohne Hilfe' : 'mit Tipps'}.</p><p class="lbl">So geht es</p>${T.lineH(t.lines)}`);
+    } else if (status === 'shown') {
+      if (inp) { inp.value = nice(t.sol); onInput(); }
+      lockInput(); checkBtn.hidden = false; checkBtn.textContent = 'Nächste Aufgabe';
+      showFb('no', `<p class="head">Hier wurde nach ${MAXW} Fehlversuchen die Lösung angezeigt.</p>`); showSolution();
+    } else {
+      if (w) { paintHints(); showFb('', `<p>Du hattest hier schon ${w} Fehlversuch${w > 1 ? 'e' : ''}. Deine Tipps stehen unten. Noch ${MAXW - w} Versuch${MAXW - w > 1 ? 'e' : ''} bis zur Lösung.</p>`); }
+      if (inp) try { inp.focus({ preventScroll: true }); } catch (e) { inp.focus(); }
+    }
+    paintTries(); paintStats();
+  }
+  function onInput() {
+    inp.classList.remove('bad');
+    const v = inp.value.trim();
+    if (!v) { prevEl.innerHTML = ''; return; }
+    const h = t.kind === 'list' ? T.previewList(v) : T.preview(v);
+    prevEl.innerHTML = h ? `So lese ich das: <b>${h}</b>` : 'So lese ich das: …';
+  }
+  function finish(st) {
+    status = st;
+    if (cur >= 0) setSlot(s.id, cur, { s: st, w });
+    lockInput(); checkBtn.hidden = false; checkBtn.disabled = false; checkBtn.textContent = 'Nächste Aufgabe';
+    paintTries(); paintStats();
+    try { checkBtn.focus({ preventScroll: true }); } catch (e) { /* egal */ }
+  }
+  function evaluate(r) {
+    if (r.ok) {
+      const before = cur >= 0 ? starCount(s.id) : 0;
+      finish(w === 0 ? 'free' : 'hint');
+      const star = cur >= 0 && starCount(s.id) > before ? `<p class="star">${starSvg(true)} Neuer Stern für „${LV[Math.floor(cur / PER)]}“!</p>` : '';
+      showFb('ok', `<p class="head">Richtig!${w === 0 ? ' Ohne Hilfe geschafft.' : ''}</p>${star}<p class="lbl">So geht es</p>${T.lineH(t.lines)}`);
+      if (inp) inp.classList.add('good');
+      return;
+    }
+    if (r.syntax || r.near) {
+      showFb('no', `<p class="head">${r.near ? 'Fast!' : 'Das kann ich noch nicht lesen.'}</p><p>${r.msg}</p><p class="lbl">Das zählt nicht als Fehlversuch.</p>`);
+      if (inp) { inp.classList.add('bad'); inp.focus({ preventScroll: true }); }
+      return;
+    }
+    w++;
+    if (w >= MAXW) {
+      finish('shown');
+      showFb('no', `<p class="head">Das war der ${MAXW}. Fehlversuch.</p><p>${r.msg}</p><p>Hier ist die richtige Lösung. Vergleiche sie genau mit deinem Weg.</p>`);
+      if (inp) { inp.value = nice(t.sol); onInput(); }
+      showSolution(); return;
+    }
+    if (cur >= 0) setSlot(s.id, cur, { w });
+    paintHints(); paintTries(); paintStats();
+    showFb('no', `<p class="head">Noch nicht richtig.</p><p>${r.msg}</p>`
+      + (w <= stages.length ? '<p>Unten steht ein neuer Tipp.</p>' : '')
+      + (w === MAXW - 1 ? '<p><b>Beim nächsten Fehlversuch wird die Lösung angezeigt.</b></p>' : ''));
+    if (inp) { inp.classList.add('bad'); inp.focus({ preventScroll: true }); }
+  }
+  function goNext() {
+    if (!counted) { cur = -1; openTask(); return; }
+    const n = firstOpen(s.id);
+    if (cur >= 0 && n >= 0) { let k = cur + 1; while (k < SLOTS && isDone(slot(s.id, k))) k++; cur = k < SLOTS ? k : n; }
+    else cur = n;
+    openTask();
+    if (cur < 0 && firstOpen(s.id) < 0) showFb('ok', '<p class="head">Alle 9 Aufgaben dieser Station sind bearbeitet! 🎉</p><p>Hier kannst du mit Extra-Aufgaben weiterüben – sie zählen nicht zum Fortschritt.</p>');
+  }
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (status) { goNext(); return; }
+    if (!inp) return;
+    const v = inp.value.trim();
+    if (!v) { showFb('', '<p>Gib zuerst eine Antwort ein.</p>'); return; }
+    evaluate(T.check(t, v));
+  });
+  ans.addEventListener('click', e => {
+    const o = e.target.closest('.opt');
+    if (o && !status) {
+      if (o.disabled) return;
+      const r = T.check(t, +o.dataset.i);
+      o.classList.add(r.ok ? 'good' : 'bad');
+      if (!r.ok) o.disabled = true;
+      evaluate(r);
+      return;
+    }
+    const k = e.target.closest('[data-key]');
+    if (!k || !inp || status) return;
+    const key = k.dataset.key, a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+    if (key === '⌫') {
+      if (a !== b) inp.setRangeText('', a, b, 'end');
+      else if (a > 0) inp.setRangeText('', a - 1, a, 'end');
+    } else inp.setRangeText(key === ';' ? '; ' : key === '␣' ? ' ' : key, a, b, 'end');
+    onInput();
+    try { inp.focus({ preventScroll: true }); } catch (err) { inp.focus(); }
+  });
+  solBtn.addEventListener('click', showSolution);
+  $('#p-next').addEventListener('click', goNext);
+  if (counted) $('#p-slots').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; cur = +b.dataset.i; openTask(); });
+  else $('#p-level').addEventListener('click', e => {
+    const b = e.target.closest('[data-l]'); if (!b) return;
+    extraLvl = +b.dataset.l; store.set('br-lvl-' + s.id, extraLvl);
+    $('#p-level').querySelectorAll('[data-l]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    openTask();
+  });
+  if (counted && firstOpen(s.id) < 0) cur = -1;
+  openTask();
+  TLUI.practice = {
+    task: () => t, cur: () => cur, status: () => status, wrong: () => w,
+    open(i) { cur = i; openTask(); },
+    answer(v) { inp.value = v; onInput(); form.requestSubmit(); return { cls: fb.className, text: fb.textContent }; },
+    choose(i) { $(`.opt[data-i="${i}"]`).click(); return { cls: fb.className, text: fb.textContent }; },
+    next: goNext,
+    hints: () => hintsEl.children.length,
+    sol: () => solbox.hidden ? '' : solbox.textContent,
+    preview: () => (prevEl ? prevEl.innerHTML : ''),
+  };
+}
+
+// ---------- Navigation: letzte Stelle merken ----------
+function route() {
+  const m = /^#s(\d+)(-ueben)?$/.exec(location.hash);
+  if (m && T.byId(+m[1])) { station(+m[1], m[2] ? 'ueben' : 'lernen'); store.set(POS, location.hash); }
+  else { home(); if (location.hash === '#start') store.set(POS, '#start'); }
+  window.scrollTo(0, 0);
+}
+TLUI.route = route;
+TLUI.reload = () => { data = loadData(); route(); };
+addEventListener('hashchange', route);
+if (!location.hash) { const p = store.get(POS, null); if (p && /^#s\d+(-ueben)?$/.test(p)) history.replaceState(null, '', p); }
+try { const th = store.get('br-theme', null); if (th) document.documentElement.dataset.theme = th; } catch (e) { /* egal */ }
+route();
+
+$('#theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  store.set('br-theme', root.dataset.theme);
+});
+})();
+</script>
+</body>
+</html>

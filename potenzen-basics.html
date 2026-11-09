@@ -1,0 +1,2539 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lernpfad Potenzrechnung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap">
+<style>
+/* Gleiche Familie wie Terme- und Ganze-Zahlen-Lernpfad: Papier, Tinte, Petrol (Bedienung), Bernstein (Hervorhebung).
+   Bruchstreifen und Kreise in drei Farben (--ca, --cb, --cc); Blau/Himbeere wie bei den ganzen Zahlen für Vorzeichen. */
+:root {
+  --bg: #f4f1ea; --dot: rgba(90, 75, 40, .13); --card: #fffdf9; --card-2: #f6f2e9;
+  --ink: #1e2430; --ink-2: #5b606c; --ink-3: #8c909a; --line: #e6dfd1; --line-2: #cbc1ae;
+  --pri: #0e6b6b; --pri-ink: #ffffff; --pri-soft: #dcefeb;
+  --red: #d1382c; --hop: #ffc02e; --hop-ink: #2e2200; --hop-soft: #fff0c2; --hop-strong: #a86a00;
+  --ok: #1b7a45; --ok-soft: #e0f3e6; --warn: #a3560a; --warn-soft: #fff1de;
+  --pos: #2c5fc0; --pos-soft: #e1e9fb; --neg: #c22f5f; --neg-soft: #fbe3ec;
+  --ca: #5b86d8; --ca-soft: #dbe5f8; --cb: #f0b23a; --cb-soft: #fdecc5; --cc: #8a68d6; --cut: #e9a0a0;
+  --k1: #0e6b6b; --k1s: #dcefeb; --k2: #a86a00; --k2s: #fff0c2; --k3: #6a4bc4; --k3s: #ece6fb;
+  --shadow: 0 1px 2px rgba(40, 32, 15, .05), 0 8px 24px rgba(40, 32, 15, .06);
+  --f: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --ease: cubic-bezier(.5, 0, .25, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161d1c; --dot: rgba(220, 235, 225, .07); --card: #1e2826; --card-2: #25302e;
+    --ink: #edf2ee; --ink-2: #b3c0ba; --ink-3: #82918b; --line: #34433f; --line-2: #4f625c;
+    --pri: #5cc6bc; --pri-ink: #0a1d1b; --pri-soft: #1f3b38; --red: #ff7b6b;
+    --hop: #f2b62c; --hop-ink: #1d1600; --hop-soft: rgba(242, 182, 44, .17); --hop-strong: #ffcb55;
+    --ok: #6fd69a; --ok-soft: #1b3326; --warn: #ffbf6e; --warn-soft: #3a2d18;
+    --pos: #8fb2ff; --pos-soft: rgba(143, 178, 255, .16); --neg: #ff8fb8; --neg-soft: rgba(255, 143, 184, .15);
+    --ca: #6f9bf0; --ca-soft: rgba(111, 155, 240, .22); --cb: #e0a530; --cb-soft: rgba(224, 165, 48, .22); --cc: #a68cf0; --cut: #8a4a4a;
+    --k1: #5cc6bc; --k1s: #1f3b38; --k2: #ffcb55; --k2s: rgba(242, 182, 44, .17); --k3: #b9a4ff; --k3s: rgba(185, 164, 255, .16);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .2);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161d1c; --dot: rgba(220, 235, 225, .07); --card: #1e2826; --card-2: #25302e;
+  --ink: #edf2ee; --ink-2: #b3c0ba; --ink-3: #82918b; --line: #34433f; --line-2: #4f625c;
+  --pri: #5cc6bc; --pri-ink: #0a1d1b; --pri-soft: #1f3b38; --red: #ff7b6b;
+  --hop: #f2b62c; --hop-ink: #1d1600; --hop-soft: rgba(242, 182, 44, .17); --hop-strong: #ffcb55;
+  --ok: #6fd69a; --ok-soft: #1b3326; --warn: #ffbf6e; --warn-soft: #3a2d18;
+  --pos: #8fb2ff; --pos-soft: rgba(143, 178, 255, .16); --neg: #ff8fb8; --neg-soft: rgba(255, 143, 184, .15);
+  --ca: #6f9bf0; --ca-soft: rgba(111, 155, 240, .22); --cb: #e0a530; --cb-soft: rgba(224, 165, 48, .22); --cc: #a68cf0; --cut: #8a4a4a;
+  --k1: #5cc6bc; --k1s: #1f3b38; --k2: #ffcb55; --k2s: rgba(242, 182, 44, .17); --k3: #b9a4ff; --k3s: rgba(185, 164, 255, .16);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .2);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font: 16px/1.5 var(--f);
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -.015em; text-wrap: balance; }
+h1 { font-size: clamp(1.25rem, 3vw, 1.6rem); }
+h2 { font-size: clamp(1.3rem, 3.4vw, 1.75rem); }
+h3 { font-size: 1.12rem; margin-bottom: 10px; }
+p { margin: 0 0 10px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0; padding-left: 1.25em; display: grid; gap: 6px; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--pri); outline-offset: 2px; }
+[hidden] { display: none !important; }
+sup { font-size: .62em; vertical-align: .75em; line-height: 0; margin-left: .03em; font-weight: 700; }
+.fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-size: .86em; line-height: 1.12; margin: 0 .1em; }
+.fr > span { padding: 0 .22em; white-space: nowrap; }
+.fr > span + span { border-top: 2px solid currentColor; }
+.fr .fr { font-size: .9em; }
+.mx { display: inline-block; width: .12em; }
+.fig { display: flex; justify-content: center; }
+.bars { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.bar { display: grid; width: min(300px, 64vw); height: 40px; border: 2.5px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--card); }
+.bar i { border-right: 1.5px solid var(--line-2); transition: background-color .3s; }
+.bar i:last-child { border-right: 0; }
+.bar i.m { border-right: 3px solid var(--ink); }
+.bar i.a { background: var(--ca); } .bar i.b { background: var(--cb); } .bar i.c { background: var(--cc); }
+.bar i.x { background: repeating-linear-gradient(135deg, var(--cut) 0 5px, var(--card) 5px 10px); }
+.barrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.barl { min-width: 2.6em; text-align: right; font-weight: 600; font-size: 1.3rem; }
+.pie { width: 140px; height: 140px; flex: none; }
+.pie path, .pie circle { stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+.pie .a { fill: var(--ca); } .pie .b { fill: var(--cb); } .pie .c { fill: var(--cc); } .pie .e { fill: var(--card); }
+.dots { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 560px; }
+.dg { display: grid; gap: 5px; padding: 8px; border: 2px dashed var(--line-2); border-radius: 10px; transition: border-color .3s; }
+.dg i { width: 14px; height: 14px; border-radius: 50%; background: var(--line-2); }
+.dg.on { border-color: var(--hop-strong); border-style: solid; background: var(--hop-soft); }
+.dg.on i { background: var(--ca); }
+.area { display: grid; width: min(240px, 62vw); aspect-ratio: 1; max-width: 100%; border: 2.5px solid var(--ink); background: var(--card); }
+.area i { border: 1px solid var(--line-2); transition: background-color .3s; }
+.area i.x { background: var(--ca-soft); } .area i.y { background: var(--cb-soft); } .area i.xy { background: var(--cc); } .area i.f { opacity: .5; }
+.anat { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 24px; }
+.anat-r { display: grid; gap: 8px; justify-items: center; }
+.decs { display: grid; gap: 10px; }
+.dec { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.dec .dl { font: 600 1.3rem/1 var(--f); min-width: 2.5ch; text-align: right; }
+.dec .eqs { font-weight: 600; color: var(--ink-3); }
+.dec .row { justify-content: flex-start; }
+.fc.com { background: var(--hop-soft); border-color: var(--hop-strong); }
+.nl g.sq line { stroke: var(--c, var(--ink)); stroke-width: 1.8; }
+.nl g.sq text { font-size: 16px; fill: var(--c, var(--ink)); }
+.nl g.nl-fl text { fill: var(--ink-2); font-weight: 500; }
+.nl g.nl-fl line { stroke: var(--ink-2); }
+.box.s { width: .75em; height: .85em; border-width: 2px; border-radius: 4px; margin: 0 .05em; vertical-align: baseline; }
+sup sup { font-size: .8em; vertical-align: .6em; }
+.sqg { --cell: 18px; display: grid; gap: 3px; }
+.sqg i { width: var(--cell); height: var(--cell); border-radius: 4px; background: var(--ca); }
+.sqg.mini { --cell: 11px; gap: 2px; }
+.sqg.mini i { border-radius: 2px; }
+.cube { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; align-items: flex-end; }
+.lay { display: grid; gap: 6px; justify-items: center; }
+.cube .lay:nth-child(2) .sqg i { background: var(--cb); }
+.cube .lay:nth-child(3) .sqg i { background: var(--cc); }
+.frc { display: inline-grid; gap: 10px; justify-items: center; }
+.frc .fl { display: block; width: 100%; border-top: 3px solid var(--ink); }
+.gb { display: grid; gap: 8px; width: min(560px, 100%); }
+.gb > div { display: grid; grid-template-columns: 4.2em minmax(0, 1fr) 5.5em; align-items: center; gap: 10px; }
+.gbl { text-align: right; font-weight: 600; }
+.gbt { display: block; min-width: 0; }
+.gbt b { display: block; height: 18px; border-radius: 4px; background: var(--ca); transition: width .4s var(--ease); }
+.gbt b.neg { background: var(--neg); }
+.gv { font-weight: 600; font-variant-numeric: tabular-nums; }
+.grp.k2 { --kb: var(--k2); }
+.fc.k2 { --kb: var(--k2); --ks: var(--k2s); }
+
+.k1 { --kb: var(--k1); --ks: var(--k1s); } .k2 { --kb: var(--k2); --ks: var(--k2s); } .k3 { --kb: var(--k3); --ks: var(--k3s); }
+.pos { --kb: var(--pos); --ks: var(--pos-soft); } .neg { --kb: var(--neg); --ks: var(--neg-soft); }
+.nv { color: var(--neg); } .pv { color: var(--pos); }
+.hl { background: var(--hop); color: var(--hop-ink); border-radius: 6px; padding: 0 .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.box { display: inline-block; width: 1.05em; height: 1.1em; border: 2.5px dashed var(--ink-3); border-radius: 7px; vertical-align: -.15em; margin: 0 .15em; }
+
+/* ---------- Kopf ---------- */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-bottom: 18px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo {
+  width: 46px; height: 46px; flex: none; border-radius: 13px; background: var(--pri); color: var(--pri-ink);
+  display: flex; align-items: center; justify-content: center; font: 700 19px/1 var(--f); letter-spacing: -.02em;
+}
+.logo i { font-style: normal; color: var(--hop); }
+
+.seg { display: inline-flex; gap: 3px; padding: 3px; background: var(--card-2); border: 1px solid var(--line); border-radius: 13px; }
+.seg button, .seg a {
+  border: 0; background: transparent; cursor: pointer; font-weight: 600; color: var(--ink-2); text-decoration: none;
+  padding: 7px 16px; min-height: 42px; border-radius: 10px; line-height: 1.15;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.seg button small { font-weight: 400; font-size: .74rem; opacity: .85; }
+.seg button:hover, .seg a:hover { background: var(--pri-soft); color: var(--ink); }
+.seg button[aria-pressed="true"], .seg a[aria-current="page"] { background: var(--pri); color: var(--pri-ink); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+  min-height: 44px; padding: 8px 16px; border-radius: 12px; cursor: pointer;
+  border: 1.5px solid var(--line-2); background: var(--card); color: var(--ink); font-weight: 600;
+}
+.btn:hover { border-color: var(--pri); }
+.btn.primary { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn:disabled { opacity: .4; cursor: default; filter: none; border-color: var(--line-2); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn.icon { padding: 8px 11px; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 20px 22px; min-width: 0; }
+.view { display: grid; gap: 16px; }
+.view > * { min-width: 0; }
+.lbl { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 0; }
+
+/* ---------- Lernpfad (Startseite) ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px 28px; align-items: center; }
+.hero p { max-width: 62ch; color: var(--ink-2); }
+.hero h2 { margin: 4px 0 10px; }
+.herofx { display: grid; gap: 8px; justify-items: center; padding: 14px; border-radius: 14px; background: var(--card-2); border: 1px dashed var(--line-2); min-width: 0; overflow: hidden; }
+.herofx .eqbig { font-size: 1.3rem; margin: 0; }
+.herofx .lbl { justify-self: start; }
+.herofx .nl { min-width: 0; }
+.path { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; }
+.path::before { content: ""; position: absolute; left: 33px; top: 26px; bottom: 26px; border-left: 3px dashed var(--line-2); }
+.stn {
+  position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; align-items: center; gap: 6px 16px;
+  padding: 12px 16px 12px 12px; text-decoration: none; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+  transition: border-color .2s, transform .2s;
+}
+.stn:hover { border-color: var(--pri); transform: translateX(3px); }
+.num {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.1rem;
+  background: var(--card); border: 3px solid var(--pri); color: var(--pri); position: relative; z-index: 1; flex: none;
+}
+.stn.done .num { background: var(--pri); color: var(--pri-ink); }
+.stn.goal .num { border-color: var(--hop-strong); color: var(--hop-strong); }
+.st-t { display: grid; min-width: 0; }
+.st-t b { font-size: 1.05rem; }
+.st-t small { color: var(--ink-2); font-size: .86rem; }
+.st-ex { font-weight: 600; color: var(--ink-2); white-space: nowrap; font-size: .98rem; }
+.st-ex small { font-weight: 500; }
+.stars { display: inline-flex; gap: 2px; }
+.stars svg { width: 20px; height: 20px; }
+.stars .on { fill: var(--hop); stroke: var(--hop-strong); }
+.stars .off { fill: none; stroke: var(--line-2); }
+
+/* ---------- Station ---------- */
+.shead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; }
+.stitle { display: flex; align-items: center; gap: 12px; margin-right: auto; min-width: 0; }
+.intro p, .intro li { max-width: 68ch; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.merke { background: var(--pri-soft); border-color: var(--pri); }
+.falle { background: var(--warn-soft); border-color: var(--warn); }
+.merke h3 { color: var(--pri); }
+.falle h3 { color: var(--warn); }
+.nextrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }
+.figwrap { overflow-x: auto; margin: 6px 0 12px; padding: 8px 0; }
+.figwrap .nl { margin-top: -54px; }
+
+.dictwrap { overflow-x: auto; margin: 4px 0 10px; }
+.dict { border-collapse: collapse; width: 100%; min-width: 440px; font-size: .95rem; }
+.dict th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: 6px 10px; border-bottom: 2px solid var(--line); }
+.dict td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.dict td.z { font-weight: 700; font-size: 1.25rem; color: var(--pri); text-align: center; }
+.dict td:last-child { white-space: nowrap; font-weight: 600; }
+
+/* Vorzeichen-Regeln */
+.vz { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 460px; width: 100%; margin: 6px 0 10px; }
+.vz > span { padding: 8px 10px; border-radius: 10px; background: var(--card); border: 1.5px solid var(--line); font-weight: 600; text-align: center; white-space: nowrap; font-size: 1.05rem; }
+.vz > span.p { border-color: var(--pos); } .vz > span.n { border-color: var(--neg); }
+.vz > span.on { background: var(--hop-soft); border-color: var(--hop-strong); }
+.vz b { font-size: 1.15em; }
+.ladder { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0 12px; }
+.ladder span { padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line-2); font-weight: 600; }
+.ladder i { font-style: normal; color: var(--ink-3); font-weight: 700; }
+
+/* ---------- Zahlengerade (SVG) ---------- */
+.nl { display: block; width: 100%; min-width: 480px; max-width: 760px; height: auto; margin: 0 auto; }
+.nl text { font: 600 18px var(--f); fill: var(--ink); }
+.nl text.nl-l { fill: var(--ink-2); font-weight: 500; font-size: 17px; }
+.nl text.nl-l.n { fill: var(--neg); }
+.nl text.nl-l.z { fill: var(--ink); font-weight: 700; }
+.nl-ax { stroke: var(--ink); stroke-width: 2.5; }
+.nl-ah { fill: var(--ink); }
+.nl-t { stroke: var(--ink-2); stroke-width: 1.6; }
+.nl-t.z { stroke: var(--ink); stroke-width: 3; }
+.nl-nz { fill: var(--neg-soft); } .nl-pz { fill: var(--pos-soft); }
+.nl .pos { --c: var(--pos); } .nl .neg { --c: var(--neg); } .nl .hop { --c: var(--hop-strong); } .nl .ink { --c: var(--ink); }
+.nl-j { fill: none; stroke: var(--c, var(--ink)); stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 1; }
+.nl-jh { fill: var(--c, var(--ink)); }
+.nl text.nl-jl { fill: var(--c, var(--ink)); font-size: 17px; }
+.nl-sp { fill: none; stroke: var(--c, var(--ink-2)); stroke-width: 2.4; }
+.nl text.nl-sl { fill: var(--c, var(--ink-2)); font-size: 17px; }
+.nl-p circle { fill: var(--c, var(--hop)); stroke: var(--card); stroke-width: 3; }
+.nl text.nl-pl { fill: var(--c, var(--ink)); font-size: 20px; font-weight: 700; }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pop { from { opacity: 0; } to { opacity: 1; } }
+.nl-j.new { animation: draw .6s var(--ease); }
+.nl .new-h { animation: pop .25s .5s backwards; }
+
+/* ---------- Erklär-Bühne ---------- */
+.exhead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.chip {
+  border: 1.5px solid var(--line-2); background: var(--card); border-radius: 999px; cursor: pointer;
+  padding: 4px 13px; min-height: 38px; color: var(--ink); font-weight: 500;
+}
+.chip:hover { border-color: var(--pri); }
+.chip[aria-pressed="true"] { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
+.stagebox {
+  margin-top: 16px; min-height: 240px; padding: 18px 10px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line);
+  display: grid; align-content: center; justify-items: center; gap: 14px; overflow-x: auto; overflow-y: hidden;
+}
+.stagebox > * { max-width: 100%; }
+.stagebox > .nl { max-width: 760px; }
+.cap { margin: 14px 0 0; min-height: 3em; font-size: 1.02rem; max-width: 72ch; }
+.cap b { background: var(--hop); color: var(--hop-ink); padding: 0 6px; border-radius: 6px; }
+.player { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; margin-top: 14px; }
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; min-width: 0; }
+.cv {
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink-3); cursor: pointer;
+  border-radius: 10px; padding: 3px 10px; min-height: 36px; font-weight: 600; white-space: nowrap; font-size: .9rem;
+}
+.cv.past { color: var(--ink-2); }
+.cv[aria-current="step"] { color: var(--ink); border-color: var(--pri); background: var(--pri-soft); }
+.ar { color: var(--ink-3); font-weight: 600; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.eqbig { font: 600 clamp(1.45rem, 4.6vw, 2.05rem)/1.35 var(--f); text-align: center; margin: 0; }
+.eqbig.sm { font-size: clamp(1.2rem, 3.8vw, 1.6rem); }
+.eqbig.dim { color: var(--ink-3); }
+.run { margin: 0; font-weight: 600; font-size: clamp(1.05rem, 3.2vw, 1.3rem); text-align: center; color: var(--ink-2); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+.op { font-weight: 700; color: var(--ink-3); font-size: 1.2rem; }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 680px; }
+.duo > div { display: grid; gap: 8px; justify-items: center; padding: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+
+.phrase { font-size: clamp(1.05rem, 3.2vw, 1.3rem); line-height: 2; text-align: center; margin: 0; max-width: 46ch; }
+.phrase .sg { border-radius: 6px; padding: 2px 3px; transition: background-color .3s, box-shadow .3s; }
+.phrase .sg.on { background: var(--ks); box-shadow: inset 0 -3px 0 var(--kb); }
+
+/* Kärtchen und Gruppen */
+.fc {
+  display: inline-block; vertical-align: middle; text-align: center; min-width: 44px; height: 44px; padding: 0 10px; border-radius: 10px; position: relative;
+  border: 2px solid var(--kb, var(--line-2)); background: var(--ks, var(--card)); font: 600 1.25rem/40px var(--f); white-space: nowrap;
+}
+.fc:has(.fr) { height: auto; min-height: 44px; line-height: 1.2; padding-block: 4px; }
+.fc.big { height: 54px; line-height: 50px; padding: 0 14px; font-size: 1.45rem; }
+.fc::after {
+  content: ""; position: absolute; left: -6%; right: -6%; top: 50%; height: 3px; border-radius: 2px; background: var(--red);
+  transform: rotate(-35deg) scaleX(0); transition: transform .45s var(--ease);
+}
+.fc.cut { opacity: .55; }
+.fc.cut::after { transform: rotate(-35deg) scaleX(1); }
+.grp { display: inline-grid; justify-items: center; gap: 8px; padding: 10px; border: 2px dashed var(--kb, var(--line-2)); border-radius: 14px; }
+.gl { font-size: .88rem; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.pair { display: inline-grid; justify-items: center; gap: 6px; padding: 8px; border: 2px dashed var(--pos); border-radius: 14px; }
+.pair .gl { color: var(--pos); }
+
+/* Plättchen */
+.pls { display: grid; gap: 10px; justify-items: start; }
+.plrow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.plrow .gl { min-width: 4.2em; text-align: right; margin-right: 6px; font-size: 1rem; }
+.pl {
+  width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; position: relative;
+  font: 700 1.2rem/1 var(--f); color: var(--card); background: var(--kb);
+}
+.pl.cut { opacity: .4; }
+.pl.cut::after { content: ""; position: absolute; left: -5px; right: -5px; top: 50%; height: 3px; margin-top: -1.5px; background: var(--ink); border-radius: 2px; transform: rotate(-35deg); }
+
+/* Muster-Tabelle */
+.mt { border-collapse: collapse; font-weight: 600; font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+.mt td { padding: 4px 10px; text-align: right; }
+.mt td.d { color: var(--ink-3); font-size: .85rem; font-weight: 500; text-align: left; }
+.mt tr.new td { background: var(--hop-soft); }
+.mt tr.new td:first-child { border-radius: 8px 0 0 8px; }
+.mt tr.new td:last-child { border-radius: 0 8px 8px 0; }
+
+/* Schrittweise rechnen */
+.calc { display: grid; gap: 6px; justify-items: start; }
+.calc .ln { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font: 600 clamp(1.25rem, 4vw, 1.7rem)/1.3 var(--f); color: var(--ink-3); }
+.calc .ln.now { color: var(--ink); }
+.calc .lc { font-size: .8rem; font-weight: 500; color: var(--ink-3); }
+
+/* Lösungswege */
+.lines { display: grid; gap: 8px; }
+.ln { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+.lm { font-weight: 600; font-size: 1.22rem; }
+.lc { font-size: .85rem; color: var(--ink-2); }
+.lines .nl { max-width: 560px; margin: 0; }
+.lines .ln:has(.nl) { display: block; overflow-x: auto; }
+.bsp { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.wk { padding: 14px 16px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.wq { margin: 0; font-size: .85rem; color: var(--ink-2); font-weight: 500; }
+.wk .lines { overflow-x: auto; }
+
+/* ---------- Üben ---------- */
+.ptop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+.pstat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.score { font-weight: 600; color: var(--ink-2); display: flex; align-items: baseline; gap: 6px; }
+.task { display: grid; gap: 16px; }
+.tq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.tag { font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--pri-soft); color: var(--pri); }
+.qline { font: 600 clamp(1.5rem, 5vw, 2.1rem)/1.3 var(--f); margin: 0; overflow-x: auto; }
+.qline.text { font-size: clamp(1.1rem, 3.4vw, 1.35rem); font-weight: 500; max-width: 60ch; }
+.qline .for { display: block; font-size: .6em; color: var(--ink-2); font-weight: 500; margin-top: 6px; }
+.qline.text .for { font-size: .82em; }
+.qline .nl { margin: 0; max-width: 640px; }
+.ansrow { display: grid; gap: 10px; }
+.tin {
+  font: 600 1.6rem/1.1 var(--f); height: 58px; padding: 0 14px; width: 100%; max-width: 520px;
+  border: 2px solid var(--pri); border-radius: 13px; background: var(--card); color: var(--ink);
+}
+.tin:focus { outline: none; box-shadow: 0 0 0 4px var(--pri-soft); }
+.tin.bad { border-color: var(--warn); background: var(--warn-soft); }
+.tin.good { border-color: var(--ok); background: var(--ok-soft); }
+.preview { min-height: 1.6em; color: var(--ink-2); font-size: 1rem; }
+.preview b { color: var(--ink); font-size: 1.15rem; }
+.keypad { display: flex; flex-wrap: wrap; gap: 6px; max-width: 620px; }
+.key {
+  min-width: 46px; min-height: 44px; padding: 0 10px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1.15rem;
+  border: 1.5px solid var(--line-2); background: var(--card-2); color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.key:hover { border-color: var(--pri); }
+.key.fk { color: var(--pri); font-size: 1rem; }
+.key.mi { color: var(--neg); border-color: var(--neg); font-size: 1.35rem; }
+.opts { display: grid; gap: 8px; }
+.opts.sym { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); max-width: 420px; }
+.opt {
+  text-align: left; padding: 12px 16px; min-height: 52px; border-radius: 12px; cursor: pointer; font-size: 1.05rem; font-weight: 500;
+  border: 1.5px solid var(--line-2); background: var(--card); color: var(--ink);
+}
+.opts.sym .opt { text-align: center; font-size: 1.8rem; font-weight: 700; min-height: 64px; }
+.opt:hover { border-color: var(--pri); }
+.opt.good { border-color: var(--ok); background: var(--ok-soft); }
+.opt.bad { border-color: var(--warn); background: var(--warn-soft); }
+.opt:disabled { cursor: default; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.fb { padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line); display: grid; gap: 8px; background: var(--card-2); }
+.fb.ok { background: var(--ok-soft); border-color: var(--ok); }
+.fb.no { background: var(--warn-soft); border-color: var(--warn); }
+.fb .head { font-weight: 700; font-size: 1.1rem; margin: 0; }
+.fb .star { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.fb .star svg { width: 22px; height: 22px; fill: var(--hop); stroke: var(--hop-strong); }
+.fb .lines { overflow-x: auto; }
+.solbox { padding: 14px 18px; border-radius: 14px; border: 1px dashed var(--line-2); display: grid; gap: 10px; overflow-x: auto; }
+.goalinfo { color: var(--ink-3); font-size: .88rem; margin: 0; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.foot { margin-top: 26px; color: var(--ink-3); font-size: .85rem; text-align: center; }
+
+/* ---------- Fortschritt ---------- */
+.stack { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--line); min-width: 70px; }
+.stack b { display: block; height: 100%; transition: width .4s var(--ease); }
+.stack .f, .legend .f { background: var(--ok); } .stack .h, .legend .h { background: var(--hop); } .stack .s, .legend .s { background: var(--red); }
+.legend .o { background: var(--line); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .9rem; color: var(--ink-2); }
+.legend span { white-space: nowrap; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.prog { display: grid; gap: 10px; }
+.prog h3 { margin: 0; }
+.ptop2 { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.st-r { display: grid; gap: 6px; justify-items: end; min-width: 80px; }
+.st-r .stack { width: 100%; height: 8px; }
+.btn.danger { border-color: var(--red); color: var(--red); }
+.btn.sm { min-height: 36px; padding: 4px 12px; font-size: .9rem; }
+.slots { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-end; }
+.slv { display: inline-flex; align-items: center; gap: 5px; }
+.slv .lbl { margin-right: 3px; }
+.sl {
+  min-width: 40px; min-height: 40px; border-radius: 10px; cursor: pointer; font-weight: 700;
+  border: 2px solid var(--line-2); background: var(--card); color: var(--ink-2);
+}
+.sl:hover { border-color: var(--pri); }
+.sl.tried { border-style: dashed; border-color: var(--warn); }
+.sl.free { background: var(--ok); border-color: var(--ok); color: var(--card); }
+.sl.hint { background: var(--hop); border-color: var(--hop-strong); color: var(--hop-ink); }
+.sl.shown { background: var(--red); border-color: var(--red); color: var(--card); }
+.sl.cur { outline: 3px solid var(--pri); outline-offset: 2px; }
+.sl.extra { color: var(--pri); border-style: dashed; }
+.tries { margin-left: auto; font-size: .85rem; color: var(--ink-3); letter-spacing: 1px; white-space: nowrap; }
+.hints { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hints:empty { display: none; }
+.hints > li { background: var(--hop-soft); border-radius: 12px; padding: 10px 14px 10px 40px; position: relative; overflow-x: auto; }
+.hints > li::before { content: "💡"; position: absolute; left: 12px; top: 9px; }
+.hints > li ul, .hints > li ol { margin-top: 6px; }
+.hints > li .lines { margin-top: 8px; padding: 10px 12px; background: var(--card); border-radius: 10px; overflow-x: auto; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .two { grid-template-columns: 1fr; }
+  .stn { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .st-ex { grid-column: 2 / -1; grid-row: 2; font-size: .9rem; }
+  .st-r { grid-column: 3; grid-row: 1 / span 2; }
+}
+@media (max-width: 640px) {
+  .wrap { padding-top: 14px; }
+  .card { padding: 16px; border-radius: 16px; }
+  .shead .seg { width: 100%; }
+  .shead .seg a { flex: 1; }
+  .player { flex-direction: column; align-items: stretch; }
+  .btns .btn { flex: 1; }
+  .ptop .seg { width: 100%; }
+  .ptop .seg button { flex: 1; padding-inline: 6px; }
+  .tin { font-size: 1.35rem; height: 52px; }
+  .key { min-width: 42px; }
+  .actions .btn { flex: 1 1 40%; }
+  .fb { padding: 12px; }
+  .lm { font-size: 1.1rem; }
+  .fc { min-width: 38px; height: 40px; line-height: 36px; font-size: 1.1rem; padding: 0 8px; }
+  .duo { grid-template-columns: 1fr; }
+  .pl { width: 28px; height: 28px; font-size: 1rem; }
+  .nl { min-width: 0; }
+  .nl text { font-size: 27px; }
+  .nl text.nl-l, .nl text.nl-jl, .nl text.nl-sl { font-size: 25px; }
+  .nl text.nl-pl { font-size: 30px; }
+  .stagebox { padding-inline: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stn, .fc::after, .phrase .sg { transition: none; }
+  .nl-j.new, .nl .new-h { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#start" aria-label="Zum Lernpfad">
+      <span class="logo" aria-hidden="true">a<i>ⁿ</i></span>
+      <h1>Lernpfad Potenzrechnung</h1>
+    </a>
+    <button class="btn icon" id="theme" type="button" title="Hell / Dunkel" aria-label="Hell oder dunkel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </header>
+  <main id="main" class="view"></main>
+  <p class="foot">Zehn Stationen, jede mit kurzer Erklärung und Übungen. Dein Fortschritt wird automatisch in diesem Browser gespeichert.</p>
+</div>
+
+<!-- =====================================================================
+     RECHENKERN (ohne DOM): Brüche, Parser für Schülereingaben, Zahlengerade
+     als SVG, Prüfung mit Fehlerdiagnose, Stationen mit Erklär-Schritten
+     und Aufgaben-Generatoren. Test: TL.runTests()
+     ===================================================================== -->
+<script id="kern">
+(function (global) {
+'use strict';
+
+// ---------- Zufall (für Tests mit Startwert) ----------
+let rnd = Math.random;
+function seed(s) {
+  rnd = () => { s = (s + 0x6D2B79F5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+const ri = (a, b) => a + Math.floor(rnd() * (b - a + 1));
+const pick = a => a[Math.floor(rnd() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sgn = () => (rnd() < 0.5 ? -1 : 1);
+const abs = Math.abs;
+function err(msg) { const e = new Error(msg); e.user = true; return e; }
+
+// ---------- Brüche [Zähler, Nenner], immer gekürzt, Nenner positiv ----------
+function gcd(a, b) { a = abs(a); b = abs(b); while (b) [a, b] = [b, a % b]; return a; }
+const lcm = (a, b) => a / gcd(a, b) * b;
+function Q(n, d = 1) {
+  if (d === 0) throw err('Durch 0 kann man nicht teilen.');
+  if (!Number.isSafeInteger(n) || !Number.isSafeInteger(d)) throw err('Diese Zahl ist zu groß zum Ausrechnen. Lass das Ergebnis als Potenz stehen.');
+  if (d < 0) { n = -n; d = -d; }
+  const g = gcd(n, d) || 1;
+  return [n / g + 0, d / g];
+}
+const qadd = (a, b) => Q(a[0] * b[1] + b[0] * a[1], a[1] * b[1]);
+const qneg = a => [-a[0] + 0, a[1]];
+const qsub = (a, b) => qadd(a, qneg(b));
+const qmul = (a, b) => Q(a[0] * b[0], a[1] * b[1]);
+const qdiv = (a, b) => Q(a[0] * b[1], a[1] * b[0]);
+const qinv = a => Q(a[1], a[0]);
+const qeq = (a, b) => a[0] === b[0] && a[1] === b[1];
+const qzero = a => a[0] === 0;
+const qpow = (a, e) => { let r = [1, 1]; for (let i = 0; i < e; i++) r = qmul(r, a); return r; };
+const qcmp = (a, b) => a[0] * b[1] - b[0] * a[1];
+const isInt = q => q[1] === 1;
+// echter Bruch mit teilerfremdem Zähler und Nenner
+const sfrac = (dmin, dmax, pn = 0.4, proper = true) => qmul(frac(dmin, dmax, proper), [rnd() < pn ? -1 : 1, 1]);
+const sg = () => (rnd() < 0.4 ? -1 : 1);
+const sq = (q, s) => (s < 0 ? qneg(q) : q);
+function frac(dmin, dmax, proper = true) { for (;;) { const d = ri(dmin, dmax), n = ri(1, proper ? d - 1 : 2 * d); if (gcd(n, d) === 1 && n !== d) return Q(n, d); } }
+
+// ---------- HTML ----------
+const MI = '−';
+const grp = n => (n >= 10000 ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f') : String(n));
+const nH = n => (n < 0 ? MI + grp(-n) : grp(n));
+const F = (n, d) => `<span class="fr"><span>${n}</span><span>${d}</span></span>`;
+const sF = (n, d) => (n < 0 ? MI : '') + F(abs(n), d);                    // ungekürzt, mit Vorzeichen
+const qH = q => (q[1] === 1 ? nH(q[0]) : sF(q[0], q[1]));
+const qP = q => (q[0] < 0 ? `(${qH(q)})` : qH(q));
+const mixRaw = (w, n, d) => `${w}<span class="mx"></span>${F(n, d)}`;
+function mixH(q) {
+  if (q[1] === 1 || abs(q[0]) < q[1]) return qH(q);
+  const w = Math.trunc(abs(q[0]) / q[1]), r = abs(q[0]) % q[1];
+  return (q[0] < 0 ? MI : '') + mixRaw(w, r, q[1]);
+}
+const qmH = q => qH(q) + (q[1] !== 1 && abs(q[0]) > q[1] ? ` = ${mixH(q)}` : '');   // 7/4 = 1 3/4
+const qS = q => (q[1] === 1 ? String(q[0]) : `${q[0]}/${q[1]}`);
+const qSP = q => (q[0] < 0 ? `(${qS(q)})` : qS(q));
+function mixS(q) {
+  if (q[1] === 1 || abs(q[0]) < q[1]) return qS(q);
+  return `${q[0] < 0 ? '-' : ''}${Math.trunc(abs(q[0]) / q[1])} ${abs(q[0]) % q[1]}/${q[1]}`;
+}
+const supH = e => `<sup>${typeof e === 'number' && e < 0 ? MI + -e : e}</sup>`;
+const ul = items => `<ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`;
+const ol = items => `<ol>${items.map(x => `<li>${x}</li>`).join('')}</ol>`;
+const eqbig = (h, cls = '') => `<p class="eqbig ${cls}">${h}</p>`;
+const chipRow = (items, op = '·') => `<div class="row">${items.join(`<span class="op">${op}</span>`)}</div>`;
+const LT = '&lt;', GT = '&gt;';
+const relH = r => (r === '<' ? LT : r === '>' ? GT : '=');
+const BOX = '<span class="box"></span>';
+const hl = h => `<span class="hl">${h}</span>`;
+
+// ---------- Parser für Eingaben: / ist der Bruchstrich, : heißt geteilt ----------
+const SUPS = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+function tokenize(s) {
+  s = String(s).replace(/[−–—]/g, '-').replace(/[·⋅×∙*]/g, '*').replace(/÷/g, ':')
+    .replace(/[[{]/g, '(').replace(/[\]}]/g, ')')
+    .replace(/(\d)[ \u00a0\u202f](?=\d{3}(?!\d)(?!\s*\/))/g, '$1');
+  const t = []; let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (/\s/.test(ch)) { i++; continue; }
+    if (/[0-9]/.test(ch)) {
+      const m = /^(\d+)\s+(\d+)\s*\/\s*(\d+)/.exec(s.slice(i));
+      if (m && !(t.length && t[t.length - 1].t === 'fr')) {
+        if (+m[3] === 0) throw err('Der Nenner darf nicht 0 sein.');
+        t.push({ t: 'mixed', w: +m[1], n: +m[2], d: +m[3] }); i += m[0].length; continue;
+      }
+    }
+    if (/[0-9.,]/.test(ch)) {
+      let j = i; while (j < s.length && /[0-9.,]/.test(s[j])) j++;
+      let raw = s.slice(i, j);
+      if (/^[1-9]\d{0,2}(\.\d{3})+$/.test(raw)) raw = raw.replace(/\./g, '');
+      const str = raw.replace(',', '.');
+      if (!/^\d+(\.\d+)?$/.test(str)) throw err(`„${s.slice(i, j)}“ ist keine gültige Zahl.`);
+      const [ip, fp = ''] = str.split('.');
+      t.push({ t: 'num', q: Q(+(ip + fp), 10 ** fp.length), dec: !!fp });
+      i = j; continue;
+    }
+    if (SUPS.includes(ch) || ch === '⁻') {
+      let j = i, e = '', neg = false;
+      if (ch === '⁻') { neg = true; j++; }
+      while (j < s.length && SUPS.includes(s[j])) { e += SUPS.indexOf(s[j]); j++; }
+      if (!e) throw err('Nach dem hochgestellten Minus fehlt die Hochzahl.');
+      t.push({ t: 'sup', e: neg ? -e : +e }); i = j; continue;
+    }
+    if (ch === '/') { t.push({ t: 'fr' }); i++; continue; }
+    if (ch === ':') { t.push({ t: '/' }); i++; continue; }
+    if ('+-*()^'.includes(ch)) { t.push({ t: ch }); i++; continue; }
+    if (/[a-zäöüß]/i.test(ch)) throw err('Hier brauchst du keine Buchstaben, nur Zahlen, Bruchstriche und Rechenzeichen.');
+    if (ch === '=') throw err('Schreib nur das Ergebnis, ohne „=“.');
+    if (ch === '°' || ch === '€' || ch === '%') throw err('Gib nur die Zahl ein, ohne Einheit.');
+    throw err(`Das Zeichen „${ch}“ kenne ich nicht.`);
+  }
+  return t;
+}
+const opName = t => ({ '*': '·', '/': ':', fr: '/' }[t] || t);
+function parse(src) {
+  const toks = tokenize(src);
+  if (!toks.length) throw err('Gib zuerst etwas ein.');
+  let p = 0;
+  const peek = () => toks[p];
+  const more = () => { if (!peek()) throw err('Nach dem Rechenzeichen fehlt noch etwas.'); };
+  function expr() {
+    const terms = [{ s: 1, a: term() }];
+    while (peek() && (peek().t === '+' || peek().t === '-')) {
+      const s = toks[p++].t === '-' ? -1 : 1; more();
+      terms.push({ s, a: term() });
+    }
+    return terms.length === 1 ? terms[0].a : { t: 'add', terms };
+  }
+  function term() {
+    const f = [{ op: '*', a: unary() }];
+    for (;;) {
+      const k = peek(); if (!k) break;
+      if (k.t === '*' || k.t === '/') { p++; more(); f.push({ op: k.t, a: unary() }); continue; }
+      if (k.t === '(') { f.push({ op: '*', a: unary() }); continue; }
+      if (k.t === 'num' || k.t === 'mixed') throw err(toks[p - 1].t === ')' ? 'Zwischen „)“ und der Zahl fehlt ein Rechenzeichen.' : 'Zwischen zwei Zahlen fehlt ein Rechenzeichen. Eine gemischte Zahl schreibst du so: 2 1/3.');
+      break;
+    }
+    return f.length === 1 ? f[0].a : { t: 'mul', f };
+  }
+  function unary() {
+    const k = peek();
+    if (k && k.t === '-') { p++; more(); return { t: 'neg', a: unary() }; }
+    if (k && k.t === '+') { p++; more(); return { t: 'pos', a: unary() }; }
+    return fracE();
+  }
+  function fracE() {
+    let a = power();
+    while (peek() && peek().t === 'fr') {
+      p++;
+      if (!peek()) throw err('Unter dem Bruchstrich fehlt noch der Nenner.');
+      a = { t: 'frac', n: a, d: power() };
+    }
+    return a;
+  }
+  function power() {
+    let b = atom();
+    for (;;) {
+      const k = peek();
+      if (k && k.t === 'sup') { p++; b = { t: 'pow', b, e: k.e }; continue; }
+      if (k && k.t === '^') {
+        p++;
+        let par = false, sg1 = 1;
+        if (toks[p] && toks[p].t === '(') { par = true; p++; }
+        if (toks[p] && (toks[p].t === '-' || toks[p].t === '+')) { if (toks[p].t === '-') sg1 = -1; p++; }
+        const e = toks[p++];
+        if (!e || e.t !== 'num' || e.q[1] !== 1) throw err('Nach ^ muss eine ganze Zahl kommen, zum Beispiel 2^5 oder 10^-3.');
+        if (par) { if (!toks[p] || toks[p].t !== ')') throw err('Die Klammer nach ^ ist nicht geschlossen.'); p++; }
+        if (e.q[0] > 400) throw err('Diese Hochzahl ist zu groß.');
+        b = { t: 'pow', b, e: sg1 * e.q[0] }; continue;
+      }
+      break;
+    }
+    return b;
+  }
+  function atom() {
+    const k = toks[p++];
+    if (!k) throw err('Am Ende fehlt noch etwas.');
+    if (k.t === 'num') return { t: 'num', q: k.q, dec: k.dec };
+    if (k.t === 'mixed') return { t: 'mixed', w: k.w, n: k.n, d: k.d };
+    if (k.t === '(') {
+      if (peek() && peek().t === ')') throw err('Die Klammer ist leer.');
+      if (!peek()) throw err('Eine Klammer ist nicht geschlossen.');
+      const e = expr();
+      const c = toks[p++];
+      if (!c || c.t !== ')') throw err('Eine Klammer ist nicht geschlossen.');
+      return { ...e, p: true };
+    }
+    if (k.t === ')') throw err('Da ist eine Klammer „)“ zu viel.');
+    if (k.t === 'fr') throw err('Vor dem Bruchstrich fehlt der Zähler.');
+    if (k.t === 'sup' || k.t === '^') throw err('Vor der Hochzahl fehlt die Grundzahl.');
+    throw err(`An dieser Stelle passt „${opName(k.t)}“ nicht.`);
+  }
+  const ast = expr();
+  if (p < toks.length) throw err(toks[p].t === ')' ? 'Da ist eine Klammer „)“ zu viel.' : 'Da ist ein Zeichen zu viel.');
+  return ast;
+}
+function val(a) {
+  switch (a.t) {
+    case 'num': return a.q;
+    case 'mixed': return Q(a.w * a.d + a.n, a.d);
+    case 'neg': return qneg(val(a.a));
+    case 'pos': return val(a.a);
+    case 'frac': { const d = val(a.d); if (qzero(d)) throw err('Der Nenner darf nicht 0 sein.'); return qdiv(val(a.n), d); }
+    case 'add': return a.terms.reduce((s, x) => qadd(s, x.s < 0 ? qneg(val(x.a)) : val(x.a)), [0, 1]);
+    case 'mul': return a.f.reduce((s, x) => {
+      const v = val(x.a);
+      if (x.op === '/') { if (qzero(v)) throw err('Durch 0 kann man nicht teilen.'); return qdiv(s, v); }
+      return qmul(s, v);
+    }, [1, 1]);
+    case 'pow': { const b = val(a.b); if (a.e < 0) { if (qzero(b)) throw err('Durch 0 kann man nicht teilen.'); return qinv(qpow(b, -a.e)); } return qpow(b, a.e); }
+  }
+  throw new Error('unbekannter Knoten');
+}
+// einfache Zahl? (ganze Zahl, Bruch a/b, gemischte Zahl, Dezimalzahl – jeweils mit Vorzeichen)
+function lit(a) {
+  let neg = false;
+  while (a.t === 'neg' || a.t === 'pos') { if (a.t === 'neg') neg = !neg; a = a.a; }
+  if (a.t === 'num') return a.dec || a.q[1] !== 1 ? { neg, kind: 'dec' } : { neg, kind: 'int', n: a.q[0], d: 1 };
+  if (a.t === 'mixed') return { neg, kind: 'mixed', w: a.w, n: a.n, d: a.d };
+  if (a.t === 'frac') {
+    let n = a.n, s = neg;
+    if (n.t === 'neg' && n.a.t === 'num') { s = !s; n = n.a; }
+    const d = a.d;
+    if (n.t === 'num' && d.t === 'num' && !n.dec && !d.dec && n.q[1] === 1 && d.q[1] === 1) return { neg: s, kind: 'frac', n: n.q[0], d: d.q[0] };
+  }
+  return null;
+}
+
+// ---------- Formatierung eines Syntaxbaums ----------
+function fmt(a, pos = 'top') {
+  let h, need = false;
+  const outer = pos !== 'top' && pos !== 'first';
+  switch (a.t) {
+    case 'num':
+      h = qH([abs(a.q[0]), a.q[1]]);
+      if (a.q[0] < 0) { h = MI + h; if (outer) need = true; }
+      if (a.q[1] !== 1 && pos === 'base') need = true;
+      break;
+    case 'mixed': h = mixRaw(a.w, a.n, a.d); if (pos === 'base') need = true; break;
+    case 'frac': h = F(fmt(a.n, 'top'), fmt(a.d, 'top')); if (pos === 'base') need = true; break;
+    case 'neg': h = MI + fmt(a.a, 'un'); if (outer) need = true; break;
+    case 'pos': h = '+' + fmt(a.a, 'un'); if (outer) need = true; break;
+    case 'pow': h = fmt(a.b, 'base') + supH(a.e); if (pos === 'base') need = true; break;
+    case 'mul':
+      h = a.f.map((f, i) => (i === 0 ? '' : f.op === '/' ? ' : ' : ' · ') + fmt(f.a, f.op === '/' ? 'div' : 'factor')).join('');
+      if (pos === 'base' || pos === 'un' || pos === 'div') need = true;
+      break;
+    case 'add':
+      h = a.terms.map((x, i) => (i === 0 ? '' : x.s < 0 ? ' − ' : ' + ') + fmt(x.a, i === 0 ? 'first' : 'term')).join('');
+      if (outer && pos !== 'term') need = true;
+      break;
+  }
+  if (a.p && pos !== 'top') need = true;
+  if (need) h = `(${h})`;
+  if (a.hl) h = `<span class="hl">${h}</span>`;
+  return h;
+}
+const srcH = src => fmt(parse(src));
+function preview(src) { try { return fmt(parse(src)); } catch (e) { if (e.user) return null; throw e; } }
+const splitList = s => String(s).split(/[;<]+/).map(x => x.trim()).filter(Boolean);
+function previewList(s) {
+  const it = splitList(s); if (!it.length) return null;
+  try { return it.map(x => fmt(parse(x))).join(' ; '); } catch (e) { if (e.user) return null; throw e; }
+}
+
+// ---------- Schrittweise rechnen (Klammer, Hoch, Punkt, Strich) ----------
+function mapKids(a, f) {
+  switch (a.t) {
+    case 'neg': case 'pos': return { ...a, a: f(a.a) };
+    case 'pow': return { ...a, b: f(a.b) };
+    case 'mul': return { ...a, f: a.f.map(x => ({ ...x, a: f(x.a) })) };
+    case 'add': return { ...a, terms: a.terms.map(x => ({ ...x, a: f(x.a) })) };
+    default: return a;
+  }
+}
+const unmark = a => JSON.parse(JSON.stringify(a, (k, v) => (k === 'hl' ? undefined : v)));
+const numN = q => ({ t: 'num', q, hl: true });
+function stKl(a, root) { return a.p && (a.t === 'add' || a.t === 'mul') && !root ? numN(val(a)) : mapKids(a, x => stKl(x, false)); }
+function stPow(a) { return a.t === 'pow' ? numN(val(a)) : mapKids(a, stPow); }
+function stPunkt(a) {
+  const b = mapKids(a, stPunkt);
+  if (b.t === 'mul') return numN(val(b));
+  if ((b.t === 'neg' || b.t === 'pos') && b.a.t === 'num' && b.a.hl) return numN(val(b));
+  return b;
+}
+function evalSteps(src) {
+  const a0 = parse(src);
+  const steps = [{ lab: 'Aufgabe', h: fmt(a0), cap: 'Schau dir die Aufgabe an: Gibt es Klammern? Potenzen? Mal und geteilt?' }];
+  let a = a0;
+  const stages = [
+    ['Klammer', x => stKl(x, true), 'Zuerst rechnest du die Klammer aus.'],
+    ['Hoch', stPow, 'Dann die Potenzen. Achte bei negativen Grundzahlen auf gerade und ungerade Hochzahlen.'],
+    ['Punkt', stPunkt, 'Punkt vor Strich: Jetzt wird mal und geteilt gerechnet.'],
+    ['Strich', x => numN(val(x)), 'Zum Schluss plus und minus.'],
+  ];
+  for (const [lab, f, cap] of stages) {
+    const b = f(unmark(a));
+    if (fmt(unmark(b)) !== fmt(unmark(a))) { steps.push({ lab, h: fmt(b), cap }); a = b; }
+  }
+  const value = val(a0);
+  steps[steps.length - 1].cap += ` Das Ergebnis ist <b>${qH(value)}</b>.`;
+  return { steps, value };
+}
+
+// ---------- Bilder: Bruchstreifen, Kreis, Punkte, Rechteck, Zahlengerade ----------
+// n Teile von d (n > d ergibt mehrere Streifen); o.cls Farbe, o.group dicke Linie nach je group Teilen, o.mark(i) eigene Farbe
+function barH(n, d, o = {}) {
+  const bars = Math.max(1, Math.ceil(n / d)), g = o.group || 1;
+  let h = '<div class="bars">';
+  for (let k = 0; k < bars; k++) {
+    h += `<div class="bar" style="grid-template-columns:repeat(${d},minmax(0,1fr))">`;
+    for (let i = 0; i < d; i++) {
+      const idx = k * d + i, on = idx < n, c = on ? (o.mark ? o.mark(idx) : '') || o.cls || 'a' : '';
+      h += `<i class="${c}${(i + 1) % g === 0 && i < d - 1 ? ' m' : ''}"></i>`;
+    }
+    h += '</div>';
+  }
+  h += '</div>';
+  return o.lab !== undefined ? `<div class="barrow"><span class="barl">${o.lab}</span>${h}</div>` : h;
+}
+function pieH(n, d, o = {}) {
+  const r = 62, c = 70, P = a => [c + r * Math.cos(a), c + r * Math.sin(a)].map(x => x.toFixed(2)).join(' ');
+  let s = `<svg class="pie" viewBox="0 0 140 140" role="img" aria-label="Kreis mit ${d} Teilen, ${n} gefärbt">`;
+  if (d === 1) s += `<circle cx="${c}" cy="${c}" r="${r}" class="${n ? o.cls || 'a' : 'e'}"/>`;
+  else for (let i = 0; i < d; i++) {
+    const a0 = -Math.PI / 2 + 2 * Math.PI * i / d, a1 = -Math.PI / 2 + 2 * Math.PI * (i + 1) / d;
+    const cls = i < n ? (o.mark ? o.mark(i) : '') || o.cls || 'a' : 'e';
+    s += `<path class="${cls}" d="M${c} ${c} L${P(a0)} A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${P(a1)} Z"/>`;
+  }
+  return s + '</svg>';
+}
+function dotsH(total, groups, take) {
+  const per = total / groups;
+  return `<div class="dots">${Array.from({ length: groups }, (_, g) => `<div class="dg${g < take ? ' on' : ''}" style="grid-template-columns:repeat(${Math.min(per, 6)},14px)">${'<i></i>'.repeat(per)}</div>`).join('')}</div>`;
+}
+// a/b von c/d als Rechteck: c von d Spalten, a von b Zeilen; step 0 leer, 1 Spalten, 2 beide, 3 nur Überlappung
+function areaH(a, b, c, d, step) {
+  let h = `<div class="area" style="grid-template-columns:repeat(${d},1fr);grid-template-rows:repeat(${b},1fr)">`;
+  for (let r = 0; r < b; r++) for (let k = 0; k < d; k++) {
+    const x = step >= 1 && k < c, y = step >= 2 && r < a;
+    h += `<i class="${step === 3 ? (x && y ? 'xy' : 'f') : (x ? 'x' : '') + (y ? ' y' : '')}${x && y ? ' xy' : ''}"></i>`;
+  }
+  return h + '</div>';
+}
+function svgQ(x, y, q, cls = '') {
+  if (q[1] === 1) return `<text class="${cls}" x="${x.toFixed(1)}" y="${y + 6}" text-anchor="middle">${nH(q[0])}</text>`;
+  const n = abs(q[0]), w = Math.max(String(n).length, String(q[1]).length) * 10 + 6;
+  return `<g class="sq ${cls}">${q[0] < 0 ? `<text x="${(x - w / 2 - 8).toFixed(1)}" y="${y + 6}" text-anchor="middle">−</text>` : ''}<text x="${x.toFixed(1)}" y="${y - 3}" text-anchor="middle">${n}</text>`
+    + `<line x1="${(x - w / 2).toFixed(1)}" y1="${y + 2}" x2="${(x + w / 2).toFixed(1)}" y2="${y + 2}"/><text x="${x.toFixed(1)}" y="${y + 20}" text-anchor="middle">${q[1]}</text></g>`;
+}
+// Zahlengerade mit Brüchen: o = { lo, hi, den, frl (Bruch an jedem Strich), pts:[{q, lab:true|'?', cls}] }
+function nlF(o) {
+  const lo = o.lo, hi = o.hi, den = o.den || 1, W = 720, H = 200, ay = 104, L = 40, R = W - 40;
+  const X = v => L + (v - lo) * (R - L) / (hi - lo);
+  let s = `<svg class="nl" viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.aria || 'Zahlengerade'}">`;
+  if (lo < 0) s += `<rect class="nl-nz" x="${L - 18}" y="${ay - 6}" width="${(X(Math.min(0, hi)) - L + 18).toFixed(1)}" height="12" rx="3"/>`;
+  s += `<line class="nl-ax" x1="${L - 22}" y1="${ay}" x2="${R + 20}" y2="${ay}"/><path class="nl-ah" d="M${R + 32} ${ay} l-13 -7 v14z"/>`;
+  for (let k = lo * den; k <= hi * den; k++) {
+    const x = X(k / den).toFixed(1), whole = k % den === 0;
+    s += `<line class="nl-t${whole ? ' z' : ''}" x1="${x}" y1="${ay - (whole ? 12 : 7)}" x2="${x}" y2="${ay + (whole ? 12 : 7)}"/>`;
+    if (whole) s += `<text class="nl-l z${k < 0 ? ' n' : ''}" x="${x}" y="${ay + 36}" text-anchor="middle">${nH(k / den)}</text>`;
+    else if (o.frl) s += svgQ(+x, ay + 34, [k, den], 'nl-fl');
+  }
+  for (const pt of o.pts || []) {
+    const x = X(pt.q[0] / pt.q[1]), y0 = ay - (pt.high ? 74 : 40);
+    s += `<g class="nl-p ${pt.cls || 'hop'}"><circle cx="${x.toFixed(1)}" cy="${ay}" r="8.5"/>`
+      + (pt.lab === '?' ? `<text class="nl-pl" x="${x.toFixed(1)}" y="${y0 + 6}" text-anchor="middle">?</text>` : pt.lab ? svgQ(x, y0, pt.q, 'nl-pl') : '') + '</g>';
+  }
+  return s + '</svg>';
+}
+const K3 = ['', 'k1', 'k2', 'k3'];
+function phraseH(parts, on) {
+  return `<p class="phrase">${parts.map(([t, id]) => `<span class="sg${id && on.includes(id) ? ' on ' + K3[id] : ''}">${t}</span>`).join('')}</p>`;
+}
+
+// ---------- Prüfen ----------
+function formIssue(task, L, v) {
+  if (!L) return 'Der Wert stimmt, aber rechne noch ganz aus. Gib das Ergebnis als eine einzige Zahl oder einen einzigen Bruch an.';
+  if (task.form === 'dec') return L.kind === 'dec' || L.kind === 'int' ? null : 'Der Wert stimmt. Schreib das Ergebnis aber als Dezimalzahl, zum Beispiel 0,004.';
+  if (L.kind === 'dec') return 'Der Wert stimmt. Gib das Ergebnis aber als Bruch an, nicht als Dezimalzahl.';
+  if (task.form === 'exact') {
+    const [wn, wd] = task.want;
+    if (L.kind === 'frac' && L.n === abs(wn) && L.d === wd && L.neg === (wn < 0)) return null;
+    return task.exactMsg;
+  }
+  if (task.form === 'free') return null;
+  if (L.kind === 'mixed' && L.n >= L.d) return 'Bei einer gemischten Zahl muss der Bruchteil kleiner als 1 sein.';
+  if ((L.kind === 'frac' || L.kind === 'mixed') && gcd(L.n, L.d) > 1) { const g = gcd(L.n, L.d); return `Fast! Kürze noch vollständig: ${L.n} und ${L.d} sind beide durch ${g} teilbar.`; }
+  if (L.kind === 'frac' && L.d === 1) return `Ein Bruch mit dem Nenner 1 ist eine ganze Zahl. Schreib einfach ${nH(v[0])}.`;
+  if (task.form === 'mixed' && v[1] !== 1 && abs(v[0]) > v[1] && L.kind !== 'mixed') return 'Schreib das Ergebnis als gemischte Zahl, zum Beispiel 2 1/3.';
+  if (task.form === 'improper' && L.kind === 'mixed') return 'Schreib das Ergebnis als unechten Bruch, zum Beispiel 7/3.';
+  return null;
+}
+function check(task, input) {
+  if (task.kind === 'mc') {
+    const o = task.opts[input];
+    return o.ok ? { ok: true } : { ok: false, msg: o.msg || 'Das passt nicht.' };
+  }
+  if (task.kind === 'list') {
+    const it = splitList(input);
+    if (!it.length) return { ok: false, syntax: true, msg: 'Gib zuerst die Brüche ein.' };
+    let got;
+    try { got = it.map(x => val(parse(x))); }
+    catch (e) { if (!e.user) throw e; return { ok: false, syntax: true, msg: e.message + ' Trenne die Brüche mit Strichpunkt, zum Beispiel 1/2; 3/4.' }; }
+    const want = task.vals;
+    if (got.length !== want.length) return { ok: false, syntax: true, msg: `Es sind ${want.length} Zahlen. Du hast ${got.length} eingegeben. Trenne sie mit Strichpunkt.` };
+    const srt = [...got].sort(qcmp);
+    if (!srt.every((x, i) => qeq(x, want[i]))) return { ok: false, msg: 'Da stimmt eine Zahl nicht mit der Aufgabe überein. Schreib alle Brüche genau ab.' };
+    if (got.every((x, i) => qeq(x, want[i]))) return { ok: true };
+    if (got.every((x, i) => qeq(x, want[want.length - 1 - i]))) return { ok: false, msg: 'Du hast von groß nach klein geordnet. Gefragt ist von klein nach groß.' };
+    return { ok: false, msg: 'Die Reihenfolge stimmt noch nicht. Mach die Brüche gleichnamig und vergleiche die Zähler.' };
+  }
+  if (task.form === 'pow') return checkPow(task, input);
+  let ast, c;
+  try { ast = parse(input); c = val(ast); }
+  catch (e) { if (!e.user) throw e; return { ok: false, syntax: true, msg: e.message }; }
+  if (qeq(c, task.val)) {
+    const issue = formIssue(task, lit(ast), c);
+    return issue ? { ok: false, near: true, msg: issue } : { ok: true };
+  }
+  for (const t of task.traps || []) if (qeq(c, t.val)) return { ok: false, msg: t.msg };
+  if (!qzero(task.val) && qeq(c, qneg(task.val))) return { ok: false, msg: task.signMsg || 'Der Betrag stimmt, aber das Vorzeichen nicht.' };
+  return { ok: false, msg: task.wrongMsg || 'Das stimmt noch nicht. Rechne Schritt für Schritt.' };
+}
+
+// ---------- Bausteine ----------
+function numTask(o) {
+  const v = Array.isArray(o.val) ? o.val : Q(o.val);
+  const t = Object.assign({ kind: 'number', after: '', lines: [], form: 'any' }, o);
+  t.val = v;
+  if (t.form === 'exact') { t.sol = `${t.want[0]}/${t.want[1]}`; t.solH = sF(t.want[0], t.want[1]); }
+  else if (t.form === 'dec') { t.sol = decStr(v); t.solH = decH(v); }
+  else if (t.form === 'mixed') { t.sol = mixS(v); t.solH = mixH(v); }
+  else { t.sol = qS(v); t.solH = t.form === 'improper' ? qH(v) : qmH(v); }
+  t.traps = (o.traps || []).filter(x => x && x[0] !== null && x[0] !== undefined && (Array.isArray(x[0]) || Number.isSafeInteger(x[0]))).map(([x, msg]) => [Array.isArray(x) ? x : Q(x), msg]).filter(([x]) => !qeq(x, v)).map(([x, msg]) => ({ val: x, msg }));
+  return t;
+}
+const safeQ = (n, d) => (d === 0 ? null : Q(n, d));
+function lineH(lines) {
+  return `<div class="lines">${lines.map((l, i) => `<div class="ln"><span class="lm">${i && !l.noeq ? '= ' : ''}${l.m}</span>${l.c ? `<span class="lc">${l.c}</span>` : ''}</div>`).join('')}</div>`;
+}
+const exT = list => list.map(t => ({ label: t.label || t.q, x: t }));
+const resLines = v => [{ m: qmH(v) }];
+function cmpTask(st, A, B, ah, bh, why) {
+  const c = qcmp(A, B), rel = c < 0 ? '<' : c > 0 ? '>' : '=';
+  return {
+    st, kind: 'mc', sym: true, prompt: 'Setze das richtige Zeichen ein: <, > oder =', q: `${ah}${BOX}${bh}`,
+    opts: ['<', '>', '='].map(r => ({ h: relH(r), ok: r === rel, msg: why })), sol: rel, solH: relH(rel),
+    lines: [{ m: `${ah} ${relH(rel)} ${bh}`, noeq: true }, { m: why, noeq: true }], data: {},
+  };
+}
+const SIGNT = `<div class="vz"><span class="p">(+) · (+) = <b>+</b></span><span class="n">(+) · (−) = <b>−</b></span><span class="n">(−) · (+) = <b>−</b></span><span class="p">(−) · (−) = <b>+</b></span></div>`;
+const UNITS = [['€', 'Euro'], ['kg', 'kg'], ['m', 'm'], ['min', 'Minuten'], ['l', 'Liter']];
+
+// =====================================================================
+// POTENZEN: Bausteine, BigInt-Werte für große Potenzen, Prüfung „als Potenz“
+// =====================================================================
+const sum = l => l.reduce((s, x) => s + x, 0);
+const bS = q => (q[1] === 1 && q[0] >= 0 ? String(q[0]) : `(${qS(q)})`);
+const bH = q => (q[1] === 1 && q[0] >= 0 ? nH(q[0]) : `(${qH(q)})`);
+const pH = (q, e) => bH(q) + supH(e);
+const pS = (q, e) => `${bS(q)}^${e}`;
+const fH = (q, e) => (e === 1 ? bH(q) : pH(q, e));          // Faktor: a¹ wird als a geschrieben
+const BOXS = '<span class="box s"></span>';
+const boxPow = q => bH(q) + `<sup>${BOXS}</sup>`;
+const prodH = (q, n) => Array(n).fill(bH(q)).join(' · ');
+const supSum = (q, parts, op) => bH(q) + `<sup>${parts.join(` ${op} `)}</sup>`;
+const tq = f => { try { return f(); } catch (e) { if (e.user) return null; throw e; } };
+const iq = n => (Number.isInteger(n) ? n : null);
+
+// BigInt-Brüche: damit auch 3^40 oder 2^60 exakt verglichen werden können
+const bg = (a, b) => { a = a < 0n ? -a : a; b = b < 0n ? -b : b; while (b) [a, b] = [b, a % b]; return a; };
+function BQ(n, d = 1n) { if (d === 0n) throw err('Durch 0 kann man nicht teilen.'); if (d < 0n) { n = -n; d = -d; } const g = bg(n, d) || 1n; return [n / g, d / g]; }
+const bEq = (a, b) => a[0] === b[0] && a[1] === b[1];
+const bpow = (q, e) => (e < 0 ? BQ(BigInt(q[1]) ** BigInt(-e), BigInt(q[0]) ** BigInt(-e)) : BQ(BigInt(q[0]) ** BigInt(e), BigInt(q[1]) ** BigInt(e)));
+function bval(a) {
+  switch (a.t) {
+    case 'num': return BQ(BigInt(a.q[0]), BigInt(a.q[1]));
+    case 'mixed': return BQ(BigInt(a.w * a.d + a.n), BigInt(a.d));
+    case 'neg': { const v = bval(a.a); return [-v[0], v[1]]; }
+    case 'pos': return bval(a.a);
+    case 'frac': { const n = bval(a.n), d = bval(a.d); if (d[0] === 0n) throw err('Der Nenner darf nicht 0 sein.'); return BQ(n[0] * d[1], n[1] * d[0]); }
+    case 'add': return a.terms.reduce((s, x) => { const v = bval(x.a), w = x.s < 0 ? [-v[0], v[1]] : v; return BQ(s[0] * w[1] + w[0] * s[1], s[1] * w[1]); }, [0n, 1n]);
+    case 'mul': return a.f.reduce((s, x) => { const v = bval(x.a); if (x.op === '/') { if (v[0] === 0n) throw err('Durch 0 kann man nicht teilen.'); return BQ(s[0] * v[1], s[1] * v[0]); } return BQ(s[0] * v[0], s[1] * v[1]); }, [1n, 1n]);
+    case 'pow': { const b = bval(a.b); if (a.e < 0) { if (b[0] === 0n) throw err('Durch 0 kann man nicht teilen.'); return BQ(b[1] ** BigInt(-a.e), b[0] ** BigInt(-a.e)); } return BQ(b[0] ** BigInt(a.e), b[1] ** BigInt(a.e)); }
+  }
+  throw new Error('unbekannter Knoten');
+}
+// Ist die Eingabe eine einzelne Potenz (oder eine einzelne Zahl = Hochzahl 1)?
+function asPow(a) {
+  let neg = false;
+  if (a.t === 'neg' && a.a.t === 'pow') { neg = true; a = a.a; }
+  try {
+    if (a.t === 'pow') return { b: val(a.b), e: a.e, neg };
+    const L = lit(a); if (L && L.kind !== 'dec') return { b: val(a), e: 1, neg: false };
+  } catch (e) { if (!e.user) throw e; }
+  return null;
+}
+function powTask(o) {
+  const t = Object.assign({ kind: 'number', form: 'pow', after: 'Schreib das Ergebnis als eine Potenz, zum Beispiel 3^5.', lines: [] }, o);
+  const W = o.want;
+  t.sol = W.e === 1 ? bS(W.b) : pS(W.b, W.e); t.solH = W.e === 1 ? bH(W.b) : pH(W.b, W.e);
+  t.wv = bpow(W.b, W.e);
+  t.ptraps = (o.ptraps || []).filter(x => x && x[0] && x[1] !== null && Number.isInteger(x[1]))
+    .map(([b, e, msg]) => ({ b, e, v: bpow(b, e), msg })).filter(x => !bEq(x.v, t.wv));
+  return t;
+}
+function checkPow(task, input) {
+  const W = task.want;
+  let ast, sv;
+  try { ast = parse(input); sv = bval(ast); }
+  catch (e) { if (!e.user) throw e; return { ok: false, syntax: true, msg: e.message }; }
+  const P = asPow(ast), same = bEq(sv, task.wv);
+  if (same && P && !P.neg && P.e === W.e && abs(P.b[0]) === abs(W.b[0]) && P.b[1] === W.b[1]) return { ok: true };
+  if (same) {
+    if (P && P.neg && qeq(qneg(P.b), W.b)) return { ok: false, near: true, msg: `Richtig gerechnet. Schreib die negative Grundzahl aber in Klammern: ${task.solH}.` };
+    if (P && P.e === 1 && !(W.e === 1)) return { ok: false, near: true, msg: `Der Wert stimmt. Gefragt ist aber eine Potenz mit der Grundzahl ${bH(W.b)}. Lass das Ergebnis als Potenz stehen.` };
+    return { ok: false, near: true, msg: `Der Wert stimmt. Fasse aber alles zu einer einzigen Potenz mit der Grundzahl ${bH(W.b)} zusammen.` };
+  }
+  for (const t of task.ptraps) if (bEq(sv, t.v)) return { ok: false, msg: t.msg };
+  if (bEq(sv, [-task.wv[0], task.wv[1]])) return { ok: false, msg: task.signMsg || 'Der Betrag stimmt, aber das Vorzeichen nicht. Zähle die Minuszeichen.' };
+  if (P && abs(P.b[0]) === abs(W.b[0]) && P.b[1] === W.b[1]) return { ok: false, msg: task.expMsg || 'Die Grundzahl stimmt, aber die Hochzahl nicht.' };
+  return { ok: false, msg: task.wrongMsg || `Das stimmt noch nicht. Schreib die Potenzen als Produkte aus und zähle die Faktoren ${bH(W.b)}.` };
+}
+// Rechnung Schritt für Schritt (Klammer, Hoch, Punkt, Strich)
+function stepTask(st, src, traps, o = {}) {
+  const { steps, value } = evalSteps(src);
+  return numTask(Object.assign({ st, prompt: 'Berechne', q: srcH(src), val: value, traps, data: { src },
+    signMsg: 'Der Betrag stimmt, aber das Vorzeichen nicht. Prüfe jeden Schritt: gerade Hochzahl → plus, ungerade → minus.',
+    lines: steps.map((s, i) => ({ m: s.h, c: i ? s.lab : '' })) }, o));
+}
+// ---------- Bilder ----------
+const sqH = (n, cls = '') => `<div class="sqg ${cls}" style="grid-template-columns:repeat(${n},var(--cell))">${'<i></i>'.repeat(n * n)}</div>`;
+const cubeH = (n, mini) => `<div class="cube">${Array.from({ length: n }, (_, k) => `<div class="lay">${sqH(n, mini ? 'mini' : '')}${mini ? '' : `<span class="gl">${k + 1}. Schicht</span>`}</div>`).join('')}</div>`;
+function gbH(rows) {
+  const mx = Math.max(...rows.map(r => r.v));
+  return `<div class="gb">${rows.map(r => `<div><span class="gbl">${r.lab}</span><span class="gbt"><b class="${r.cls || ''}" style="width:${Math.max(1.5, 100 * r.v / mx).toFixed(1)}%"></b></span><span class="gv">${r.txt}</span></div>`).join('')}</div>`;
+}
+const chip = (h, k, cls = '') => `<span class="fc ${cls}"${k ? ` data-k="${k}"` : ''}>${h}</span>`;
+const chips = (q, n, pre, from = 0, cls = '') => Array.from({ length: n }, (_, i) => chip(bH(q), `${pre}${from + i}`, (q[0] < 0 ? 'neg ' : '') + cls)).join('<span class="op">·</span>');
+const frcH = (top, bot) => `<div class="frc"><div class="row">${top}</div><i class="fl"></i><div class="row">${bot}</div></div>`;
+const grpH = (lab, inner, cls = '') => `<div class="grp ${cls}"><span class="gl">${lab}</span><div class="row">${inner}</div></div>`;
+const tableH = rows => `<table class="mt">${rows.map(r => `<tr${r.nw ? ' class="new"' : ''}><td>${r.a}</td><td>=</td><td>${r.b}</td><td class="d">${r.d || ''}</td></tr>`).join('')}</table>`;
+const big = n => nH(n);
+
+// =====================================================================
+// Station 1: Potenzen verstehen
+// =====================================================================
+function val1(b, e) {
+  const q = Q(b), v = b ** e, lines = [{ m: pH(q, e) }];
+  if (e >= 2) lines.push({ m: prodH(q, e), c: `${e} gleiche Faktoren` });
+  lines.push({ m: big(v), c: e === 0 ? (b === 0 ? '' : 'jede Zahl außer 0 hoch 0 ist 1') : e === 1 ? 'hoch 1: die Zahl selbst' : '' });
+  return numTask({ st: 1, prompt: 'Berechne', q: pH(q, e), val: v, data: { b, e },
+    traps: [[e >= 2 ? b * e : null, `Hoch ${e} heißt nicht mal ${e}, sondern ${e}-mal die ${b} als Faktor.`], [e >= 2 && b >= 2 && b <= 12 ? iq(e ** b) : null, 'Grundzahl und Hochzahl vertauscht? Unten steht die Zahl, die malgenommen wird. Oben steht, wie oft.'],
+      [e >= 2 ? b ** (e - 1) : null, `Zähle die Faktoren: Es sind ${e} Faktoren, also nur ${e - 1} Malzeichen.`], [e >= 2 ? b ** (e + 1) : null, `Zähle die Faktoren: Es sind genau ${e} Faktoren.`],
+      [e === 0 ? 0 : null, 'Jede Zahl (außer 0) hoch 0 ist 1, nicht 0.'], [e === 0 ? b : null, 'Hoch 0 ist nicht die Zahl selbst. Jede Zahl (außer 0) hoch 0 ist 1.'], [e === 1 ? 1 : null, 'Hoch 1 heißt: Die Zahl kommt einmal vor. Das Ergebnis ist die Zahl selbst.']],
+    wrongMsg: `Schreib die Potenz als Produkt mit ${e} Faktoren ${b} und rechne Schritt für Schritt.`, lines });
+}
+function asPow1(q, e) {
+  return powTask({ st: 1, prompt: 'Schreib als Potenz', q: prodH(q, e), want: { b: q, e }, after: 'Gib die Potenz ein, zum Beispiel 3^5.', data: {},
+    ptraps: [[q[1] === 1 && q[0] > 0 && q[0] <= 12 ? Q(e) : null, q[0], 'Grundzahl und Hochzahl vertauscht: Unten steht die Zahl, die malgenommen wird, oben die Anzahl der Faktoren.'], [q, e - 1, 'Zähle die Faktoren noch einmal.'], [q, e + 1, 'Zähle die Faktoren noch einmal.'], [q[1] === 1 ? Q(q[0] * e) : null, 1, `Das wäre ${bH(q)} mal ${e}. Gesucht ist ${e}-mal ${bH(q)} als Faktor.`]],
+    lines: [{ m: prodH(q, e), c: `${e} gleiche Faktoren ${bH(q)}` }, { m: pH(q, e) }] });
+}
+function findExp1(b, e) {
+  const v = b ** e;
+  return numTask({ st: 1, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${boxPow(Q(b))} = ${big(v)}`, val: e, data: {},
+    traps: [[e >= 1 ? iq(v / b) : null, `Gesucht ist die Hochzahl: Wie oft kommt die ${b} als Faktor vor?`], [e + 1, 'Zähle die Faktoren noch einmal.'], [e - 1, e === 1 ? `${b} hoch 0 ist 1, nicht ${b}.` : 'Zähle die Faktoren noch einmal.'], [e === 0 ? 1 : null, `${b}${supH(1)} ist ${b}, nicht 1. Jede Zahl hoch 0 ist 1.`]],
+    wrongMsg: `Nimm die ${b} so oft mal, bis ${big(v)} herauskommt. Zähle dabei die Faktoren.`,
+    lines: e === 0 ? [{ m: `${pH(Q(b), 0)} = 1`, noeq: true, c: 'jede Zahl außer 0 hoch 0 ist 1' }, { m: 'Die Hochzahl ist 0.', noeq: true }]
+      : b === 10 ? [{ m: `${big(v)} hat ${e} Nullen.`, noeq: true }, { m: `${pH(Q(10), e)} = ${big(v)}`, noeq: true, c: '10 hoch n ist eine 1 mit n Nullen' }]
+        : [{ m: `${prodH(Q(b), e)} = ${big(v)}`, noeq: true, c: `${e} Faktoren` }, { m: `${pH(Q(b), e)} = ${big(v)}`, noeq: true }] });
+}
+function findBase1(b, e) {
+  const v = b ** e;
+  return numTask({ st: 1, prompt: 'Welche Grundzahl gehört in das Kästchen?', q: `${BOX}${supH(e)} = ${big(v)}`, val: b, data: {},
+    traps: [[iq(v / e), `Gesucht ist die Grundzahl: Welche Zahl ergibt ${e}-mal mit sich selbst malgenommen ${big(v)}?`], [b + 1, 'Probiere es aus: Nimm die Zahl ' + e + '-mal als Faktor.'], [b - 1, 'Probiere es aus: Nimm die Zahl ' + e + '-mal als Faktor.']],
+    lines: [{ m: `${prodH(Q(b), e)} = ${big(v)}`, noeq: true }, { m: `Die Grundzahl ist ${b}.`, noeq: true }] });
+}
+function cmp1(b1, e1, b2, e2) {
+  const v1 = b1 ** e1, v2 = b2 ** e2;
+  return cmpTask(1, Q(v1), Q(v2), pH(Q(b1), e1), pH(Q(b2), e2), `${pH(Q(b1), e1)} = ${big(v1)} und ${pH(Q(b2), e2)} = ${big(v2)}.`);
+}
+function gen1(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.4) { const b = ri(2, 5), e = b === 2 ? ri(2, 5) : ri(2, 3); return val1(b, e); }
+    if (r < 0.6) return asPow1(Q(ri(2, 9)), ri(3, 6));
+    if (r < 0.8) return val1(10, ri(2, 6));
+    return val1(ri(2, 30), pick([0, 1]));
+  }
+  if (l === 2) {
+    if (r < 0.3) return val1(...pick([[2, 6], [2, 7], [2, 8], [2, 10], [3, 4], [3, 5], [4, 3], [4, 4], [5, 3], [5, 4], [6, 3], [7, 3], [9, 3], [11, 2], [12, 2], [15, 2]]));
+    if (r < 0.55) return findExp1(...pick([[2, 5], [2, 6], [2, 7], [3, 3], [3, 4], [4, 3], [5, 3], [10, 4], [10, 6], [6, 2], [7, 2]]));
+    if (r < 0.8) return findBase1(...pick([[4, 2], [7, 2], [9, 2], [12, 2], [13, 2], [2, 3], [3, 3], [4, 3], [5, 3], [10, 3], [2, 4], [3, 4]]));
+    return pick([() => val1(0, ri(2, 9)), () => val1(1, ri(5, 99)), () => val1(ri(50, 999), 0)])();
+  }
+  if (r < 0.35) return cmp1(...pick([[2, 5, 5, 2], [3, 4, 4, 3], [2, 4, 4, 2], [2, 3, 3, 2], [2, 6, 6, 2], [2, 10, 10, 3], [5, 3, 3, 5], [10, 0, 0, 10], [1, 9, 9, 1], [2, 7, 7, 2], [4, 2, 2, 4]]));
+  if (r < 0.55) return findExp1(10, ri(5, 9));
+  if (r < 0.75) return findExp1(...pick([[2, 9], [2, 10], [3, 5], [5, 4], [7, 3], [2, 0], [7, 0], [13, 1], [3, 0]]));
+  return findBase1(...pick([[15, 2], [20, 2], [25, 2], [6, 3], [2, 6], [3, 5], [2, 10], [11, 3]]));
+}
+const S1EX = [{ label: 'Was ist 2⁵?', mode: 'was' }, { label: 'Quadrat und Würfel', mode: 'qw' }, { label: 'Hoch 1 und hoch 0', mode: 'null' }, { label: 'Zehnerpotenzen', mode: 'zehn' }];
+function explore1(e) {
+  const two = Q(2);
+  if (e.mode === 'was') return [
+    { lab: 'Potenz', h: `<div class="anat">${eqbig(pH(two, 5))}<p class="run">unten: <b class="pv">Grundzahl</b> 2, diese Zahl wird malgenommen<br>oben: <b class="pv">Hochzahl</b> 5, so oft kommt sie als Faktor vor</p></div>`, cap: 'Eine <b>Potenz</b> ist eine Kurzschrift für ein Produkt aus gleichen Faktoren. Man liest: „2 hoch 5“.' },
+    { lab: 'Faktoren', h: `<div class="row">${chips(two, 5, 'f')}</div>`, cap: '2 hoch 5 heißt: Fünfmal die 2 als Faktor.' },
+    { lab: 'Rechnen', h: tableH([{ a: '2', b: '2' }, { a: '2 · 2', b: '4' }, { a: '2 · 2 · 2', b: '8' }, { a: '2 · 2 · 2 · 2', b: '16' }, { a: '2 · 2 · 2 · 2 · 2', b: '32', nw: true }]), cap: 'Mit jedem Faktor verdoppelt sich das Ergebnis.' },
+    { lab: 'Ergebnis', h: eqbig(`2${supH(5)} = <b>32</b>`) + eqbig('nicht 2 · 5 = 10', 'sm dim'), cap: 'Das Ergebnis heißt <b>Potenzwert</b>. Achtung: Hoch 5 ist nicht mal 5!' },
+  ];
+  if (e.mode === 'qw') return [
+    { lab: 'Quadrat', h: `<div class="anat">${sqH(3)}${eqbig(`3${supH(2)} = 3 · 3 = 9`, 'sm')}</div>`, cap: 'Ein Quadrat mit 3 Kästchen pro Seite hat 3 · 3 = 9 Kästchen. Darum heißt hoch 2 auch „zum Quadrat“. 9 ist eine <b>Quadratzahl</b>.' },
+    { lab: 'Würfel', h: cubeH(3) + eqbig(`3${supH(3)} = 3 · 3 · 3 = 27`, 'sm'), cap: 'Ein Würfel mit 3 Würfelchen pro Kante hat 3 Schichten zu je 9 Würfelchen: 27. Darum heißt hoch 3 auch „hoch drei“ oder „Kubik“.' },
+    { lab: 'Merken', h: eqbig(`Quadratzahlen: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100`, 'sm') + eqbig(`Kubikzahlen: 1, 8, 27, 64, 125, …, 1000`, 'sm'), cap: 'Oben stehen die Quadratzahlen von 1² bis 10², unten einige Kubikzahlen. Es lohnt sich, sie auswendig zu können.' },
+  ];
+  if (e.mode === 'null') {
+    const rows = [[4, 81], [3, 27], [2, 9], [1, 3], [0, 1]].map(([k, v]) => ({ a: `3${supH(k)}`, b: String(v), d: k < 4 ? ': 3' : '' }));
+    return [
+      { lab: 'Muster', h: tableH(rows.slice(0, 3)), cap: 'Wird die Hochzahl um 1 kleiner, fällt ein Faktor 3 weg. Der Wert wird durch 3 geteilt.' },
+      { lab: 'Hoch 1', h: tableH(rows.slice(0, 4).map((r, i) => ({ ...r, nw: i === 3 }))), cap: `27 : 3 = 9, 9 : 3 = 3. Also ist 3${supH(1)} = 3. Hoch 1 ist immer die Zahl selbst.` },
+      { lab: 'Hoch 0', h: tableH(rows.map((r, i) => ({ ...r, nw: i === 4 }))), cap: `Noch einmal durch 3: 3 : 3 = 1. Also ist 3${supH(0)} = 1.` },
+      { lab: 'Regel', h: eqbig(`a${supH(1)} = a`) + eqbig(`a${supH(0)} = 1 (für a ≠ 0)`), cap: 'Das gilt für jede Grundzahl außer 0: Hoch 1 ergibt die Zahl selbst, hoch 0 ergibt immer 1.' },
+    ];
+  }
+  const names = ['eins', 'zehn', 'hundert', 'tausend', 'zehntausend', 'hunderttausend', 'eine Million'];
+  return [
+    { lab: 'Zehner', h: tableH([1, 2, 3].map(k => ({ a: `10${supH(k)}`, b: big(10 ** k), d: names[k] }))), cap: '10 hoch 3 = 10 · 10 · 10 = 1000. Jeder Faktor 10 hängt eine Null an.' },
+    { lab: 'Mehr', h: tableH([0, 1, 2, 3, 4, 5, 6].map(k => ({ a: `10${supH(k)}`, b: big(10 ** k), d: names[k], nw: k === 6 }))), cap: '10 hoch n ist eine 1 mit n Nullen. Auch hier gilt: 10 hoch 0 = 1.' },
+    { lab: 'Rückwärts', h: eqbig(`${big(100000000)} = 10${supH(8)}`), cap: 'Umgekehrt: Zähle die Nullen. 100 000 000 hat 8 Nullen, also ist es 10 hoch 8.' },
+  ];
+}
+
+// =====================================================================
+// Station 2: Negative Grundzahlen
+// =====================================================================
+const SG = e => (e % 2 ? `Ungerade Hochzahl (${e}): Ein Minus bleibt übrig, das Ergebnis ist negativ.` : `Gerade Hochzahl (${e}): Die Minuszeichen bilden Paare, das Ergebnis ist positiv.`);
+function neg2(b, e) {
+  const q = Q(-b), v = (-b) ** e;
+  const mid = e === 0 ? [] : e <= 6 ? [{ m: prodH(q, e), c: `${e} Minuszeichen → ${e % 2 ? 'minus' : 'plus'}` }] : [{ m: `${e % 2 ? MI : '+'}${b}${b === 1 ? '' : supH(e)}`, c: `${e} ist ${e % 2 ? 'ungerade → minus' : 'gerade → plus'}` }];
+  return numTask({ st: 2, prompt: 'Berechne', q: pH(q, e), val: v, data: { b, e },
+    traps: [[e >= 2 ? -b * e : null, `Hoch ${e} heißt nicht mal ${e}.`], [e >= 2 ? b * e : null, `Hoch ${e} heißt nicht mal ${e}.`], [e === 0 ? -1 : null, 'Jede Zahl (außer 0) hoch 0 ist 1, auch eine negative Zahl.']],
+    signMsg: e === 0 ? 'Hoch 0 ergibt immer 1, auch bei negativer Grundzahl.' : SG(e), lines: [{ m: pH(q, e) }, ...mid, { m: big(v) }] });
+}
+function nopar2(b, e) {
+  const v = -(b ** e), q = `${MI}${b}${supH(e)}`;
+  return numTask({ st: 2, prompt: 'Berechne', q, val: v, data: {},
+    traps: [[-b * e, `Hoch ${e} heißt nicht mal ${e}.`]],
+    signMsg: `Hier steht keine Klammer. Das Minus gehört nicht zur Grundzahl: ${MI}${b}${supH(e)} = ${MI}(${prodH(Q(b), e)}). Erst hoch, dann kommt das Minus davor.`,
+    lines: [{ m: q }, { m: `${MI}(${prodH(Q(b), e)})`, c: 'ohne Klammer: erst hoch, dann das Minus' }, { m: big(v) }] });
+}
+function signMc2() {
+  const b = ri(2, 9), e = ri(11, 99), kind = pick(['par', 'par', 'nopar', 'outer']);
+  let q, neg, why;
+  if (kind === 'par') { q = pH(Q(-b), e); neg = e % 2 === 1; why = SG(e); }
+  else if (kind === 'nopar') { q = `${MI}${b}${supH(e)}`; neg = true; why = `Ohne Klammer ist zuerst ${b}${supH(e)} positiv. Das Minus davor macht das Ergebnis negativ, egal welche Hochzahl.`; }
+  else { q = `${MI}${pH(Q(-b), e)}`; neg = e % 2 === 0; why = `${pH(Q(-b), e)} ist ${e % 2 ? 'negativ' : 'positiv'} (${e % 2 ? 'ungerade' : 'gerade'} Hochzahl). Das Minus vor der Klammer dreht das Vorzeichen noch einmal um.`; }
+  return { st: 2, kind: 'mc', prompt: 'Ist das Ergebnis positiv oder negativ? Du musst nicht ausrechnen.', q,
+    opts: [{ h: 'positiv', ok: !neg, msg: why }, { h: 'negativ', ok: neg, msg: why }], sol: neg ? 'negativ' : 'positiv', solH: neg ? 'negativ' : 'positiv',
+    lines: [{ m: why, noeq: true }], data: {} };
+}
+function asPow2(b, e) {
+  const q = Q(-b);
+  return powTask({ st: 2, prompt: 'Schreib als Potenz', q: prodH(q, e), want: { b: q, e }, after: 'Gib die Potenz ein. Negative Grundzahlen schreibst du in Klammern: (−2)^5.', data: {},
+    ptraps: [[q, e - 1, 'Zähle die Faktoren noch einmal.'], [q, e + 1, 'Zähle die Faktoren noch einmal.']],
+    signMsg: `Die Grundzahl ist ${bH(q)}, mit Minus. Schreib sie in Klammern: ${pH(q, e)}.`,
+    lines: [{ m: prodH(q, e), c: `${e} Faktoren ${bH(q)}` }, { m: pH(q, e), c: 'die negative Grundzahl steht in Klammern' }] });
+}
+function gen2(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.65) { const b = ri(2, 6); return neg2(b, b <= 3 ? ri(2, 4) : ri(2, 3)); }
+    if (r < 0.85) return asPow2(ri(2, 9), ri(3, 6));
+    return neg2(ri(2, 20), pick([0, 1]));
+  }
+  if (l === 2) {
+    if (r < 0.3) return neg2(...pick([[2, 5], [2, 6], [2, 7], [3, 3], [3, 4], [4, 3], [5, 3], [10, 5], [10, 6]]));
+    if (r < 0.55) return nopar2(ri(2, 9), rnd() < 0.75 ? 2 : 3);
+    if (r < 0.75) return neg2(1, ri(10, 99));
+    return signMc2();
+  }
+  const b = ri(2, 6), c = ri(2, 12), n = ri(10, 40);
+  return pick([
+    () => stepTask(2, `(-${b})^2 - ${b}^2`, [[2 * b * b, `(${MI}${b})${supH(2)} = ${b * b} und ${b}${supH(2)} = ${b * b}. Beide sind gleich.`]]),
+    () => stepTask(2, `-${b}^2 + (-${b})^2`, [[2 * b * b, `${MI}${b}${supH(2)} ist ${MI}${b * b}, weil keine Klammer da ist.`], [-2 * b * b, `(${MI}${b})${supH(2)} ist positiv: Minus mal Minus gibt Plus.`]]),
+    () => stepTask(2, `-(-${b})^3`, [[-(b ** 3), 'Das Minus vor der Klammer dreht das Vorzeichen noch einmal um.']]),
+    () => stepTask(2, `(-1)^${n} + (-1)^${n + 1}`, [[2, `${n} und ${n + 1}: Eine der beiden Hochzahlen ist gerade, die andere ungerade.`], [-2, `${n} und ${n + 1}: Eine der beiden Hochzahlen ist gerade, die andere ungerade.`]]),
+    () => stepTask(2, `${c} - (-${b})^2`, [[c + b * b, `(${MI}${b})${supH(2)} = ${b * b}. Davor steht noch ein Minus: ${c} − ${b * b}.`]]),
+    () => stepTask(2, `(-2)^${ri(3, 5)} * (-1)^${n}`, []),
+  ])();
+}
+const S2EX = [{ label: '(−2)⁴ und (−2)⁵', mode: 'paare' }, { label: '(−3)² oder −3²?', mode: 'ohne' }, { label: '(−1) hoch n', mode: 'eins' }];
+function explore2(e) {
+  if (e.mode === 'paare') {
+    const q = Q(-2), f = i => chip(`(${MI}2)`, `f${i}`, 'neg');
+    const pairs = n => { const p = []; for (let i = 0; i + 1 < n; i += 2) p.push(`<span class="pair"><span class="row">${f(i)}<span class="op">·</span>${f(i + 1)}</span><span class="gl">= +4</span></span>`); if (n % 2) p.push(`<span class="grp neg"><span class="row">${f(n - 1)}</span><span class="gl">bleibt ${MI}2</span></span>`); return `<div class="row">${p.join('<span class="op">·</span>')}</div>`; };
+    return [
+      { lab: 'Faktoren', h: `<div class="row">${chips(q, 4, 'f')}</div>`, cap: `${pH(q, 4)} heißt: viermal ${bH(q)} als Faktor. Die Klammer zeigt: Das Minus gehört zur Grundzahl.` },
+      { lab: 'Paare', h: pairs(4), cap: 'Je zwei Minus ergeben Plus. Bei 4 Faktoren gehen alle Minus in Paaren auf.' },
+      { lab: 'Gerade', h: eqbig(`${pH(q, 4)} = <b>16</b>`), cap: 'Gerade Hochzahl: Das Ergebnis ist positiv.' },
+      { lab: 'Ungerade', h: pairs(5) + eqbig(`${pH(q, 5)} = <b>${MI}32</b>`, 'sm'), cap: 'Bei 5 Faktoren bleibt ein Minus übrig. Ungerade Hochzahl: Das Ergebnis ist negativ.' },
+    ];
+  }
+  if (e.mode === 'ohne') return [
+    { lab: 'Zwei Aufgaben', h: `<div class="duo"><div>${eqbig(`(${MI}3)${supH(2)}`)}<span class="gl">mit Klammer</span></div><div>${eqbig(`${MI}3${supH(2)}`)}<span class="gl">ohne Klammer</span></div></div>`, cap: 'Sie sehen fast gleich aus. Der Unterschied ist die Klammer.' },
+    { lab: 'Auflösen', h: `<div class="duo"><div>${eqbig(`(${MI}3) · (${MI}3)`, 'sm')}<span class="gl">das Minus wird mitquadriert</span></div><div>${eqbig(`${MI}(3 · 3)`, 'sm')}<span class="gl">das Minus bleibt draußen</span></div></div>`, cap: 'Mit Klammer gehört das Minus zur Grundzahl. Ohne Klammer wird nur die 3 quadriert. Hoch kommt vor dem Minus.' },
+    { lab: 'Ergebnis', h: `<div class="duo"><div>${eqbig(`= <b>9</b>`)}</div><div>${eqbig(`= <b>${MI}9</b>`)}</div></div>`, cap: 'Darum: (−3)² = 9, aber −3² = −9. Achte immer auf die Klammer!' },
+  ];
+  const rows = [1, 2, 3, 4, 5, 6].map(n => ({ a: pH(Q(-1), n), b: n % 2 ? `<span class="nv">${MI}1</span>` : '<span class="pv">1</span>', d: n % 2 ? 'ungerade' : 'gerade' }));
+  return [
+    { lab: 'Muster', h: tableH(rows.slice(0, 3)), cap: 'Jeder weitere Faktor (−1) dreht das Vorzeichen um.' },
+    { lab: 'Weiter', h: tableH(rows), cap: 'Das Ergebnis springt immer zwischen −1 und 1 hin und her.' },
+    { lab: 'Regel', h: eqbig(`${pH(Q(-1), 100)} = 1`, 'sm') + eqbig(`${pH(Q(-1), 101)} = ${MI}1`, 'sm'), cap: 'Darum musst du nicht rechnen: Gerade Hochzahl → 1, ungerade Hochzahl → −1.' },
+  ];
+}
+
+// =====================================================================
+// Station 3: Brüche als Grundzahl
+// =====================================================================
+function fpow3(A, e) {
+  const v = qpow(A, e), a = abs(A[0]), b = A[1], neg = A[0] < 0 && e % 2 === 1;
+  const lines = [{ m: pH(A, e) }];
+  if (e >= 2) lines.push({ m: (neg ? MI : '') + F(Array(e).fill(a).join(' · '), Array(e).fill(b).join(' · ')), c: A[0] < 0 ? `${e % 2 ? 'ungerade' : 'gerade'} Hochzahl → ${neg ? 'minus' : 'plus'}` : 'Zähler und Nenner potenzieren' });
+  lines.push({ m: qmH(v), c: e === 0 ? 'jede Zahl außer 0 hoch 0 ist 1' : e === 1 ? 'hoch 1: die Zahl selbst' : '' });
+  return numTask({ st: 3, prompt: 'Berechne', q: pH(A, e), val: v, data: { A, e },
+    traps: e >= 2 ? [[Q(A[0] ** e, b), 'Auch der Nenner wird potenziert.'], [Q(A[0], b ** e), 'Auch der Zähler wird potenziert.'], [Q(A[0] * e, b), `Hoch ${e} heißt nicht mal ${e}.`], [Q(A[0] * e, b * e), `Hoch ${e} heißt: ${e}-mal mit sich selbst malnehmen, nicht Zähler und Nenner mal ${e}.`]] : [[e === 0 ? Q(0) : null, 'Jede Zahl (außer 0) hoch 0 ist 1.'], [e === 0 ? A : null, 'Hoch 0 ergibt 1, nicht die Zahl selbst.']],
+    signMsg: A[0] < 0 && e ? SG(e) : 'Prüfe das Vorzeichen.', lines });
+}
+function outneg3(A, e) {
+  const v = qneg(qpow(A, e)), q = `${MI}${pH(A, e)}`;
+  return numTask({ st: 3, prompt: 'Berechne', q, val: v, data: {},
+    traps: [[Q(-(A[0] ** e), A[1]), 'Auch der Nenner wird potenziert.'], [Q(-A[0] * e, A[1]), `Hoch ${e} heißt nicht mal ${e}.`]],
+    signMsg: 'Das Minus steht vor der Klammer. Es wird nicht mitpotenziert, sondern bleibt stehen.',
+    lines: [{ m: q }, { m: MI + F(Array(e).fill(A[0]).join(' · '), Array(e).fill(A[1]).join(' · ')), c: 'zuerst potenzieren, das Minus vor der Klammer bleibt' }, { m: qmH(v) }] });
+}
+function nobr3(a, b, where, e = 2) {
+  const den = where === 'den', v = den ? Q(a, b ** e) : Q(a ** e, b), q = den ? F(a, `${b}${supH(e)}`) : F(`${a}${supH(e)}`, b);
+  return numTask({ st: 3, prompt: 'Berechne', q, val: v, data: {},
+    traps: [[Q(a ** e, b ** e), `Hier steht keine Klammer um den Bruch. Nur der ${den ? 'Nenner' : 'Zähler'} wird potenziert.`], [den ? Q(a, b * e) : Q(a * e, b), `Hoch ${e} heißt nicht mal ${e}.`]],
+    lines: [{ m: q }, { m: den ? F(a, Array(e).fill(b).join(' · ')) : F(Array(e).fill(a).join(' · '), b), c: `ohne Klammer: nur der ${den ? 'Nenner' : 'Zähler'} wird potenziert` }, { m: qmH(v) }] });
+}
+function mixpow3(w, n, d, s = 1) {
+  const A = Q(s * (w * d + n), d), v = qpow(A, 2), q = `(${s < 0 ? MI : ''}${mixRaw(w, n, d)})${supH(2)}`;
+  return numTask({ st: 3, prompt: 'Berechne', q, val: v, data: {},
+    traps: [[qadd(Q(w * w), Q(n * n, d * d)), 'Wandle die gemischte Zahl zuerst in einen unechten Bruch um. Ganze und Bruch getrennt quadrieren ist falsch.']],
+    signMsg: 'Gerade Hochzahl: Das Ergebnis ist positiv.',
+    lines: [{ m: q }, { m: pH(A, 2), c: 'in einen unechten Bruch umwandeln' }, { m: F(`${abs(A[0])} · ${abs(A[0])}`, `${d} · ${d}`) }, { m: qmH(v) }] });
+}
+function findExp3(A, e) {
+  const v = qpow(A, e);
+  return numTask({ st: 3, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${boxPow(A)} = ${qH(v)}`, val: e, data: {},
+    traps: [[e + 1, 'Zähle die Faktoren noch einmal.'], [e - 1, 'Zähle die Faktoren noch einmal.']],
+    lines: [{ m: `${qH(v)} = ${(v[0] < 0 ? MI : '') + F(Array(e).fill(abs(A[0])).join(' · '), Array(e).fill(A[1]).join(' · '))}`, noeq: true, c: `${e} Faktoren` }, { m: `${pH(A, e)} = ${qH(v)}`, noeq: true }] });
+}
+function cmp3(A, e) {
+  const v = qpow(A, e);
+  let why = `${pH(A, e)} = ${qH(v)}. Vergleiche mit ${qH(A)}.`;
+  if (A[0] > 0 && A[0] < A[1]) why += ' Liegt die Grundzahl zwischen 0 und 1, wird die Potenz kleiner.';
+  if (A[0] > A[1]) why += ' Ist die Grundzahl größer als 1, wird die Potenz größer.';
+  return cmpTask(3, v, A, pH(A, e), qH(A), why);
+}
+function asPow3(A, e) {
+  return powTask({ st: 3, prompt: 'Schreib als Potenz', q: prodH(A, e), want: { b: A, e }, after: 'Brüche als Grundzahl schreibst du in Klammern: (2/3)^4.', data: {},
+    ptraps: [[A, e - 1, 'Zähle die Faktoren noch einmal.'], [A, e + 1, 'Zähle die Faktoren noch einmal.']],
+    lines: [{ m: prodH(A, e), c: `${e} Faktoren ${bH(A)}` }, { m: pH(A, e) }] });
+}
+const smallF = () => pick([Q(1, 2), Q(1, 3), Q(2, 3), Q(3, 4), Q(2, 5), Q(3, 5), Q(1, 4), Q(4, 5), Q(5, 6), Q(3, 2), Q(5, 3), Q(4, 3)]);
+function gen3(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.45) { const A = sq(smallF(), rnd() < 0.3 ? -1 : 1); return fpow3(A, A[1] <= 5 && abs(A[0]) <= 4 && rnd() < 0.4 ? 3 : 2); }
+    if (r < 0.65) return fpow3(Q(1, 2), ri(2, 6));
+    if (r < 0.85) return asPow3(sq(frac(2, 7), rnd() < 0.3 ? -1 : 1), ri(2, 4));
+    return fpow3(sq(frac(2, 9), sg()), pick([0, 1]));
+  }
+  if (l === 2) {
+    if (r < 0.3) return fpow3(qneg(pick([Q(1, 2), Q(2, 3), Q(1, 3), Q(3, 4), Q(2, 5), Q(3, 2)])), ri(2, 4));
+    if (r < 0.5) return outneg3(frac(2, 7), 2);
+    if (r < 0.75) { const [a, b] = pick([[2, 3], [3, 4], [2, 5], [3, 5], [1, 2], [4, 3]]); return nobr3(a, b, rnd() < 0.6 ? 'den' : 'num', rnd() < 0.8 ? 2 : 3); }
+    return mixpow3(ri(1, 2), ...pick([[1, 2], [1, 3], [2, 3], [1, 4], [3, 4]]), sg());
+  }
+  if (r < 0.3) { const A = sq(pick([Q(1, 2), Q(2, 3), Q(1, 3), Q(3, 4), Q(2, 5), Q(3, 2)]), sg()); return findExp3(A, ri(2, 4)); }
+  if (r < 0.6) return cmp3(sq(pick([Q(1, 2), Q(2, 3), Q(3, 4), Q(3, 2), Q(5, 4), Q(4, 3), Q(1, 3)]), rnd() < 0.25 ? -1 : 1), ri(2, 3));
+  if (r < 0.8) return fpow3(sq(pick([Q(1, 2), Q(2, 3), Q(1, 3), Q(3, 2)]), sg()), ri(4, 5));
+  const A = pick([Q(1, 2), Q(2, 3), Q(1, 3), Q(3, 4)]);
+  return pick([
+    () => stepTask(3, `(${qS(A)})^2 - (${qS(qmul(A, Q(1, 2)))})^2`, []),
+    () => stepTask(3, `(-1/2)^3 * ${8 * ri(1, 4)}`, [[Q(ri(1, 4)), 'Ungerade Hochzahl: (−½)³ ist negativ.']]),
+    () => stepTask(3, `1 - (${qS(A)})^2`, [[qpow(qsub(Q(1), A), 2), 'Hoch vor Strich: Zuerst wird potenziert, dann abgezogen.']]),
+  ])();
+}
+const S3EX = [{ label: '(⅔)²', mode: 'flaeche' }, { label: '(½)ⁿ', mode: 'halb' }, { label: '(⅔)² oder 2/3²?', mode: 'klammer' }, { label: '(−¾)ⁿ', mode: 'neg' }];
+function explore3(e) {
+  if (e.mode === 'flaeche') return [
+    { lab: 'Aufgabe', h: eqbig(`(${F(2, 3)})${supH(2)} = ${F(2, 3)} · ${F(2, 3)}`), cap: `Hoch 2 heißt: zweimal ${F(2, 3)} als Faktor.` },
+    { lab: F(2, 3), h: areaH(2, 3, 2, 3, 1), cap: `Zeichne ein Quadrat und färbe ${F(2, 3)} davon (2 von 3 Spalten).` },
+    { lab: 'davon ' + F(2, 3), h: areaH(2, 3, 2, 3, 2), cap: `Nimm davon noch einmal ${F(2, 3)} (2 von 3 Zeilen).` },
+    { lab: 'Ergebnis', h: areaH(2, 3, 2, 3, 3) + eqbig(`(${F(2, 3)})${supH(2)} = ${F(`2${supH(2)}`, `3${supH(2)}`)} = <b>${F(4, 9)}</b>`, 'sm'), cap: '4 von 9 Kästchen. Zähler und Nenner werden beide potenziert. Das Ergebnis ist kleiner als die Grundzahl.' },
+  ];
+  if (e.mode === 'halb') return [1, 2, 3, 4].map(n => ({
+    lab: `hoch ${n}`, h: barH(1, 2 ** n, { lab: pH(Q(1, 2), n) }) + eqbig(`${pH(Q(1, 2), n)} = ${F(1, 2 ** n)}`, 'sm'),
+    cap: n === 1 ? `Ein halber Streifen: ${F(1, 2)}.` : `Noch einmal halbieren: ${F(1, 2 ** (n - 1))} · ${F(1, 2)} = ${F(1, 2 ** n)}. Bei jedem Faktor ${F(1, 2)} wird der Teil halb so groß.`,
+  }));
+  if (e.mode === 'klammer') return [
+    { lab: 'Zwei Aufgaben', h: `<div class="duo"><div>${eqbig(`(${F(2, 3)})${supH(2)}`)}<span class="gl">mit Klammer</span></div><div>${eqbig(F(2, `3${supH(2)}`))}<span class="gl">ohne Klammer</span></div></div>`, cap: 'Steht die Hochzahl außerhalb einer Klammer um den Bruch, oder nur beim Nenner?' },
+    { lab: 'Auflösen', h: `<div class="duo"><div>${eqbig(F('2 · 2', '3 · 3'), 'sm')}<span class="gl">Zähler und Nenner</span></div><div>${eqbig(F(2, '3 · 3'), 'sm')}<span class="gl">nur der Nenner</span></div></div>`, cap: 'Mit Klammer wird der ganze Bruch potenziert. Ohne Klammer nur die Zahl, an der die Hochzahl steht.' },
+    { lab: 'Ergebnis', h: `<div class="duo"><div>${eqbig(`= <b>${F(4, 9)}</b>`)}</div><div>${eqbig(`= <b>${F(2, 9)}</b>`)}</div></div>`, cap: 'Achte genau darauf, wo die Hochzahl steht und ob eine Klammer da ist.' },
+  ];
+  const A = Q(-3, 4), rows = [1, 2, 3, 4].map(n => { const v = qpow(A, n); return { lab: pH(A, n), v: abs(v[0]) / v[1], txt: qH(v), cls: v[0] < 0 ? 'neg' : '' }; });
+  return [
+    { lab: 'Potenzen', h: gbH(rows.slice(0, 2)), cap: `(${MI}${F(3, 4)})${supH(2)} = ${F(9, 16)}: Minus mal Minus gibt Plus, Zähler und Nenner werden quadriert.` },
+    { lab: 'Weiter', h: gbH(rows), cap: 'Das Vorzeichen wechselt: gerade Hochzahl → plus, ungerade → minus. Wie bei den ganzen Zahlen.' },
+    { lab: 'Kleiner', h: gbH(rows), cap: `Der Betrag wird mit jedem Faktor kleiner, weil ${F(3, 4)} kleiner als 1 ist. Die Balken zeigen den Betrag.` },
+  ];
+}
+
+// =====================================================================
+// Station 4: Potenzen mit gleicher Grundzahl multiplizieren
+// =====================================================================
+function mul4(q, es) {
+  const s = sum(es), qd = es.map(e => fH(q, e)).join(' · '), ones = es.filter(e => e === 1).length;
+  return powTask({ st: 4, prompt: 'Schreib als eine Potenz', q: qd, want: { b: q, e: s }, data: { q, es },
+    ptraps: [[q, es.reduce((p, e) => p * e, 1), 'Beim Multiplizieren werden die Hochzahlen addiert, nicht multipliziert.'], [abs(q[0]) > 1 || q[1] > 1 ? qpow(q, es.length) : null, s, 'Die Grundzahl bleibt gleich. Nur die Hochzahlen werden addiert.'], [ones ? q : null, s - ones, `Eine Zahl ohne Hochzahl hat die Hochzahl 1: ${bH(q)} = ${pH(q, 1)}. Zähle sie mit.`]],
+    expMsg: 'Die Grundzahl stimmt. Addiere alle Hochzahlen.',
+    signMsg: 'Prüfe das Vorzeichen: Die negative Grundzahl schreibst du in Klammern, dann bleibt das Vorzeichen richtig.',
+    lines: [{ m: qd }, { m: supSum(q, es, '+'), c: 'gleiche Grundzahl: Hochzahlen addieren' }, { m: pH(q, s) }] });
+}
+function missExp4(b, m, s) {
+  const q = Q(b);
+  return numTask({ st: 4, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${pH(q, m)} · ${boxPow(q)} = ${pH(q, s)}`, val: s - m, data: {},
+    traps: [[s + m, 'Die Hochzahlen werden addiert. Gesucht ist die Zahl, die zu ' + m + ' dazukommt, damit ' + s + ' herauskommt.'], [iq(s / m), 'Die Hochzahlen werden addiert, nicht multipliziert.']],
+    lines: [{ m: `${m} + ${BOX} = ${s}`, noeq: true, c: 'Hochzahlen addieren' }, { m: `${BOX} = ${s} − ${m} = ${s - m}`, noeq: true }] });
+}
+function notc4() {
+  const a = ri(2, 7); let c; do c = ri(2, 7); while (c === a);
+  const m = ri(2, 5), n = ri(2, 5);
+  const opts = shuffle([
+    { h: `${pH(Q(a), m)} · ${pH(Q(a), n)}`, ok: true },
+    { h: `${pH(Q(a), m)} · ${pH(Q(c), n)}`, msg: 'Die Grundzahlen sind verschieden. Die Regel gilt nur bei gleicher Grundzahl.' },
+    { h: `${pH(Q(a), m)} + ${pH(Q(a), n)}`, msg: 'Das ist eine Summe. Hochzahlen addieren darf man nur beim Malnehmen, nicht beim Addieren.' },
+  ]);
+  return { st: 4, kind: 'mc', prompt: 'Welche Aufgabe kann man zu einer einzigen Potenz zusammenfassen?', q: 'Nur eine ist richtig.', opts, sol: '', solH: `${pH(Q(a), m)} · ${pH(Q(a), n)} = ${pH(Q(a), m + n)}`, data: {},
+    lines: [{ m: `${pH(Q(a), m)} · ${pH(Q(a), n)} = ${pH(Q(a), m + n)}`, noeq: true, c: 'gleiche Grundzahl, malnehmen' }, { m: 'Bei verschiedenen Grundzahlen oder bei einer Summe gilt die Regel nicht.', noeq: true }] };
+}
+function value4(q, m, n) {
+  const v = qpow(q, m + n), qd = `${fH(q, m)} · ${fH(q, n)}`;
+  return numTask({ st: 4, prompt: 'Berechne geschickt', q: qd, val: v, data: {},
+    traps: [[tq(() => qpow(q, m * n)), 'Die Hochzahlen werden addiert, nicht multipliziert.']],
+    signMsg: 'Prüfe das Vorzeichen: Ist die Hochzahl der Summe gerade oder ungerade?',
+    lines: [{ m: qd }, { m: pH(q, m + n), c: 'zuerst zusammenfassen' }, { m: qmH(v) }] });
+}
+function gen4(l) {
+  const r = rnd();
+  if (l === 1) {
+    const b = Q(r < 0.15 ? 10 : ri(2, 9));
+    if (rnd() < 0.25) return mul4(b, shuffle([1, ri(2, 6)]));
+    return mul4(b, [ri(2, 6), ri(2, 6)]);
+  }
+  if (l === 2) {
+    const q = pick([() => Q(-ri(2, 9)), () => frac(2, 7), () => qneg(frac(2, 7)), () => Q(ri(2, 9))])();
+    const n = rnd() < 0.5 ? 3 : 2, es = Array.from({ length: n }, () => (rnd() < 0.2 ? 1 : ri(2, 6)));
+    return mul4(q, es);
+  }
+  if (r < 0.25) { const s = ri(8, 15), m = ri(2, s - 2); return missExp4(ri(2, 9), m, s); }
+  if (r < 0.45) return notc4();
+  if (r < 0.7) return pick([() => value4(Q(10), ri(1, 3), ri(2, 4)), () => value4(Q(1, 2), ri(1, 3), ri(1, 3)), () => value4(Q(-1), ri(3, 30), ri(3, 30)), () => value4(Q(-2), ri(1, 3), ri(1, 3)), () => value4(Q(2, 3), 1, 2)])();
+  const q = pick([Q(-ri(2, 5)), qneg(frac(2, 5)), Q(ri(2, 9))]);
+  return mul4(q, Array.from({ length: ri(3, 4) }, () => (rnd() < 0.25 ? 1 : ri(2, 7))));
+}
+const S4EX = [{ label: '2³ · 2⁴', mode: 'regel' }, { label: '5 · 5³', mode: 'eins' }, { label: '(−⅔)² · (−⅔)³', mode: 'neg' }, { label: 'Wann nicht?', mode: 'nicht' }];
+function explore4(e) {
+  if (e.mode === 'regel') {
+    const q = Q(2);
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${pH(q, 3)} · ${pH(q, 4)}`), cap: 'Zwei Potenzen mit der gleichen Grundzahl 2 werden multipliziert.' },
+      { lab: 'Ausschreiben', h: `<div class="row">${grpH(pH(q, 3), chips(q, 3, 'f'))}<span class="op">·</span>${grpH(pH(q, 4), chips(q, 4, 'f', 3), 'k2')}</div>`, cap: 'Schreib beide Potenzen als Produkte: 3 Faktoren und 4 Faktoren.' },
+      { lab: 'Zusammen', h: `<div class="row">${chips(q, 7, 'f')}</div>`, cap: 'Zusammen sind das 3 + 4 = 7 Faktoren 2.' },
+      { lab: 'Regel', h: eqbig(`${pH(q, 3)} · ${pH(q, 4)} = ${supSum(q, [3, 4], '+')} = <b>${pH(q, 7)}</b>`, 'sm') + eqbig(`a<sup>m</sup> · a<sup>n</sup> = a<sup>m + n</sup>`, 'sm'), cap: 'Gleiche Grundzahl: Die Hochzahlen werden addiert. Die Grundzahl bleibt gleich!' },
+    ];
+  }
+  if (e.mode === 'eins') {
+    const q = Q(5);
+    return [
+      { lab: 'Aufgabe', h: eqbig(`5 · ${pH(q, 3)}`), cap: 'Die 5 vorne hat keine Hochzahl.' },
+      { lab: 'Hoch 1', h: eqbig(`${pH(q, 1)} · ${pH(q, 3)}`), cap: `Eine Zahl ohne Hochzahl hat die Hochzahl 1: 5 = ${pH(q, 1)}.` },
+      { lab: 'Ergebnis', h: eqbig(`${supSum(q, [1, 3], '+')} = <b>${pH(q, 4)}</b>`), cap: 'Also 1 + 3 = 4. Ausgeschrieben: 5 · 5 · 5 · 5. Das sind 4 Faktoren.' },
+    ];
+  }
+  if (e.mode === 'neg') {
+    const q = Q(-2, 3);
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${pH(q, 2)} · ${pH(q, 3)}`), cap: 'Auch bei negativen Brüchen gilt die Regel, wenn die Grundzahl gleich ist.' },
+      { lab: 'Faktoren', h: `<div class="row">${chips(q, 5, 'f')}</div>`, cap: `2 + 3 = 5 Faktoren ${bH(q)}.` },
+      { lab: 'Ergebnis', h: eqbig(`${supSum(q, [2, 3], '+')} = <b>${pH(q, 5)}</b>`) + eqbig(`= ${MI}${F(32, 243)}`, 'sm dim'), cap: 'Die Grundzahl bleibt in Klammern stehen. Willst du den Wert: ungerade Hochzahl, also negativ.' },
+    ];
+  }
+  return [
+    { lab: 'Andere Grundzahl', h: eqbig(`${pH(Q(2), 3)} · ${pH(Q(3), 2)} = 8 · 9 = 72`, 'sm'), cap: 'Verschiedene Grundzahlen: Hier kann man nichts zusammenfassen. Rechne beide Potenzen einzeln aus.' },
+    { lab: 'Summe', h: eqbig(`${pH(Q(2), 3)} + ${pH(Q(2), 4)} = 8 + 16 = 24`, 'sm') + eqbig(`aber ${pH(Q(2), 7)} = 128`, 'sm dim'), cap: 'Bei einer Summe darf man die Hochzahlen nicht addieren! Die Regel gilt nur beim Malnehmen.' },
+    { lab: 'Merke', h: eqbig(`gleiche Grundzahl <b>und</b> malnehmen → Hochzahlen addieren`, 'sm'), cap: 'Prüfe immer beides, bevor du die Regel verwendest.' },
+  ];
+}
+
+// =====================================================================
+// Station 5: Potenzen mit gleicher Grundzahl dividieren
+// =====================================================================
+function div5(q, m, n, asFrac) {
+  const d = m - n, qd = asFrac ? F(fH(q, m), fH(q, n)) : `${fH(q, m)} : ${fH(q, n)}`;
+  return powTask({ st: 5, prompt: 'Schreib als eine Potenz', q: qd, want: { b: q, e: d }, data: { q, m, n },
+    ptraps: [[q, m + n, 'Beim Dividieren werden die Hochzahlen subtrahiert, nicht addiert.'], [m % n === 0 ? q : null, m / n, 'Die Hochzahlen werden subtrahiert, nicht dividiert.'], [abs(q[0]) > 1 || q[1] > 1 ? Q(1) : null, d, 'Die Grundzahl bleibt gleich. Nur die Hochzahlen werden subtrahiert.']],
+    expMsg: 'Die Grundzahl stimmt. Subtrahiere die Hochzahlen: oben minus unten (erste minus zweite).',
+    lines: [{ m: qd }, { m: supSum(q, [m, n], '−'), c: 'gleiche Grundzahl: Hochzahlen subtrahieren' }, { m: fH(q, d) }] });
+}
+function same5(q, n) {
+  const qd = `${pH(q, n)} : ${pH(q, n)}`;
+  return numTask({ st: 5, prompt: 'Berechne', q: qd, val: 1, data: {},
+    traps: [[0, 'Eine Zahl geteilt durch sich selbst ergibt 1, nicht 0.'], [-1, 'Eine Zahl geteilt durch sich selbst ergibt 1.']],
+    lines: [{ m: qd }, { m: supSum(q, [n, n], '−'), c: 'Hochzahlen subtrahieren' }, { m: pH(q, 0) }, { m: '1', c: 'hoch 0 ist 1' }] });
+}
+function missExp5(b, s, n) {
+  const q = Q(b);
+  return numTask({ st: 5, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${boxPow(q)} : ${pH(q, n)} = ${pH(q, s)}`, val: s + n, data: {},
+    traps: [[s - n, `Beim Dividieren wird subtrahiert. Gesucht ist die Zahl, von der man ${n} abzieht und ${s} erhält.`], [s * n, 'Die Hochzahlen werden subtrahiert, nicht dividiert.']],
+    lines: [{ m: `${BOX} − ${n} = ${s}`, noeq: true, c: 'Hochzahlen subtrahieren' }, { m: `${BOX} = ${s} + ${n} = ${s + n}`, noeq: true }] });
+}
+function combo5(q, a, b, c) {
+  const e = a + b - c, qd = F(`${fH(q, a)} · ${fH(q, b)}`, fH(q, c));
+  return powTask({ st: 5, prompt: 'Schreib als eine Potenz', q: qd, want: { b: q, e }, data: {},
+    ptraps: [[q, a + b + c, 'Die Hochzahl im Nenner wird subtrahiert.'], [q, a * b - c, 'Im Zähler werden die Hochzahlen addiert, nicht multipliziert.']],
+    lines: [{ m: qd }, { m: F(pH(q, a + b), fH(q, c)), c: 'oben: Hochzahlen addieren' }, { m: supSum(q, [a + b, c], '−'), c: 'dann: oben minus unten' }, { m: fH(q, e) }] });
+}
+function value5(q, m, n) {
+  const v = qpow(q, m - n), qd = `${pH(q, m)} : ${pH(q, n)}`;
+  return numTask({ st: 5, prompt: 'Berechne geschickt', q: qd, val: v, data: {},
+    traps: [[tq(() => qpow(q, m + n)), 'Beim Dividieren werden die Hochzahlen subtrahiert.']],
+    lines: [{ m: qd }, { m: fH(q, m - n), c: 'zuerst zusammenfassen' }, { m: qmH(v) }] });
+}
+function gen5(l) {
+  const r = rnd();
+  if (l === 1) { const m = ri(4, 9), n = ri(2, m - 1); return div5(Q(r < 0.15 ? 10 : ri(2, 9)), m, n, false); }
+  if (l === 2) {
+    if (r < 0.2) return same5(pick([Q(ri(2, 9)), Q(-ri(2, 9)), frac(2, 7)]), ri(2, 9));
+    const q = pick([() => Q(-ri(2, 9)), () => frac(2, 7), () => qneg(frac(2, 7)), () => Q(ri(2, 9))])(), m = ri(4, 12), n = ri(1, m - 1);
+    return div5(q, m, n, rnd() < 0.5);
+  }
+  if (r < 0.35) { const q = pick([Q(ri(2, 9)), Q(-ri(2, 6)), frac(2, 5)]), a = ri(2, 6), b = ri(1, 6), c = ri(2, a + b - 1); return combo5(q, a, b, c); }
+  if (r < 0.6) return missExp5(ri(2, 9), ri(2, 7), ri(2, 7));
+  const m = ri(4, 8), k = ri(1, 2);
+  return pick([() => value5(Q(10), ri(5, 9), ri(2, 4)), () => value5(Q(ri(2, 6)), m, m - 2), () => value5(Q(2, 3), m, m - k), () => value5(Q(-3), m, m - 3), () => value5(Q(-1, 2), m, m - 3)])();
+}
+const S5EX = [{ label: '5⁶ : 5⁴', mode: 'regel' }, { label: '2³ : 2³', mode: 'null' }, { label: '(−⅓)⁷ : (−⅓)⁵', mode: 'neg' }];
+function explore5(e) {
+  if (e.mode === 'regel') {
+    const q = Q(5), top = c => Array.from({ length: 6 }, (_, i) => chip('5', `t${i}`, i < c ? 'cut' : '')).join('<span class="op">·</span>'), bot = c => Array.from({ length: 4 }, (_, i) => chip('5', `b${i}`, i < c ? 'cut' : '')).join('<span class="op">·</span>');
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${pH(q, 6)} : ${pH(q, 4)} = ${F(pH(q, 6), pH(q, 4))}`), cap: 'Eine Division kann man als Bruch schreiben.' },
+      { lab: 'Ausschreiben', h: frcH(top(0), bot(0)), cap: 'Oben stehen 6 Faktoren 5, unten 4 Faktoren 5.' },
+      { lab: 'Kürzen', h: frcH(top(4), bot(4)), cap: 'Jeder Faktor 5 unten kürzt sich mit einem Faktor 5 oben. 4 Paare fallen weg.' },
+      { lab: 'Regel', h: eqbig(`${supSum(q, [6, 4], '−')} = <b>${pH(q, 2)}</b>`, 'sm') + eqbig(`a<sup>m</sup> : a<sup>n</sup> = a<sup>m − n</sup>`, 'sm'), cap: 'Übrig bleiben 6 − 4 = 2 Faktoren. Gleiche Grundzahl: Die Hochzahlen werden subtrahiert.' },
+    ];
+  }
+  if (e.mode === 'null') {
+    const q = Q(2), row = c => Array.from({ length: 3 }, (_, i) => chip('2', `${c}${i}`, 'cut')).join('<span class="op">·</span>');
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${pH(q, 3)} : ${pH(q, 3)}`), cap: 'Eine Zahl wird durch sich selbst geteilt.' },
+      { lab: 'Kürzen', h: frcH(row('t'), row('b')), cap: 'Alle Faktoren kürzen sich weg. Übrig bleibt 1, wie bei 8 : 8 = 1.' },
+      { lab: 'Mit der Regel', h: eqbig(`${supSum(q, [3, 3], '−')} = ${pH(q, 0)} = <b>1</b>`), cap: 'Mit der Regel kommt hoch 0 heraus. Darum ist es sinnvoll, dass jede Zahl hoch 0 gleich 1 ist.' },
+    ];
+  }
+  const q = Q(-1, 3);
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${pH(q, 7)} : ${pH(q, 5)}`), cap: 'Gleiche Grundzahl, auch wenn sie ein negativer Bruch ist.' },
+    { lab: 'Regel', h: eqbig(`${supSum(q, [7, 5], '−')} = <b>${pH(q, 2)}</b>`), cap: '7 − 5 = 2. Die Grundzahl bleibt mit Klammer stehen.' },
+    { lab: 'Wert', h: eqbig(`${pH(q, 2)} = ${F(1, 9)}`), cap: 'Willst du den Wert: gerade Hochzahl, also positiv.' },
+  ];
+}
+
+// =====================================================================
+// Station 6: Potenz einer Potenz
+// =====================================================================
+function pp6(q, m, n) {
+  const qd = `(${pH(q, m)})${supH(n)}`;
+  return powTask({ st: 6, prompt: 'Schreib als eine Potenz', q: qd, want: { b: q, e: m * n }, data: { q, m, n },
+    ptraps: [[q, m + n, 'Bei einer Potenz hoch eine Hochzahl werden die Hochzahlen multipliziert, nicht addiert.'], [m ** n <= 400 ? q : null, m ** n, `Die Hochzahlen werden multipliziert (${m} · ${n}), nicht ${m} hoch ${n}.`]],
+    expMsg: 'Die Grundzahl stimmt. Multipliziere die Hochzahlen.',
+    signMsg: 'Prüfe das Vorzeichen: Ist die neue Hochzahl gerade oder ungerade?',
+    lines: [{ m: qd }, { m: Array(n).fill(pH(q, m)).join(' · '), c: `${n}-mal ${pH(q, m)}` }, { m: supSum(q, [m, n], '·'), c: 'Hochzahlen multiplizieren' }, { m: pH(q, m * n) }] });
+}
+function value6(q, m, n) {
+  const v = qpow(q, m * n), qd = `(${pH(q, m)})${supH(n)}`;
+  return numTask({ st: 6, prompt: 'Berechne geschickt', q: qd, val: v, data: {},
+    traps: [[tq(() => qpow(q, m + n)), 'Die Hochzahlen werden multipliziert, nicht addiert.']],
+    signMsg: 'Prüfe das Vorzeichen: Ist die Hochzahl m · n gerade oder ungerade?',
+    lines: [{ m: qd }, { m: pH(q, m * n), c: 'Hochzahlen multiplizieren' }, { m: qmH(v) }] });
+}
+function combo6(q, a, b, c, op) {
+  const e = op === '·' ? a * b + c : a * b - c, qd = `(${pH(q, a)})${supH(b)} ${op === '·' ? '·' : ':'} ${fH(q, c)}`;
+  return powTask({ st: 6, prompt: 'Schreib als eine Potenz', q: qd, want: { b: q, e }, data: {},
+    ptraps: [[q, op === '·' ? a + b + c : a + b - c, 'Bei (a hoch m) hoch n werden die Hochzahlen multipliziert.']],
+    lines: [{ m: qd }, { m: `${pH(q, a * b)} ${op === '·' ? '·' : ':'} ${fH(q, c)}`, c: 'zuerst: Potenz einer Potenz' }, { m: supSum(q, [a * b, c], op === '·' ? '+' : '−') }, { m: pH(q, e) }] });
+}
+function missExp6(b, m, n) {
+  const q = Q(b);
+  return numTask({ st: 6, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `(${boxPow(q)})${supH(n)} = ${pH(q, m * n)}`, val: m, data: {},
+    traps: [[m * n - n, 'Die Hochzahlen werden multipliziert, nicht addiert.'], [m * n * n, `Gesucht ist die Zahl, die mal ${n} genau ${m * n} ergibt.`]],
+    lines: [{ m: `${BOX} · ${n} = ${m * n}`, noeq: true, c: 'Hochzahlen multiplizieren' }, { m: `${BOX} = ${m * n} : ${n} = ${m}`, noeq: true }] });
+}
+function mc6() {
+  const [m, n] = pick([[3, 2], [2, 3], [2, 2], [4, 2], [2, 4]]), v1 = 2 ** (m * n), v2 = 2 ** (m ** n);
+  return cmpTask(6, Q(v1), Q(v2), `(2${supH(m)})${supH(n)}`, `2<sup>${m}<sup>${n}</sup></sup>`, `(2${supH(m)})${supH(n)} = 2${supH(`${m} · ${n}`)} = 2${supH(m * n)}. Bei 2<sup>${m}<sup>${n}</sup></sup> wird zuerst ${m}${supH(n)} = ${m ** n} gerechnet: 2${supH(m ** n)}.`);
+}
+function gen6(l) {
+  const r = rnd();
+  if (l === 1) return pp6(Q(r < 0.15 ? 10 : ri(2, 9)), ri(2, 5), ri(2, 4));
+  if (l === 2) {
+    if (r < 0.65) return pp6(pick([() => Q(-ri(2, 9)), () => frac(2, 7), () => qneg(frac(2, 7))])(), ri(2, 5), ri(2, 4));
+    return pick([() => value6(Q(10), ri(1, 3), ri(2, 3)), () => value6(Q(-1), ri(2, 9), ri(2, 9)), () => value6(Q(1, 2), 2, 2), () => value6(Q(-2), 1, ri(2, 5)), () => value6(Q(2, 3), 1, 3)])();
+  }
+  if (r < 0.4) { const q = pick([Q(ri(2, 9)), Q(-ri(2, 5)), frac(2, 5)]), a = ri(2, 4), b = ri(2, 3), op = rnd() < 0.5 ? '·' : ':', c = op === '·' ? ri(1, 5) : ri(1, a * b - 1); return combo6(q, a, b, c, op); }
+  if (r < 0.65) return missExp6(ri(2, 9), ri(2, 6), ri(2, 4));
+  return mc6();
+}
+const S6EX = [{ label: '(2³)²', mode: 'regel' }, { label: '((−2)³)²', mode: 'neg' }, { label: '(2³)² oder 2^(3²)?', mode: 'turm' }];
+function explore6(e) {
+  if (e.mode === 'regel') {
+    const q = Q(2);
+    return [
+      { lab: 'Aufgabe', h: eqbig(`(${pH(q, 3)})${supH(2)}`), cap: `Die Potenz ${pH(q, 3)} wird noch einmal hoch 2 genommen.` },
+      { lab: 'Zweimal', h: eqbig(`${pH(q, 3)} · ${pH(q, 3)}`), cap: `Hoch 2 heißt: zweimal ${pH(q, 3)} als Faktor.` },
+      { lab: 'Faktoren', h: `<div class="row">${grpH(pH(q, 3), chips(q, 3, 'f'))}<span class="op">·</span>${grpH(pH(q, 3), chips(q, 3, 'f', 3), 'k2')}</div>`, cap: '2 Gruppen mit je 3 Faktoren: 2 · 3 = 6 Faktoren.' },
+      { lab: 'Regel', h: eqbig(`(${pH(q, 3)})${supH(2)} = ${supSum(q, [3, 2], '·')} = <b>${pH(q, 6)}</b>`, 'sm') + eqbig(`(a<sup>m</sup>)<sup>n</sup> = a<sup>m · n</sup>`, 'sm'), cap: 'Die Hochzahlen werden multipliziert.' },
+    ];
+  }
+  if (e.mode === 'neg') {
+    const q = Q(-2);
+    return [
+      { lab: 'Aufgabe', h: eqbig(`(${pH(q, 3)})${supH(2)}`), cap: 'Auch bei negativer Grundzahl gilt die Regel.' },
+      { lab: 'Regel', h: eqbig(`${supSum(q, [3, 2], '·')} = ${pH(q, 6)}`), cap: '3 · 2 = 6.' },
+      { lab: 'Wert', h: eqbig(`${pH(q, 6)} = <b>64</b>`), cap: `Gerade Hochzahl: positiv. Du kannst auch zuerst innen rechnen: ${pH(q, 3)} = −8 und (−8)² = 64.` },
+    ];
+  }
+  return [
+    { lab: 'Zwei Aufgaben', h: `<div class="duo"><div>${eqbig(`(2${supH(3)})${supH(2)}`)}<span class="gl">Klammer: Potenz hoch 2</span></div><div>${eqbig(`2<sup>3<sup>2</sup></sup>`)}<span class="gl">Hochzahl ist 3 hoch 2</span></div></div>`, cap: 'Bei einem „Potenzturm“ ohne Klammer wird von oben nach unten gerechnet.' },
+    { lab: 'Rechnen', h: `<div class="duo"><div>${eqbig(`2${supH('3 · 2')} = 2${supH(6)}`, 'sm')}</div><div>${eqbig(`2${supH(9)}`, 'sm')}</div></div>`, cap: 'Links werden die Hochzahlen multipliziert: 6. Rechts ist die Hochzahl 3² = 9.' },
+    { lab: 'Ergebnis', h: `<div class="duo"><div>${eqbig('= <b>64</b>')}</div><div>${eqbig('= <b>512</b>')}</div></div>`, cap: 'Ein großer Unterschied! Achte auf die Klammer.' },
+  ];
+}
+
+// =====================================================================
+// Station 7: Potenzen mit gleicher Hochzahl
+// =====================================================================
+function same7(a, c, n, op, asFrac) {
+  const r = op === '·' ? qmul(a, c) : qdiv(a, c), v = qpow(r, n);
+  const qd = op === '·' ? `${pH(a, n)} · ${pH(c, n)}` : asFrac ? F(pH(a, n), pH(c, n)) : `${pH(a, n)} : ${pH(c, n)}`;
+  return numTask({ st: 7, prompt: 'Berechne geschickt', q: qd, val: v, data: { a, c, n, op },
+    traps: [[tq(() => qpow(r, 2 * n)), 'Die Hochzahl bleibt gleich. Es werden nur die Grundzahlen verrechnet.']],
+    signMsg: `Prüfe das Vorzeichen: ${bH(r)} hoch ${n}.`,
+    wrongMsg: `Gleiche Hochzahl: Rechne zuerst die Grundzahlen ${op === '·' ? 'mal' : 'geteilt'}, dann potenziere.`,
+    lines: [{ m: qd }, { m: `(${qP(a)} ${op} ${qP(c)})${supH(n)}`, c: `gleiche Hochzahl: Grundzahlen ${op === '·' ? 'multiplizieren' : 'dividieren'}` }, { m: pH(r, n) }, { m: qmH(v) }] });
+}
+function asPow7(a, c, n) {
+  const r = qmul(a, c), qd = `${pH(a, n)} · ${pH(c, n)}`;
+  return powTask({ st: 7, prompt: 'Schreib als eine Potenz', q: qd, want: { b: r, e: n }, data: {},
+    ptraps: [[r, 2 * n, 'Die Hochzahl bleibt gleich. Nur die Grundzahlen werden multipliziert.'], [qadd(a, c), n, 'Die Grundzahlen werden multipliziert, nicht addiert.']],
+    expMsg: 'Die Grundzahl stimmt. Die Hochzahl bleibt aber gleich.',
+    lines: [{ m: qd }, { m: `(${qP(a)} · ${qP(c)})${supH(n)}`, c: 'gleiche Hochzahl: Grundzahlen multiplizieren' }, { m: pH(r, n) }] });
+}
+function mc7() {
+  const a = ri(2, 6); let c; do c = ri(2, 6); while (c === a);
+  const n = ri(2, 5), m = n + ri(1, 2);
+  const opts = shuffle([
+    { h: `${pH(Q(a), n)} · ${pH(Q(c), n)}`, ok: true },
+    { h: `${pH(Q(a), n)} · ${pH(Q(c), m)}`, msg: 'Die Hochzahlen sind verschieden. Man darf die Grundzahlen nur zusammenfassen, wenn die Hochzahl gleich ist.' },
+    { h: `${pH(Q(a), n)} + ${pH(Q(c), n)}`, msg: 'Bei einer Summe gilt die Regel nicht. Nur beim Malnehmen und Dividieren.' },
+  ]);
+  return { st: 7, kind: 'mc', prompt: 'Welche Aufgabe kann man zu einer einzigen Potenz zusammenfassen?', q: 'Nur eine ist richtig.', opts, sol: '', solH: `${pH(Q(a), n)} · ${pH(Q(c), n)} = ${pH(Q(a * c), n)}`, data: {},
+    lines: [{ m: `${pH(Q(a), n)} · ${pH(Q(c), n)} = (${a} · ${c})${supH(n)} = ${pH(Q(a * c), n)}`, noeq: true, c: 'gleiche Hochzahl, malnehmen' }] };
+}
+function gen7(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.6) { const [a, c] = pick([[2, 5], [5, 2], [4, 5], [5, 20], [2, 50], [4, 25], [25, 4], [20, 5]]); return same7(Q(a), Q(c), a * c >= 100 ? ri(2, 3) : ri(2, 4), '·'); }
+    const [a, c] = pick([[2, 3], [3, 4], [2, 7], [5, 3], [2, 5], [3, 3]]); return asPow7(Q(a), Q(c), ri(3, 6));
+  }
+  if (l === 2) {
+    if (r < 0.45) { const [a, c] = pick([[12, 4], [15, 5], [18, 6], [20, 4], [21, 7], [36, 12], [100, 25], [14, 7], [-18, 6], [24, -8], [-10, 5]]); return same7(Q(a), Q(c), ri(2, 4), ':', rnd() < 0.5); }
+    if (r < 0.75) { const [a, c] = pick([[-2, 5], [-4, 25], [5, -2], [-5, -2], [-20, 5]]); return same7(Q(a), Q(c), ri(2, 3), '·'); }
+    const [a, c] = pick([[Q(1, 3), Q(6)], [Q(3, 4), Q(4)], [Q(2, 3), Q(3, 2)], [Q(5), Q(2, 5)], [Q(1, 2), Q(8)]]); return same7(a, c, ri(2, 4), '·');
+  }
+  if (r < 0.3) return mc7();
+  const [a, c, op] = pick([[Q(-1, 2), Q(4), '·'], [Q(-1, 5), Q(10), '·'], [Q(2, 3), Q(-3, 2), '·'], [Q(3, 4), Q(3, 8), ':'], [Q(5, 6), Q(5, 12), ':'], [Q(-2, 3), Q(1, 3), ':'], [Q(1, 3), Q(-9), '·'], [Q(9, 10), Q(3, 10), ':']]);
+  return same7(a, c, ri(2, 5), op, op === ':' && rnd() < 0.5);
+}
+const S7EX = [{ label: '2³ · 5³', mode: 'mal' }, { label: '12³ : 4³', mode: 'durch' }, { label: '(⅓)⁴ · 6⁴', mode: 'bruch' }];
+function explore7(e) {
+  if (e.mode === 'mal') {
+    const p = i => `<span class="pair"><span class="row">${chip('2', `a${i}`)}<span class="op">·</span>${chip('5', `b${i}`, 'k2')}</span><span class="gl">= 10</span></span>`;
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${pH(Q(2), 3)} · ${pH(Q(5), 3)}`), cap: 'Verschiedene Grundzahlen, aber die gleiche Hochzahl 3.' },
+      { lab: 'Ausschreiben', h: `<div class="row">${grpH(pH(Q(2), 3), [0, 1, 2].map(i => chip('2', `a${i}`)).join('<span class="op">·</span>'))}<span class="op">·</span>${grpH(pH(Q(5), 3), [0, 1, 2].map(i => chip('5', `b${i}`, 'k2')).join('<span class="op">·</span>'), 'k2')}</div>`, cap: 'Drei Faktoren 2 und drei Faktoren 5.' },
+      { lab: 'Paare', h: `<div class="row">${[0, 1, 2].map(p).join('<span class="op">·</span>')}</div>`, cap: 'Beim Malnehmen darf man die Reihenfolge ändern: Bilde Paare 2 · 5 = 10.' },
+      { lab: 'Regel', h: eqbig(`(2 · 5)${supH(3)} = 10${supH(3)} = <b>1000</b>`, 'sm') + eqbig(`a<sup>n</sup> · b<sup>n</sup> = (a · b)<sup>n</sup>`, 'sm'), cap: 'Gleiche Hochzahl: Die Grundzahlen werden multipliziert, die Hochzahl bleibt. So kann man oft geschickt rechnen.' },
+    ];
+  }
+  if (e.mode === 'durch') return [
+    { lab: 'Aufgabe', h: eqbig(`${pH(Q(12), 3)} : ${pH(Q(4), 3)}`), cap: '12 hoch 3 auszurechnen ist mühsam. Es geht einfacher.' },
+    { lab: 'Bruch', h: eqbig(`${F(pH(Q(12), 3), pH(Q(4), 3))} = (${F(12, 4)})${supH(3)}`), cap: 'Gleiche Hochzahl: Man darf zuerst die Grundzahlen dividieren.' },
+    { lab: 'Ergebnis', h: eqbig(`${pH(Q(3), 3)} = <b>27</b>`) + eqbig(`a<sup>n</sup> : b<sup>n</sup> = (a : b)<sup>n</sup>`, 'sm'), cap: '12 : 4 = 3, und 3 hoch 3 ist 27.' },
+  ];
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${pH(Q(1, 3), 4)} · ${pH(Q(6), 4)}`), cap: 'Ein Bruch und eine ganze Zahl mit gleicher Hochzahl.' },
+    { lab: 'Zusammen', h: eqbig(`(${F(1, 3)} · 6)${supH(4)}`), cap: `Zuerst die Grundzahlen: ${F(1, 3)} · 6 = 2.` },
+    { lab: 'Ergebnis', h: eqbig(`${pH(Q(2), 4)} = <b>16</b>`), cap: 'Viel einfacher, als zuerst 1/81 und 1296 auszurechnen.' },
+  ];
+}
+
+// =====================================================================
+// Station 8: Rechenreihenfolge
+// =====================================================================
+const HVP = 'Hoch vor Punkt: Zuerst wird potenziert, dann malgenommen.';
+const HVS = 'Hoch vor Strich: Zuerst wird potenziert, dann addiert oder subtrahiert.';
+function gen8(l) {
+  for (let tries = 0; ; tries++) {
+    let t;
+    if (l === 1) {
+      const a = ri(2, 6), b = ri(2, 5), m = ri(2, 4), n = ri(2, 4);
+      t = pick([
+        () => stepTask(8, `${a} * ${b}^2`, [[(a * b) ** 2, HVP]]),
+        () => stepTask(8, `${a} + ${b}^3`, [[(a + b) ** 3, HVS]]),
+        () => stepTask(8, `${a}^2 - ${b}^2`, [[(a - b) ** 2, HVS], [2 * a - 2 * b, 'Hoch 2 heißt nicht mal 2.']]),
+        () => stepTask(8, `2^${m} + 2^${n}`, [[2 ** (m + n), 'Eine Summe von Potenzen darf man nicht zusammenfassen. Rechne jede Potenz einzeln aus.']]),
+        () => stepTask(8, `${ri(2, 9)}^0 + 0^${ri(2, 5)} + 1^${ri(2, 9)}`, [[3, '0 hoch einer Zahl (größer als 0) ist 0.'], [1, 'Jede Zahl (außer 0) hoch 0 ist 1, und 1 hoch irgendwas ist auch 1.']]),
+        () => stepTask(8, `${ri(20, 60)} - ${b}^2 * 2`, []),
+      ])();
+    } else if (l === 2) {
+      const c = ri(2, 6), e = ri(2, 4), n = ri(2, 20), k = ri(1, 3), a = ri(1, 5), b = ri(2, 7);
+      t = pick([
+        () => stepTask(8, `(-2)^${e} + ${c} * 2^2`, [[(-2) ** e + (c * 2) ** 2, HVP]]),
+        () => stepTask(8, `(1/2)^${e} * ${2 ** e * k} - ${c}`, []),
+        () => stepTask(8, `${c} - (-1)^${n} * 2^3`, [[c + (-1) ** n * 8, 'Achte auf das Vorzeichen von (−1) hoch ' + n + '.']]),
+        () => (a === b ? null : stepTask(8, `(${a} - ${b})^3`, [[a ** 3 - b ** 3, 'Zuerst die Klammer ausrechnen, dann potenzieren.']])),
+        () => stepTask(8, `-${c}^2 + (-${c})^2 * 2`, [[3 * c * c, `${MI}${c}${supH(2)} ist ${MI}${c * c}: ohne Klammer bleibt das Minus.`]]),
+        () => stepTask(8, `(2/3)^2 * ${9 * k} - (-1)^3`, []),
+      ])();
+    } else {
+      const k = ri(1, 3), c = ri(2, 4);
+      t = pick([
+        () => stepTask(8, `2^5 * 2^3 : 2^6 + ${c}^0`, [[4, `${c} hoch 0 ist 1, nicht 0.`]]),
+        () => stepTask(8, `4 * (1/2)^3 - (-2)^2`, [[Q(9, 2), '(−2)² ist positiv, davor steht aber ein Minus.']]),
+        () => stepTask(8, `(2/3)^2 * (3/2)^3 - ${k}`, []),
+        () => stepTask(8, `10^3 : 10^2 - ${c}^2`, []),
+        () => stepTask(8, `((-1)^3)^2 + 2^3 * (1/2)^2`, []),
+        () => stepTask(8, `(-${c})^3 : ${c}^2 + 3^2`, [[c + 9, `(${MI}${c})${supH(3)} ist negativ.`]]),
+        () => stepTask(8, `-(${k + 1}/3)^2 + 1/9`, []),
+      ])();
+    }
+    if (t && (abs(t.val[0]) <= 5000 && t.val[1] <= 100 || tries > 30)) return t;
+  }
+}
+function explore8(t) {
+  const { steps } = evalSteps(t.data.src);
+  return steps.map((s, i) => ({ lab: s.lab, cap: s.cap,
+    h: `<div class="calc">${steps.slice(0, i + 1).map((x, j) => `<div class="ln${j === i ? ' now' : ''}"><span class="lm">${j ? '= ' : ''}${x.h}</span><span class="lc">${j ? x.lab : ''}</span></div>`).join('')}</div>` }));
+}
+
+// =====================================================================
+// Station 9: Zehnerpotenzen und Sachaufgaben
+// =====================================================================
+const dec = (i, d) => (d ? `${Math.trunc(i / 10 ** d)},${String(i % 10 ** d).padStart(d, '0')}` : String(i));
+function tenVal9(i, d, n) {   // i·10^(−d) · 10^n, z. B. 35 mit d=1 → 3,5
+  const v = i * 10 ** (n - d), a = dec(i, d), q = `${a} · 10${supH(n)}`;
+  return numTask({ st: 9, prompt: 'Schreib als Zahl ohne Potenz', q, val: v, data: {},
+    traps: [[iq(i * 10 ** (n - d - 1)), 'Zähle noch einmal: Das Komma wandert so viele Stellen nach rechts, wie die Hochzahl angibt.'], [i * 10 ** (n - d + 1), 'Zähle noch einmal: Das Komma wandert so viele Stellen nach rechts, wie die Hochzahl angibt.'], [d ? i * 10 ** n : null, `Bei ${a} wandert das Komma ${n} Stellen nach rechts. Häng nicht einfach ${n} Nullen an ${i} an.`], [i * 10 * n / 10 ** d === Math.round(i * 10 * n / 10 ** d) ? i * 10 * n / 10 ** d : null, `10 hoch ${n} ist nicht 10 · ${n}.`]],
+    lines: [{ m: q }, { m: `${a} · ${big(10 ** n)}`, c: `10${supH(n)} = 1 mit ${n} Nullen` }, { m: big(v), c: d ? `Komma ${n} Stellen nach rechts` : '' }] });
+}
+function tenExp9(i, d, n) {
+  const v = i * 10 ** (n - d), a = dec(i, d), zeros = String(v).match(/0*$/)[0].length;
+  return numTask({ st: 9, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${big(v)} = ${a} · 10<sup>${BOXS}</sup>`, val: n, data: {},
+    traps: [[zeros !== n ? zeros : null, 'Zähle nicht die Nullen, sondern die Stellen, um die das Komma wandert.'], [n + 1, 'Zähle die Stellen noch einmal.'], [n - 1, 'Zähle die Stellen noch einmal.']],
+    lines: [{ m: `${big(v)} : ${big(10 ** n)} = ${a}`, noeq: true, c: `das Komma wandert ${n} Stellen nach links` }, { m: `${big(v)} = ${a} · 10${supH(n)}`, noeq: true }] });
+}
+const S9 = {
+  1: [
+    () => { const n = pick([5, 10, 20, 25, 50, 100]), h = ri(3, 6); return { text: `In einer Schale sind ${n} Bakterien. Ihre Anzahl verdoppelt sich jede Stunde. Wie viele Bakterien sind es nach ${h} Stunden?`, src: `${n} * 2^${h}`, unit: 'Bakterien', say: v => `Nach ${h} Stunden sind es ${qH(v)} Bakterien.`, traps: [[n * 2 * h, `Jede Stunde mal 2. Nach ${h} Stunden ist das mal 2${supH(h)}, nicht mal 2 · ${h}.`], [2 ** h, `Am Anfang sind es schon ${n} Bakterien.`], [n * 2 ** (h - 1), 'Zähle die Stunden noch einmal: Jede Stunde wird einmal verdoppelt.']] }; },
+    () => { const a = ri(2, 12); return { text: `Ein Würfel hat die Kantenlänge ${a} cm. Wie groß ist sein Volumen in cm³?`, src: `${a}^3`, unit: 'cm³', say: v => `Das Volumen ist ${qH(v)} cm³.`, traps: [[3 * a, 'Volumen eines Würfels: Kante hoch 3, also Kante · Kante · Kante.'], [a * a, 'Das ist die Fläche einer Seite. Das Volumen ist Kante hoch 3.'], [6 * a * a, 'Das ist die Oberfläche. Gesucht ist das Volumen: Kante hoch 3.']] }; },
+    () => { const a = ri(11, 25); return { text: `Ein quadratisches Feld ist ${a} m lang und ${a} m breit. Wie groß ist seine Fläche in m²?`, src: `${a}^2`, unit: 'm²', say: v => `Die Fläche ist ${qH(v)} m².`, traps: [[4 * a, 'Das ist der Umfang. Die Fläche ist Seite hoch 2.'], [2 * a, 'Hoch 2 heißt nicht mal 2.']] }; },
+  ],
+  2: [
+    () => { const d = ri(3, 5), V = 2 ** d * ri(2, 9); return { text: `In einem Fass sind ${V} Liter Wasser. Jeden Tag verdunstet die Hälfte des Wassers, das noch drin ist. Wie viele Liter sind nach ${d} Tagen noch im Fass?`, src: `${V} * (1/2)^${d}`, unit: 'Liter', say: v => `Nach ${d} Tagen sind noch ${qH(v)} Liter im Fass.`, traps: [[V - d * V / 2, 'Es verdunstet jeden Tag die Hälfte vom Rest, nicht jeden Tag gleich viel.'], [V / 2, 'Das ist erst nach einem Tag.']] }; },
+    () => { const n = ri(3, 6); return { text: `Lea schickt eine Nachricht an 3 Freundinnen. Jede davon schickt sie an 3 weitere Personen weiter, und so weiter. Wie viele Personen bekommen die Nachricht in der ${n}. Runde?`, src: `3^${n}`, unit: 'Personen', say: v => `In der ${n}. Runde bekommen ${qH(v)} Personen die Nachricht.`, traps: [[3 * n, `Jede Runde wird mal 3 genommen: 3${supH(n)}, nicht 3 · ${n}.`], [3 ** (n - 1), 'Zähle die Runden noch einmal: In der 1. Runde sind es 3 Personen.']] }; },
+    () => { const A = pick([Q(3, 2), Q(1, 2), Q(2, 3), Q(5, 2), Q(4, 3)]); return { text: `Ein Würfel hat die Kantenlänge ${qH(A)} m. Wie groß ist sein Volumen in m³?`, src: `(${qS(A)})^3`, unit: 'm³', say: v => `Das Volumen ist ${qmH(v)} m³.`, traps: [[qmul(A, Q(3)), 'Hoch 3 heißt nicht mal 3.'], [Q(A[0] ** 3, A[1]), 'Auch der Nenner wird hoch 3 genommen.']] }; },
+  ],
+  3: [
+    () => { const n = ri(8, 14); return { text: `Auf das 1. Feld eines Schachbretts legt man 1 Reiskorn, auf das 2. Feld 2 Körner, auf das 3. Feld 4 Körner. Auf jedem Feld liegt doppelt so viel wie auf dem vorigen. Wie viele Körner liegen auf dem ${n}. Feld?`, src: `2^${n - 1}`, unit: 'Körner', say: v => `Auf dem ${n}. Feld liegen ${qH(v)} Körner.`, traps: [[2 ** n, `Auf dem 1. Feld liegt 2${supH(0)} = 1 Korn, auf dem 2. Feld 2${supH(1)}. Auf dem ${n}. Feld also 2${supH(n - 1)}.`], [2 * n, 'Verdoppeln heißt mal 2 bei jedem Feld.']] }; },
+    () => { const k = ri(2, 5); return { text: `Alle Kanten eines Würfels werden ${k}-mal so lang. Wie viel-mal so groß wird das Volumen?`, src: `${k}^3`, unit: 'mal', say: v => `Das Volumen wird ${qH(v)}-mal so groß.`, traps: [[k, 'Das Volumen hängt von allen drei Kanten ab: Länge, Breite und Höhe.'], [3 * k, `Jede der drei Kanten wird ${k}-mal so lang: ${k} · ${k} · ${k}.`], [k * k, 'Das wäre die Fläche einer Seite. Beim Volumen kommt noch die Höhe dazu.']] }; },
+    () => { const s = ri(2, 4); return { text: `Licht legt in einer Sekunde etwa 3 · 10${supH(5)} km zurück. Wie viele km sind das in 10${supH(s)} Sekunden?`, src: `3 * 10^5 * 10^${s}`, unit: 'km', say: v => `Das sind ${qH(v)} km, also 3 · 10${supH(5 + s)} km.`, traps: [[3 * 10 ** (5 * s), 'Gleiche Grundzahl 10: Die Hochzahlen werden addiert, nicht multipliziert.'], [3 * 10 ** (5 + s - 1), 'Zähle die Nullen noch einmal.']] }; },
+    () => { const [h0, A, n] = pick([[81, Q(2, 3), 3], [64, Q(3, 4), 2], [125, Q(2, 5), 2], [32, Q(1, 2), 4], [27, Q(1, 3), 2]]); return { text: `Ein Ball fällt aus ${h0} cm Höhe. Nach jedem Aufprall springt er nur noch ${qH(A)} so hoch wie vorher. Wie hoch springt er nach dem ${n}. Aufprall?`, src: `${h0} * (${qS(A)})^${n}`, unit: 'cm', say: v => `Nach dem ${n}. Aufprall springt er ${qmH(v)} cm hoch.`, traps: [[qmul(Q(h0), qmul(A, Q(n))), `Bei jedem Aufprall wird mal ${qH(A)} genommen, also hoch ${n}, nicht mal ${n}.`]] }; },
+  ],
+};
+function make9(o) {
+  const r = evalSteps(o.src), v = r.value;
+  const lines = [{ m: r.steps[0].h, c: 'als Rechnung', noeq: true }].concat(r.steps.slice(1).map(s => ({ m: s.h }))).concat([{ m: o.say(v), noeq: true, c: 'Antwort' }]);
+  return numTask({ st: 9, prompt: 'Löse die Sachaufgabe', q: o.text, qText: true, after: o.unit === 'mal' ? 'Gib nur die Zahl ein.' : `Gib nur die Zahl ein (in ${o.unit}).`, val: v, traps: o.traps, data: o, lines,
+    wrongMsg: 'Das stimmt noch nicht. Überlege: Wie oft wird mit der gleichen Zahl malgenommen? Das ist die Hochzahl.' });
+}
+function gen9(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.3) return tenVal9(ri(2, 9), 0, ri(3, 7));
+    if (r < 0.5) { const n = ri(4, 9); return tenExp9(1, 0, n); }
+    return make9(pick(S9[1])());
+  }
+  if (l === 2) {
+    if (r < 0.25) return tenVal9(ri(11, 99), 1, ri(3, 8));
+    if (r < 0.5) return tenExp9(pick([ri(11, 99), ri(2, 9) * 10 + 5]), 1, ri(4, 9));
+    return make9(pick(S9[2])());
+  }
+  if (r < 0.25) return pick([
+    () => numTask({ st: 9, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `Die Sonne ist etwa ${big(150000000)} km von der Erde entfernt. Das sind 1,5 · 10<sup>${BOXS}</sup> km.`, qText: true, val: 8, data: {}, traps: [[7, 'Das Komma wandert von 1,5 aus 8 Stellen nach rechts. Zähle die Stellen, nicht die Nullen.']], lines: [{ m: `${big(150000000)} = 1,5 · ${big(100000000)}`, noeq: true }, { m: `= 1,5 · 10${supH(8)}`, noeq: true }] }),
+    () => numTask({ st: 9, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `Auf der Erde leben etwa 8 Milliarden Menschen. Das sind 8 · 10<sup>${BOXS}</sup> Menschen.`, qText: true, val: 9, data: {}, traps: [[6, 'Eine Million hat 6 Nullen, eine Milliarde hat 9 Nullen.'], [8, 'Eine Milliarde hat 9 Nullen.']], lines: [{ m: `8 Milliarden = ${big(8000000000)}`, noeq: true }, { m: `= 8 · 10${supH(9)}`, noeq: true, c: '1 Milliarde = 10⁹' }] }),
+  ])();
+  return make9(pick(S9[3])());
+}
+const S9EX = [{ label: '3,5 · 10⁶', mode: 'komma' }, { label: 'Verdoppeln', mode: 'dopp' }, { label: 'Kante mal 2', mode: 'wuerfel' }];
+function explore9(e) {
+  if (e.mode === 'komma') return [
+    { lab: 'Zahl', h: eqbig(big(3500000)), cap: 'Große Zahlen schreibt man oft kürzer mit einer Zehnerpotenz.' },
+    { lab: 'Komma', h: eqbig(`3,5 · ${big(1000000)}`), cap: 'Setze das Komma nach der ersten Ziffer: 3,5. Dann musst du mit 1 000 000 malnehmen, um wieder auf die Zahl zu kommen.' },
+    { lab: 'Potenz', h: eqbig(`3,5 · 10${supH(6)}`), cap: '1 000 000 = 10 hoch 6. Das Komma ist um 6 Stellen gewandert.' },
+    { lab: 'Zurück', h: eqbig(`4,2 · 10${supH(5)} = ${big(420000)}`, 'sm'), cap: 'Umgekehrt: Hochzahl 5 heißt, das Komma wandert 5 Stellen nach rechts. Fehlende Stellen werden mit Nullen gefüllt.' },
+  ];
+  if (e.mode === 'dopp') {
+    const rows = [0, 1, 2, 3, 4, 5].map(h => ({ lab: `${h} h`, v: 50 * 2 ** h, txt: big(50 * 2 ** h) }));
+    return [
+      { lab: 'Start', h: gbH(rows.slice(0, 2)), cap: '50 Bakterien verdoppeln sich jede Stunde. Nach 1 Stunde: 50 · 2 = 100.' },
+      { lab: 'Wachsen', h: gbH(rows), cap: 'Jede Stunde kommt ein Faktor 2 dazu. Nach 5 Stunden: 50 · 2 · 2 · 2 · 2 · 2.' },
+      { lab: 'Potenz', h: eqbig(`50 · 2${supH(5)} = 50 · 32 = <b>1600</b>`, 'sm'), cap: 'Die Anzahl der Stunden ist die Hochzahl. So ein Wachstum wird sehr schnell sehr groß.' },
+    ];
+  }
+  return [
+    { lab: 'Kante 1', h: `<div class="anat">${cubeH(1)}${eqbig(`1${supH(3)} = 1`, 'sm')}</div>`, cap: 'Ein Würfel mit Kantenlänge 1 hat das Volumen 1.' },
+    { lab: 'Kante 2', h: `<div class="anat">${cubeH(2)}${eqbig(`2${supH(3)} = 8`, 'sm')}</div>`, cap: 'Verdoppelt man alle Kanten, passen 2 · 2 · 2 = 8 kleine Würfel hinein.' },
+    { lab: 'Kante 3', h: `<div class="anat">${cubeH(3)}${eqbig(`3${supH(3)} = 27`, 'sm')}</div>`, cap: 'Bei dreifacher Kante wird das Volumen 3 hoch 3 = 27-mal so groß. Nicht nur 3-mal!' },
+  ];
+}
+
+// =====================================================================
+// Station 10: Kleine Zahlen – Zehnerpotenzen mit negativer Hochzahl
+// =====================================================================
+function decStr(q) {
+  const [n, d] = q; let k = 0;
+  while (k < 20 && (10 ** k) % d !== 0) k++;
+  const N = n * (10 ** k / d), s = String(abs(N)).padStart(k + 1, '0');
+  return (N < 0 ? '-' : '') + s.slice(0, s.length - k) + (k ? ',' + s.slice(s.length - k) : '');
+}
+const decH = q => decStr(q).replace('-', MI);
+const p10 = e => (e >= 0 ? Q(10 ** e) : Q(1, 10 ** -e));
+const sciQ = (i, d, e) => qmul(Q(i, 10 ** d), p10(e));
+const sciH = (i, d, e) => `${dec(i, d)} · 10${supH(e)}`;
+const eP = e => (e < 0 ? `(${MI}${-e})` : String(e));
+const NEGPOS = 'Eine negative Hochzahl macht die Zahl nicht negativ, sondern klein: Sie liegt zwischen 0 und 1.';
+const TEN = Q(10);
+function decOf10(n) {
+  const v = p10(-n);
+  return numTask({ st: 10, prompt: 'Schreib als Dezimalzahl', q: `10${supH(-n)}`, val: v, form: 'dec', data: {},
+    traps: [[-(10 ** n), NEGPOS], [-10 * n, `${NEGPOS} Hoch −${n} heißt auch nicht mal −${n}.`], [p10(-n - 1), `Die 1 steht an der ${n}. Stelle nach dem Komma.`], [n > 1 ? p10(-n + 1) : null, `Die 1 steht an der ${n}. Stelle nach dem Komma.`], [10 ** n, 'Bei negativer Hochzahl ist die Zahl kleiner als 1.']],
+    lines: [{ m: `10${supH(-n)}` }, { m: F(1, `10${supH(n)}`), c: 'negative Hochzahl: 1 geteilt durch 10 hoch n' }, { m: F(1, big(10 ** n)) }, { m: decH(v), c: `${n} Stellen nach dem Komma, die letzte ist die 1` }] });
+}
+function frac10(n) {
+  const v = p10(-n);
+  return numTask({ st: 10, prompt: 'Schreib als Bruch', q: `10${supH(-n)}`, val: v, data: {},
+    traps: [[-(10 ** n), NEGPOS], [-10 * n, NEGPOS], [Q(1, 10 * n), `10 hoch ${n} ist ${big(10 ** n)}, nicht 10 · ${n}.`], [Q(-1, 10 ** n), NEGPOS]],
+    lines: [{ m: `10${supH(-n)}` }, { m: F(1, `10${supH(n)}`), c: 'negative Hochzahl: Kehrwert der positiven Potenz' }, { m: F(1, big(10 ** n)) }] });
+}
+function findExp10(i, d, e) {
+  const v = sciQ(i, d, e), ds = decStr(v), zeros = (ds.match(/0/g) || []).length;
+  const right = i === 1 && d === 0 ? `10<sup>${BOXS}</sup>` : `${dec(i, d)} · 10<sup>${BOXS}</sup>`;
+  return numTask({ st: 10, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${decH(v)} = ${right}`, val: e, data: {},
+    traps: [[e < 0 ? -e : null, 'Die Zahl ist kleiner als 1. Darum ist die Hochzahl negativ.'], [e < 0 && zeros !== -e ? -zeros : null, 'Zähle nicht die Nullen, sondern die Stellen, um die das Komma wandert.'], [e + 1, 'Zähle die Stellen noch einmal: Das Komma wandert, bis es hinter der ersten Ziffer steht, die nicht 0 ist.'], [e - 1, 'Zähle die Stellen noch einmal: Das Komma wandert, bis es hinter der ersten Ziffer steht, die nicht 0 ist.']],
+    lines: [{ m: `${decH(v)} → ${dec(i, d)}`, noeq: true, c: `das Komma wandert ${abs(e)} Stellen nach ${e < 0 ? 'rechts' : 'links'}` }, { m: `${decH(v)} = ${sciH(i, d, e)}`, noeq: true, c: e < 0 ? 'kleine Zahl: negative Hochzahl' : '' }] });
+}
+function sciToDec10(i, d, e) {
+  const v = sciQ(i, d, e);
+  return numTask({ st: 10, prompt: 'Schreib als Dezimalzahl', q: sciH(i, d, e), val: v, form: 'dec', data: {},
+    traps: [[sciQ(i, d, e + 1), `Zähle noch einmal: Das Komma wandert genau ${-e} Stellen nach links.`], [sciQ(i, d, e - 1), `Zähle noch einmal: Das Komma wandert genau ${-e} Stellen nach links.`], [tq(() => sciQ(i, d, -e)), 'Bei negativer Hochzahl wandert das Komma nach links, die Zahl wird kleiner.'], [tq(() => qneg(sciQ(i, d, -e))), NEGPOS], [qneg(v), NEGPOS]],
+    lines: [{ m: sciH(i, d, e) }, { m: `${dec(i, d)} : ${big(10 ** -e)}`, c: `10${supH(e)} = ${F(1, big(10 ** -e))}: durch ${big(10 ** -e)} teilen` }, { m: decH(v), c: `Komma ${-e} Stellen nach links` }] });
+}
+const PRE = { k: ['Kilo', 3], M: ['Mega', 6], G: ['Giga', 9], m: ['Milli', -3], 'µ': ['Mikro', -6], n: ['Nano', -9] };
+function vors10() {
+  const [p, u] = pick([['m', 'm'], ['µ', 'm'], ['n', 'm'], ['m', 'g'], ['m', 's'], ['µ', 's'], ['n', 's'], ['m', 'l'], ['k', 'm'], ['M', 'W'], ['G', 'B'], ['µ', 'g']]);
+  const k = ri(2, 9), [name, e] = PRE[p];
+  return numTask({ st: 10, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${k} ${p}${u} = ${k} · 10<sup>${BOXS}</sup> ${u}`, val: e, data: {},
+    traps: [[-e, e < 0 ? `${name} bedeutet einen Teil der Einheit: Die Hochzahl ist negativ.` : `${name} bedeutet ein Vielfaches der Einheit: Die Hochzahl ist positiv.`], [e < 0 ? e + 3 : e - 3, `${name} ist 10${supH(e)}. Präg dir die Vorsilben ein: Milli 10${supH(-3)}, Mikro 10${supH(-6)}, Nano 10${supH(-9)}.`]],
+    lines: [{ m: `1 ${p}${u} = 10${supH(e)} ${u}`, noeq: true, c: `${name} = 10${supH(e)}` }, { m: `${k} ${p}${u} = ${k} · 10${supH(e)} ${u}`, noeq: true }] });
+}
+function cmp10() {
+  for (;;) {
+    const i1 = ri(1, 9), i2 = ri(1, 9), e1 = -ri(2, 8), e2 = e1 + pick([-1, 0, 1, 2, -2]);
+    const A = sciQ(i1, 0, e1), B = sciQ(i2, 0, e2);
+    if (qeq(A, B)) continue;
+    return cmpTask(10, A, B, sciH(i1, 0, e1), sciH(i2, 0, e2), `${sciH(i1, 0, e1)} = ${decH(A)} und ${sciH(i2, 0, e2)} = ${decH(B)}. ${e1 === e2 ? 'Gleiche Hochzahl: Vergleiche die Zahlen davor.' : `Die Hochzahl entscheidet zuerst: ${eP(Math.max(e1, e2))} ist größer als ${eP(Math.min(e1, e2))}.`}`);
+  }
+}
+function rule10(kind) {
+  let a, b, e, qd, op, parts;
+  if (kind === 'mul') { do { a = ri(-9, 9); b = ri(-9, 9); } while (a >= 0 && b >= 0 || !a || !b); e = a + b; qd = `10${supH(a)} · 10${supH(b)}`; op = '+'; parts = [a, eP(b)]; }
+  else if (kind === 'div') { do { a = ri(-6, 8); b = ri(-6, 9); } while (a - b >= 0 || a === b || !b); e = a - b; qd = `10${supH(a)} : 10${supH(b)}`; op = '−'; parts = [a, eP(b)]; }
+  else { a = -ri(1, 4); b = ri(2, 4); e = a * b; qd = `(10${supH(a)})${supH(b)}`; op = '·'; parts = [eP(a), b]; }
+  const pr = parts.map(x => (typeof x === 'number' && x < 0 ? MI + -x : x));
+  return powTask({ st: 10, prompt: 'Schreib als eine Zehnerpotenz', q: qd, want: { b: TEN, e }, after: 'Eine negative Hochzahl gibst du so ein: 10^-3.', data: {},
+    ptraps: [[TEN, kind === 'pow' ? a + b : a * b, kind === 'pow' ? 'Bei einer Potenz hoch eine Hochzahl werden die Hochzahlen multipliziert.' : kind === 'mul' ? 'Beim Multiplizieren werden die Hochzahlen addiert, nicht multipliziert.' : 'Beim Dividieren werden die Hochzahlen subtrahiert.'],
+      [TEN, kind === 'mul' ? a - b : kind === 'div' ? a + b : -e, kind === 'mul' ? 'Beim Multiplizieren werden die Hochzahlen addiert.' : kind === 'div' ? `Erste minus zweite Hochzahl: ${a} − ${eP(b)}. Minus minus gibt plus.` : 'Prüfe das Vorzeichen der Hochzahl: negativ mal positiv gibt negativ.'],
+      [Q(100), e, 'Die Grundzahl 10 bleibt gleich.']],
+    expMsg: 'Die Grundzahl 10 stimmt. Rechne die Hochzahl noch einmal nach, achte auf die Vorzeichen.',
+    lines: [{ m: qd }, { m: `10<sup>${pr.join(` ${op} `)}</sup>`, c: kind === 'mul' ? 'Hochzahlen addieren' : kind === 'div' ? 'Hochzahlen subtrahieren' : 'Hochzahlen multiplizieren' }, { m: `10${supH(e)}` }] });
+}
+const OBJ = [['Ein Bakterium ist etwa', 'lang', 2, -6], ['Ein rotes Blutkörperchen hat einen Durchmesser von etwa', '', 7, -6], ['Ein menschliches Haar ist etwa', 'dick', 8, -5], ['Ein Virus ist etwa', 'groß', 1, -7], ['Ein Wasserstoffatom hat einen Durchmesser von etwa', '', 1, -10], ['Ein Pollenkorn ist etwa', 'groß', 3, -5], ['Eine Zelle der Mundschleimhaut ist etwa', 'groß', 6, -5]];
+function sach10(kind) {
+  if (kind === 'exp') {
+    const [s, w, i, e] = pick(OBJ), v = sciQ(i, 0, e);
+    return numTask({ st: 10, prompt: 'Welche Hochzahl gehört in das Kästchen?', q: `${s} ${decH(v)} m${w ? ' ' + w : ''}. Das sind ${i} · 10<sup>${BOXS}</sup> m.`, qText: true, val: e, data: {},
+      traps: [[-e, 'Die Zahl ist kleiner als 1. Darum ist die Hochzahl negativ.'], [e + 1, 'Zähle die Stellen, um die das Komma wandert, noch einmal.'], [e - 1, 'Zähle die Stellen, um die das Komma wandert, noch einmal.']],
+      lines: [{ m: `${decH(v)} m = ${sciH(i, 0, e)} m`, noeq: true, c: `das Komma wandert ${-e} Stellen nach rechts` }] });
+  }
+  if (kind === 'dec') {
+    const [s, w, i, e] = pick(OBJ), v = sciQ(i, 0, e);
+    return numTask({ st: 10, prompt: 'Schreib als Dezimalzahl', q: `${s} ${sciH(i, 0, e)} m${w ? ' ' + w : ''}. Schreib diese Länge als Dezimalzahl in m.`, qText: true, after: 'Gib nur die Zahl ein.', val: v, form: 'dec', data: {},
+      traps: [[sciQ(i, 0, e + 1), 'Zähle die Stellen noch einmal.'], [sciQ(i, 0, e - 1), 'Zähle die Stellen noch einmal.'], [tq(() => sciQ(i, 0, -e)), 'Bei negativer Hochzahl wandert das Komma nach links.']],
+      lines: [{ m: `${sciH(i, 0, e)} m = ${decH(v)} m`, noeq: true, c: `Komma ${-e} Stellen nach links` }] });
+  }
+  if (kind === 'wie') {
+    const [s, a, es, et, strecke] = pick([['Ein rotes Blutkörperchen ist', 7, -6, -3, '7 mm'], ['Ein Wassermolekül ist etwa', 3, -10, -3, '3 mm'], ['Ein Bakterium ist', 2, -6, -2, '2 cm'], ['Ein Pollenkorn ist', 3, -5, -2, '3 cm'], ['Ein Virus ist', 1, -7, -3, '1 mm']]);
+    const v = 10 ** (et - es);
+    return numTask({ st: 10, prompt: 'Löse die Aufgabe', q: `${s} ${sciH(a, 0, es)} m groß. Wie viele davon passen nebeneinander auf eine Strecke von ${strecke} = ${sciH(a, 0, et)} m?`, qText: true, after: 'Gib nur die Zahl ein.', val: v, data: {},
+      traps: [[tq(() => 10 ** (et + es) < 1 ? null : 10 ** (et + es)), 'Die Strecke wird durch die Größe geteilt: Die Hochzahlen werden subtrahiert.'], [Number.isSafeInteger(10 ** (es - et)) ? 10 ** (es - et) : null, `Erste minus zweite Hochzahl: ${eP(et)} − ${eP(es)} = ${et - es}.`]],
+      lines: [{ m: `${sciH(a, 0, et)} : (${sciH(a, 0, es)})`, noeq: true, c: 'Strecke durch Größe' }, { m: `= 10<sup>${eP(et)} − ${eP(es)}</sup> = 10${supH(et - es)}`, noeq: true, c: `${a} : ${a} = 1, Hochzahlen subtrahieren` }, { m: `= ${big(v)}`, noeq: true }, { m: `Es passen ${big(v)} nebeneinander.`, noeq: true, c: 'Antwort' }] });
+  }
+  if (kind === 'mal') {
+    const [nA, dA, aA, eA, nB, aB, eB] = pick([['Ein Bakterium', 'das Bakterium', 2, -6, 'ein Virus', 1, -7], ['Ein Haar', 'das Haar', 8, -5, 'ein Bakterium', 2, -6], ['Eine Mundschleimhautzelle', 'die Zelle', 6, -5, 'ein Bakterium', 3, -6], ['Ein Pollenkorn', 'das Pollenkorn', 4, -5, 'ein Bakterium', 2, -6]]);
+    const v = qdiv(sciQ(aA, 0, eA), sciQ(aB, 0, eB));
+    return numTask({ st: 10, prompt: 'Löse die Aufgabe', q: `${nA} ist etwa ${sciH(aA, 0, eA)} m groß, ${nB} etwa ${sciH(aB, 0, eB)} m. Wie viel-mal so groß ist ${dA}?`, qText: true, after: 'Gib nur die Zahl ein.', val: v, data: {},
+      traps: [[tq(() => qdiv(sciQ(aB, 0, eB), sciQ(aA, 0, eA))), 'Größeres durch Kleineres teilen.'], [Q(aA / aB === Math.trunc(aA / aB) ? aA / aB : 0), 'Die Hochzahlen sind verschieden. Teile auch die Zehnerpotenzen.']],
+      lines: [{ m: `(${sciH(aA, 0, eA)}) : (${sciH(aB, 0, eB)})`, noeq: true }, { m: `= ${qH(Q(aA, aB))} · 10<sup>${eP(eA)} − ${eP(eB)}</sup> = ${qH(Q(aA, aB))} · 10${supH(eA - eB)}`, noeq: true, c: 'Zahlen teilen, Hochzahlen subtrahieren' }, { m: `= ${qmH(v)}`, noeq: true }] });
+  }
+  const [what, a, e, n, unit] = pick([['Ein Sandkorn wiegt etwa', 2, -5, 3, 'kg'], ['Ein Reiskorn wiegt etwa', 3, -5, 4, 'kg'], ['Ein Wassertropfen hat etwa', 5, -5, 3, 'Liter']]);
+  const v = sciQ(a, 0, e + n);
+  return numTask({ st: 10, prompt: 'Löse die Aufgabe', q: `${what} ${sciH(a, 0, e)} ${unit}. Wie viel ${unit === 'kg' ? 'wiegen' : 'sind'} 10${supH(n)} = ${big(10 ** n)} Stück? Gib das Ergebnis als Dezimalzahl an.`, qText: true, after: `Gib nur die Zahl ein (in ${unit}).`, val: v, form: 'dec', data: {},
+    traps: [[tq(() => sciQ(a, 0, e * n)), 'Beim Multiplizieren werden die Hochzahlen addiert, nicht multipliziert.'], [tq(() => sciQ(a, 0, e - n)), `Die Hochzahlen werden addiert: ${eP(e)} + ${n}.`]],
+    lines: [{ m: `${sciH(a, 0, e)} · 10${supH(n)}`, noeq: true }, { m: `= ${a} · 10<sup>${eP(e)} + ${n}</sup> = ${sciH(a, 0, e + n)}`, noeq: true, c: 'Hochzahlen addieren' }, { m: `= ${decH(v)} ${unit}`, noeq: true }] });
+}
+function gen10(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.4) return decOf10(ri(1, 6));
+    if (r < 0.65) return frac10(ri(1, 5));
+    return findExp10(1, 0, -ri(1, 7));
+  }
+  if (l === 2) {
+    if (r < 0.3) return sciToDec10(...pick([[ri(2, 9), 0], [ri(11, 99), 1]]), -ri(2, 7));
+    if (r < 0.55) return findExp10(...pick([[ri(2, 9), 0], [ri(11, 99), 1]]), -ri(2, 8));
+    if (r < 0.8) return vors10();
+    return cmp10();
+  }
+  if (r < 0.35) return rule10(pick(['mul', 'div', 'pow']));
+  return sach10(pick(['exp', 'dec', 'wie', 'mal', 'masse']));
+}
+const S10EX = [{ label: 'Von 10³ bis 10⁻³', mode: 'muster' }, { label: '0,00042 = 4,2 · 10⁻⁴', mode: 'komma' }, { label: 'Milli, Mikro, Nano', mode: 'vors' }, { label: 'Regeln gelten weiter', mode: 'regel' }];
+function explore10(e) {
+  if (e.mode === 'muster') {
+    const row = k => ({ a: `10${supH(k)}`, b: k >= 0 ? big(10 ** k) : `${F(1, big(10 ** -k))} = ${decH(p10(k))}`, d: k > -3 ? ': 10' : '', nw: k < 0 });
+    return [
+      { lab: 'Bekannt', h: tableH([3, 2, 1, 0].map(row)), cap: 'Wird die Hochzahl um 1 kleiner, wird die Zahl durch 10 geteilt.' },
+      { lab: 'Weiter', h: tableH([3, 2, 1, 0, -1].map(row)), cap: `Das Muster geht weiter: 1 : 10 = ${F(1, 10)} = 0,1. Also ist 10${supH(-1)} = 0,1.` },
+      { lab: 'Noch kleiner', h: tableH([3, 2, 1, 0, -1, -2, -3].map(row)), cap: `10${supH(-2)} = 0,01 und 10${supH(-3)} = 0,001. Die Zahlen werden immer kleiner, bleiben aber positiv.` },
+      { lab: 'Regel', h: eqbig(`10<sup>${MI}n</sup> = ${F(1, '10<sup>n</sup>')} = 0,0…01`, 'sm'), cap: 'Bei 10 hoch minus n steht die 1 an der n-ten Stelle nach dem Komma.' },
+    ];
+  }
+  if (e.mode === 'komma') return [
+    { lab: 'Zahl', h: eqbig('0,00042'), cap: 'Sehr kleine Zahlen sind mit vielen Nullen schwer zu lesen. Mit Zehnerpotenzen geht es kürzer.' },
+    { lab: 'Komma', h: eqbig(`0,0004<span class="hl">2</span> → 4,2`), cap: 'Verschiebe das Komma nach rechts, bis es hinter der ersten Ziffer steht, die nicht 0 ist. Das sind 4 Stellen.' },
+    { lab: 'Potenz', h: eqbig(`0,00042 = 4,2 · 10${supH(-4)}`), cap: 'Weil die Zahl klein ist, wird die Hochzahl negativ: −4. Probe: 4,2 : 10 000 = 0,00042.' },
+    { lab: 'Zurück', h: eqbig(`3,7 · 10${supH(-5)} = 0,000037`, 'sm'), cap: 'Umgekehrt: Hochzahl −5 heißt, das Komma wandert 5 Stellen nach links. Fehlende Stellen werden mit Nullen gefüllt.' },
+  ];
+  if (e.mode === 'vors') return [
+    { lab: 'Große', h: tableH([['k', 'Kilo', 3, 'Kilometer'], ['M', 'Mega', 6, 'Megawatt'], ['G', 'Giga', 9, 'Gigabyte']].map(([p, n, k, ex]) => ({ a: `${p} = ${n}`, b: `10${supH(k)}`, d: ex }))), cap: 'Vorsilben für Vielfache kennst du schon: 1 km = 10³ m = 1000 m.' },
+    { lab: 'Kleine', h: tableH([['m', 'Milli', -3, 'Millimeter'], ['µ', 'Mikro', -6, 'Mikrometer'], ['n', 'Nano', -9, 'Nanometer']].map(([p, n, k, ex]) => ({ a: `${p} = ${n}`, b: `10${supH(k)}`, d: ex, nw: true }))), cap: 'Für Teile einer Einheit gibt es Milli, Mikro und Nano. Sie haben negative Hochzahlen.' },
+    { lab: 'Beispiel', h: eqbig(`7 µm = 7 · 10${supH(-6)} m = 0,000007 m`, 'sm'), cap: 'So groß ist etwa ein rotes Blutkörperchen. In Biologie, Chemie und Physik brauchst du diese Schreibweise oft.' },
+  ];
+  return [
+    { lab: 'Aufgabe', h: eqbig(`10${supH(5)} · 10${supH(-3)}`), cap: 'Die Potenzregeln gelten auch mit negativen Hochzahlen.' },
+    { lab: 'Ausgeschrieben', h: eqbig(`${big(100000)} · 0,001 = 100`, 'sm'), cap: `10${supH(-3)} = 0,001. Mal 0,001 heißt: durch 1000 teilen.` },
+    { lab: 'Regel', h: eqbig(`10<sup>5 + (${MI}3)</sup> = 10${supH(2)} = <b>100</b>`), cap: 'Mit der Regel: Hochzahlen addieren, 5 + (−3) = 2. Es kommt dasselbe heraus.' },
+    { lab: 'Dividieren', h: eqbig(`10${supH(3)} : 10${supH(5)} = 10<sup>3 − 5</sup> = 10${supH(-2)} = 0,01`, 'sm'), cap: 'Jetzt darf beim Dividieren die zweite Hochzahl auch größer sein. Dann wird die neue Hochzahl negativ.' },
+  ];
+}
+
+// =====================================================================
+// Stationen
+// =====================================================================
+const s2 = supH(2), s3 = supH(3);
+const STATIONS = [
+  {
+    id: 1, title: 'Potenzen verstehen', short: 'Grundzahl, Hochzahl, hoch 0 und hoch 1', sample: `2${supH(5)} = 32`,
+    lvl: ['ausrechnen, als Potenz schreiben', 'größere Potenzen, Kästchen', 'vergleichen, Zehnerpotenzen'],
+    intro: `<p>Eine <b>Potenz</b> ist eine Kurzschrift für ein Produkt aus gleichen Faktoren: 2 · 2 · 2 · 2 · 2 = 2${supH(5)}. Die Zahl unten heißt <b>Grundzahl</b> (Basis), die kleine Zahl oben heißt <b>Hochzahl</b> (Exponent). Das Ergebnis heißt <b>Potenzwert</b>.</p>
+      <p>In den Stationen 1 bis 9 sind die Hochzahlen immer 0, 1, 2, 3, …, also natürliche Zahlen oder 0. Erst in Station 10 kommen negative Hochzahlen bei Zehnerpotenzen dazu. Die Grundzahlen sind ganze Zahlen oder Brüche.</p>
+      <p>Im Eingabefeld schreibst du eine Potenz mit dem Zeichen ^: 2^5. Negative Grundzahlen und Brüche kommen in Klammern: (−2)^5 oder (2/3)^4.</p>`,
+    merke: ul([`a${supH('n')} = a · a · … · a mit n Faktoren.`, `a${supH(1)} = a, zum Beispiel 7${supH(1)} = 7.`, `a${supH(0)} = 1 für jede Zahl a ≠ 0, zum Beispiel 7${supH(0)} = 1.`, `10${supH('n')} ist eine 1 mit n Nullen: 10${supH(4)} = 10 000.`]),
+    falle: ul([`2${supH(5)} ist 32, nicht 2 · 5 = 10.`, `2${supH(3)} = 8, aber 3${supH(2)} = 9. Grundzahl und Hochzahl nicht vertauschen!`, `5${supH(0)} ist 1, nicht 0 und nicht 5.`]),
+    hint: () => 'Schreib die Potenz als Produkt: Die Grundzahl kommt so oft als Faktor vor, wie die Hochzahl sagt. Hoch 1 ist die Zahl selbst, hoch 0 ist 1.',
+    gen: gen1, examples: () => S1EX.map(e => ({ label: e.label, x: e })), explore: explore1,
+    bsp: () => [val1(3, 4), asPow1(Q(6), 5), findExp1(2, 6)],
+  },
+  {
+    id: 2, title: 'Negative Grundzahlen', short: 'Gerade und ungerade Hochzahl, Klammern', sample: `(${MI}3)${s2} = 9`,
+    lvl: ['hoch 2 und hoch 3', 'mit und ohne Klammer', 'gemischte Aufgaben'],
+    intro: `<p>Ist die Grundzahl negativ, steht sie in Klammern: (−2)${supH(4)} = (−2) · (−2) · (−2) · (−2). Weil je zwei Minus ein Plus ergeben, entscheidet die Hochzahl über das Vorzeichen.</p>
+      <p>Ganz wichtig ist die Klammer: Bei −2${supH(4)} gehört das Minus nicht zur Grundzahl. Zuerst wird 2${supH(4)} = 16 gerechnet, dann kommt das Minus davor.</p>`,
+    merke: ul([`Gerade Hochzahl: Ergebnis positiv. (−2)${supH(4)} = 16.`, `Ungerade Hochzahl: Ergebnis negativ. (−2)${s3} = −8.`, `Ohne Klammer: −3${s2} = −(3 · 3) = −9.`, `(−1) hoch gerade Zahl = 1, (−1) hoch ungerade Zahl = −1.`]),
+    falle: ul([`(−3)${s2} ist 9, nicht −9.`, `−3${s2} ist −9, nicht 9.`, `(−2)${s3} ist −8, nicht −6.`]),
+    hint: () => 'Zähle die Minuszeichen: Gerade Hochzahl → plus, ungerade → minus. Achte auf die Klammer: Ohne Klammer gehört das Minus nicht zur Grundzahl.',
+    gen: gen2, examples: () => S2EX.map(e => ({ label: e.label, x: e })), explore: explore2,
+    bsp: () => [neg2(3, 4), nopar2(5, 2), neg2(1, 37)],
+  },
+  {
+    id: 3, title: 'Brüche als Grundzahl', short: 'Zähler und Nenner potenzieren', sample: `(${F(2, 3)})${s2} = ${F(4, 9)}`,
+    lvl: ['hoch 2 und hoch 3', 'negativ, ohne Klammer, gemischt', 'Kästchen, vergleichen'],
+    intro: `<p>Auch ein Bruch kann Grundzahl sein. Weil man beim Malnehmen von Brüchen Zähler mal Zähler und Nenner mal Nenner rechnet, gilt:</p>
+      ${eqbig(`(${F('a', 'b')})${supH('n')} = ${F(`a${supH('n')}`, `b${supH('n')}`)}`, 'sm')}
+      <p>Zähler und Nenner werden beide potenziert. Für das Vorzeichen gilt dasselbe wie bei ganzen Zahlen. Und: Die Klammer um den Bruch muss da sein, sonst wird nur der Zähler oder nur der Nenner potenziert.</p>`,
+    merke: ul([`(${F(3, 4)})${s2} = ${F(9, 16)}: Zähler und Nenner potenzieren.`, `(${MI}${F(1, 2)})${s3} = ${MI}${F(1, 8)}: ungerade Hochzahl, also minus.`, `${F(2, `3${s2}`)} = ${F(2, 9)}: ohne Klammer nur der Nenner.`, 'Gemischte Zahlen zuerst in unechte Brüche umwandeln.', 'Liegt die Grundzahl zwischen 0 und 1, wird die Potenz kleiner.']),
+    falle: ul([`(${F(2, 3)})${s2} ist nicht ${F(4, 3)}. Auch der Nenner wird quadriert.`, `(${F(2, 5)})${s2} ist nicht ${F(4, 10)}. Hoch 2 heißt nicht mal 2.`, `(${mixRaw(1, 1, 2)})${s2} ist ${F(9, 4)}, nicht ${mixRaw(1, 1, 4)}.`]),
+    hint: () => 'Zähler und Nenner werden beide potenziert. Achte auf das Vorzeichen und auf die Klammer um den Bruch.',
+    gen: gen3, examples: () => S3EX.map(e => ({ label: e.label, x: e })), explore: explore3,
+    bsp: () => [fpow3(Q(3, 5), 2), fpow3(Q(-2, 3), 3), nobr3(3, 4, 'den')],
+  },
+  {
+    id: 4, title: 'Multiplizieren', short: 'Gleiche Grundzahl: Hochzahlen addieren', sample: `2${s3} · 2${supH(4)} = 2${supH(7)}`,
+    lvl: ['zwei Potenzen', 'negativ, Brüche, drei Faktoren', 'Kästchen, wann nicht?'],
+    intro: `<p>Werden Potenzen mit <b>gleicher Grundzahl</b> multipliziert, kann man sie zu einer Potenz zusammenfassen. Schreibst du sie aus, siehst du warum: 2${s3} · 2${supH(4)} sind 3 + 4 = 7 Faktoren 2.</p>
+      ${eqbig(`a<sup>m</sup> · a<sup>n</sup> = a<sup>m + n</sup>`, 'sm')}
+      <p>Die Grundzahl bleibt gleich, die Hochzahlen werden addiert. Das gilt auch für negative Grundzahlen und Brüche.</p>`,
+    merke: ul(['Gleiche Grundzahl und malnehmen: Hochzahlen addieren.', `Eine Zahl ohne Hochzahl hat die Hochzahl 1: 5 · 5${s3} = 5${supH(4)}.`, `Negative Grundzahl bleibt in Klammern: (−3)${s2} · (−3)${s3} = (−3)${supH(5)}.`]),
+    falle: ul([`2${s3} · 2${supH(4)} ist nicht 2${supH(12)} (Hochzahlen nicht multiplizieren).`, `2${s3} · 2${supH(4)} ist nicht 4${supH(7)} (die Grundzahl bleibt gleich).`, `2${s3} + 2${supH(4)} ist nicht 2${supH(7)}! Bei Summen gilt die Regel nicht.`, `2${s3} · 3${supH(4)} kann man nicht zusammenfassen.`]),
+    hint: () => 'Gleiche Grundzahl und malnehmen? Dann Grundzahl abschreiben und die Hochzahlen addieren. Eine Zahl ohne Hochzahl hat die Hochzahl 1.',
+    gen: gen4, examples: () => S4EX.map(e => ({ label: e.label, x: e })), explore: explore4,
+    bsp: () => [mul4(Q(7), [3, 5]), mul4(Q(-2), [1, 4, 2]), mul4(Q(3, 4), [2, 6])],
+  },
+  {
+    id: 5, title: 'Dividieren', short: 'Gleiche Grundzahl: Hochzahlen subtrahieren', sample: `5${supH(6)} : 5${supH(4)} = 5${s2}`,
+    lvl: ['zwei Potenzen', 'als Bruch, negativ, hoch 0', 'zusammengesetzt, Kästchen'],
+    intro: `<p>Werden Potenzen mit gleicher Grundzahl dividiert, kürzen sich gleiche Faktoren weg. Übrig bleibt die Differenz der Hochzahlen:</p>
+      ${eqbig(`a<sup>m</sup> : a<sup>n</sup> = ${F('a<sup>m</sup>', 'a<sup>n</sup>')} = a<sup>m − n</sup>`, 'sm')}
+      <p>In diesem Lernpfad ist die erste Hochzahl immer mindestens so groß wie die zweite. Sind beide gleich, kommt a${supH(0)} = 1 heraus.</p>`,
+    merke: ul(['Gleiche Grundzahl und dividieren: Hochzahlen subtrahieren (erste minus zweite).', `a${supH('n')} : a${supH('n')} = a${supH(0)} = 1.`, 'Steht die Division als Bruch da: Hochzahl oben minus Hochzahl unten.']),
+    falle: ul([`5${supH(6)} : 5${s2} ist 5${supH(4)}, nicht 5${s3} (nicht dividieren, sondern subtrahieren).`, `5${supH(6)} : 5${supH(4)} ist nicht 1${s2} (die Grundzahl bleibt).`, `a${supH(4)} : a${supH(4)} ist 1, nicht 0.`]),
+    hint: () => 'Gleiche Grundzahl und dividieren? Dann Grundzahl abschreiben und die Hochzahlen subtrahieren: erste minus zweite.',
+    gen: gen5, examples: () => S5EX.map(e => ({ label: e.label, x: e })), explore: explore5,
+    bsp: () => [div5(Q(9), 8, 3), div5(Q(-2, 5), 7, 6, true), combo5(Q(3), 4, 5, 6)],
+  },
+  {
+    id: 6, title: 'Potenz einer Potenz', short: 'Hochzahlen multiplizieren', sample: `(2${s3})${s2} = 2${supH(6)}`,
+    lvl: ['ganze Grundzahlen', 'negativ, Brüche, ausrechnen', 'mit anderen Regeln, Kästchen'],
+    intro: `<p>Wird eine Potenz noch einmal potenziert, werden die Hochzahlen multipliziert:</p>
+      ${eqbig(`(a<sup>m</sup>)<sup>n</sup> = a<sup>m · n</sup>`, 'sm')}
+      <p>Denn (2${s3})${s2} = 2${s3} · 2${s3}. Das sind 2 Gruppen mit je 3 Faktoren, also 6 Faktoren.</p>`,
+    merke: ul(['Potenz hoch Hochzahl: Hochzahlen multiplizieren.', `((−2)${s3})${s2} = (−2)${supH(6)} = 64: die neue Hochzahl ist gerade.`, 'Erst diese Regel anwenden, dann die Regeln fürs Malnehmen oder Dividieren.']),
+    falle: ul([`(2${s3})${s2} ist 2${supH(6)}, nicht 2${supH(5)}.`, `(2${s3})${s2} ist nicht dasselbe wie 2<sup>3<sup>2</sup></sup> = 2${supH(9)}.`]),
+    hint: () => 'Bei (a hoch m) hoch n: Grundzahl abschreiben und die Hochzahlen multiplizieren.',
+    gen: gen6, examples: () => S6EX.map(e => ({ label: e.label, x: e })), explore: explore6,
+    bsp: () => [pp6(Q(5), 4, 3), pp6(Q(-1, 2), 3, 2), combo6(Q(2), 3, 4, 5, ':')],
+  },
+  {
+    id: 7, title: 'Gleiche Hochzahl', short: 'Grundzahlen zusammenfassen', sample: `2${s3} · 5${s3} = 10${s3}`,
+    lvl: ['malnehmen', 'dividieren, Vorzeichen, Brüche', 'gemischt, wann nicht?'],
+    intro: `<p>Haben zwei Potenzen die <b>gleiche Hochzahl</b>, darf man zuerst die Grundzahlen verrechnen:</p>
+      ${eqbig(`a<sup>n</sup> · b<sup>n</sup> = (a · b)<sup>n</sup> &nbsp;&nbsp; a<sup>n</sup> : b<sup>n</sup> = (a : b)<sup>n</sup>`, 'sm')}
+      <p>So kann man oft geschickt rechnen: 2${s3} · 5${s3} = 10${s3} = 1000, ohne 8 · 125 rechnen zu müssen.</p>`,
+    merke: ul(['Gleiche Hochzahl beim Malnehmen: Grundzahlen multiplizieren, Hochzahl bleibt.', 'Gleiche Hochzahl beim Dividieren: Grundzahlen dividieren, Hochzahl bleibt.', `Auch rückwärts: (2 · 3)${s2} = 2${s2} · 3${s2} = 36.`]),
+    falle: ul([`2${s3} · 5${s3} ist 10${s3}, nicht 10${supH(6)}.`, `2${s3} + 5${s3} ist nicht 7${s3}.`, 'Bei verschiedenen Hochzahlen gilt die Regel nicht.']),
+    hint: () => 'Gleiche Hochzahl? Dann zuerst die Grundzahlen malnehmen oder dividieren, die Hochzahl bleibt. Danach ausrechnen.',
+    gen: gen7, examples: () => S7EX.map(e => ({ label: e.label, x: e })), explore: explore7,
+    bsp: () => [same7(Q(4), Q(25), 3, '·'), same7(Q(-18), Q(6), 3, ':', true), same7(Q(3, 4), Q(4), 3, '·')],
+  },
+  {
+    id: 8, title: 'Rechenreihenfolge', short: 'Klammer, Hoch, Punkt, Strich', sample: `3 · 2${s2} = 12`,
+    lvl: ['Hoch vor Punkt und Strich', 'Vorzeichen und Brüche', 'mit den Potenzregeln'],
+    intro: `<p>Kommen Potenzen in längeren Rechnungen vor, gilt diese Reihenfolge:</p>
+      <div class="ladder"><span>1. Klammer</span><i>→</i><span>2. Hoch</span><i>→</i><span>3. Punkt (·, :)</span><i>→</i><span>4. Strich (+, −)</span></div>
+      <p>Potenzen werden also vor dem Malnehmen und vor dem Addieren ausgerechnet. Summen von Potenzen darf man nicht zusammenfassen.</p>`,
+    merke: ol(['Zuerst die Klammern.', 'Dann die Potenzen.', 'Dann mal und geteilt.', 'Zum Schluss plus und minus.']),
+    falle: ul([`3 · 2${s2} ist 12, nicht (3 · 2)${s2} = 36.`, `2${s3} + 2${supH(4)} ist 24, nicht 2${supH(7)} = 128.`, `−3${s2} + 1 ist −8, nicht 10.`]),
+    hint: () => 'Klammer, Hoch, Punkt, Strich. Schreib jeden Schritt in eine neue Zeile und achte auf die Vorzeichen.',
+    gen: gen8, examples: () => exT([stepTask(8, '3 * 2^2', []), stepTask(8, '2^3 + 2^4', []), stepTask(8, '-3^2 + (-2)^3 * 2', []), stepTask(8, '4 * (1/2)^3 - (-2)^2', [])]), explore: explore8,
+    bsp: () => [stepTask(8, '5 * 2^3 - 3^2', []), stepTask(8, '(2 - 5)^3 + (1/3)^2 * 9', [])],
+  },
+  {
+    id: 9, title: 'Zehnerpotenzen und Sachaufgaben', short: 'Große Zahlen, Wachstum, Würfel', sample: `3,5 · 10${supH(6)}`,
+    lvl: ['Zehnerpotenzen, Fläche, Würfel', 'Komma, Halbieren, Kettenbrief', 'Schachbrett, Licht, Ball'],
+    intro: `<p>Große Zahlen schreibt man oft mit Zehnerpotenzen: 3 500 000 = 3,5 · 10${supH(6)}. Die Hochzahl sagt, um wie viele Stellen das Komma nach rechts wandert.</p>
+      <p>Potenzen kommen auch im Alltag vor: Wenn sich etwas immer wieder verdoppelt, halbiert oder verdreifacht, ist die Anzahl der Schritte die Hochzahl. Bei Flächen (Quadrat) und Volumen (Würfel) brauchst du hoch 2 und hoch 3.</p>
+      <p>Wie man sehr kleine Zahlen mit Zehnerpotenzen schreibt, lernst du in Station 10.</p>`,
+    merke: ul([`a · 10${supH('n')}: Komma um n Stellen nach rechts.`, 'Verdoppeln in n Schritten: mal 2 hoch n. Halbieren: mal (½) hoch n.', `Quadrat: Fläche = Seite${s2}. Würfel: Volumen = Kante${s3}.`, 'Antwortsatz mit Einheit schreiben.']),
+    falle: ul([`10${supH(6)} ist eine 1 mit 6 Nullen, nicht 60.`, `Bei 3,5 · 10${supH(6)} wandert das Komma 6 Stellen: 3 500 000. Hänge nicht einfach 6 Nullen an 35 an.`, `Verdoppeln in 5 Stunden ist mal 2${supH(5)} = 32, nicht mal 10.`]),
+    hint: () => 'Zehnerpotenzen: Zähle die Stellen, um die das Komma wandert. Wachstum: Wie oft wird mit der gleichen Zahl malgenommen? Das ist die Hochzahl.',
+    gen: gen9, examples: () => S9EX.map(e => ({ label: e.label, x: e })), explore: explore9,
+    bsp: () => [tenVal9(42, 1, 5), make9(S9[1][0]()), make9(S9[2][0]())],
+  },
+  {
+    id: 10, title: 'Kleine Zahlen: negative Hochzahlen', short: 'Zehnerpotenzen für Biologie, Chemie, Physik', sample: `10${supH(-3)} = 0,001`,
+    lvl: ['10 hoch minus n', 'a · 10ⁿ, Vorsilben, vergleichen', 'Regeln, Naturwissenschaften'],
+    intro: `<p>In Biologie, Chemie und Physik kommen sehr kleine Zahlen vor: Ein Bakterium ist etwa 0,000002 m lang. Solche Zahlen schreibt man mit Zehnerpotenzen mit <b>negativer Hochzahl</b>: 0,000002 m = 2 · 10${supH(-6)} m.</p>
+      <p>In dieser Station gibt es negative Hochzahlen, aber nur bei der Grundzahl 10. Es gilt:</p>
+      ${eqbig(`10<sup>${MI}n</sup> = ${F(1, '10<sup>n</sup>')} &nbsp;&nbsp; zum Beispiel &nbsp; 10${supH(-3)} = ${F(1, 1000)} = 0,001`, 'sm')}
+      <p>Eine negative Hochzahl macht die Zahl also nicht negativ, sondern klein. Im Eingabefeld schreibst du sie so: 10^-3.</p>`,
+    merke: ul([`10${supH(-1)} = 0,1; &nbsp;10${supH(-2)} = 0,01; &nbsp;10${supH(-3)} = 0,001. Bei 10 hoch minus n steht die 1 an der n-ten Stelle nach dem Komma.`, `a · 10<sup>${MI}n</sup>: Das Komma wandert n Stellen nach links. 4,2 · 10${supH(-4)} = 0,00042.`, 'Kleine Zahl in der Form a · 10ⁿ: Verschiebe das Komma nach rechts, bis es hinter der ersten Ziffer steht, die nicht 0 ist. Die Anzahl der Stellen mit Minus ist die Hochzahl.', `Die Potenzregeln gelten weiter: 10${supH(5)} · 10${supH(-3)} = 10${supH(2)}, 10${supH(3)} : 10${supH(5)} = 10${supH(-2)}.`, `Vorsilben: Milli = 10${supH(-3)}, Mikro (µ) = 10${supH(-6)}, Nano = 10${supH(-9)}.`]),
+    falle: ul([`10${supH(-3)} ist 0,001, nicht −1000 und nicht −30.`, `4,2 · 10${supH(-4)} ist 0,00042, nicht 0,0042.`, 'Bei 0,00042 nicht die Nullen zählen, sondern die Stellen, um die das Komma wandert.', `Die größere Zahl hat die größere Hochzahl: 10${supH(-3)} ist größer als 10${supH(-5)}.`]),
+    hint: () => 'Negative Hochzahl heißt: Die Zahl ist kleiner als 1. Das Komma wandert so viele Stellen nach links, wie die Hochzahl angibt. Bei Regeln mit gleicher Grundzahl 10 die Hochzahlen mit Vorzeichen verrechnen.',
+    gen: gen10, examples: () => S10EX.map(e => ({ label: e.label, x: e })), explore: explore10,
+    bsp: () => [decOf10(4), sciToDec10(35, 1, -5), findExp10(7, 0, -6)],
+  },
+];
+const MIX = {
+  id: 11, title: 'Gemischtes Training', short: 'Aufgaben aus allen Stationen', sample: 'alles', mix: true,
+  lvl: ['leicht', 'mittel', 'schwer'],
+  hint: t => byId(t.st).hint(t),
+  gen(l) { const s = pick(STATIONS); const t = s.gen(l); t.tag = `${s.id} · ${s.title}`; return t; },
+};
+function byId(id) { return id === 11 ? MIX : STATIONS.find(s => s.id === id); }
+function hero() {
+  return `<p class="lbl">Am Ende kannst du das</p>
+    ${cubeH(3, true)}
+    ${eqbig(`2${supH(3)} · 2${supH(4)} = 2${supH(7)}`, 'sm')}
+    ${eqbig(`(${MI}3)${supH(2)} = 9, aber ${MI}3${supH(2)} = ${MI}9`, 'sm')}
+    ${eqbig(`(${F(2, 3)})${supH(2)} = ${F(4, 9)}`, 'sm')}`;
+}
+
+// ---------- Selbsttest (Node: TL.runTests()) ----------
+function runTests(n = 150) {
+  const fails = [];
+  const ok = (c, m) => { if (!c) fails.push(m); };
+  const V = s => qS(val(parse(s)));
+  const cases = [['2^5', '32'], ['-3^2', '-9'], ['(-3)^2', '9'], ['(2/3)^2', '4/9'], ['2/3^2', '2/9'], ['(2^3)^2', '64'], ['2³', '8'], ['5^0', '1'], ['100 000', '100000'], ['3.500.000', '3500000'], ['3,5 * 10^6', '3500000'], ['(1 1/2)^2', '9/4']];
+  for (const [a, b] of cases) ok(V(a) === b, `Wert ${a} → ${V(a)} statt ${b}`);
+  for (const bad of ['', '2^', '^3', '2^x', '(2', '2 3', '0^-2', '10^(-3']) { try { val(parse(bad)); fails.push('kein Fehler bei: ' + bad); } catch (e) { ok(e.user, 'Fehlerart: ' + bad + ' ' + e.message); } }
+  const tp = mul4(Q(2), [3, 4]);
+  ok(check(tp, '2^7').ok && check(tp, '2⁷').ok, 'Potenz richtig'); ok(check(tp, '128').near, 'Wert statt Potenz'); ok(check(tp, '2^3*2^4').near, 'nicht zusammengefasst');
+  ok(/multipliziert/.test(check(tp, '2^12').msg), 'Falle 2^12'); ok(/Grundzahl bleibt/.test(check(tp, '4^7').msg), 'Falle 4^7'); ok(check(tp, '4^3*2').near === true || !check(tp, '4^3*2').ok, '4^3*2');
+  const tn = mul4(Q(-2), [3, 4]); ok(check(tn, '(-2)^7').ok && check(tn, '-2^7').near && !check(tn, '2^7').ok, 'neg Klammer');
+  ok(V('10^-3') === '1/1000' && V('10^(-3)') === '1/1000' && V('10⁻³') === '1/1000' && V('4,2*10^-4') === '21/50000', 'negative Hochzahlen');
+  const td = decOf10(3); ok(check(td, '0,001').ok && check(td, '0.001').ok && check(td, '1/1000').near && /nicht negativ/.test(check(td, '-1000').msg), 'dec form');
+  const tr = rule10('div'); ok(check(tr, tr.sol).ok, 'rule10');
+  const t6 = pp6(Q(-2), 3, 2); ok(check(t6, '(-2)^6').ok && check(t6, '2^6').ok, 'pp6 gerade');
+  const tb = pp6(Q(7), 5, 4); ok(check(tb, '7^20').ok && check(tb, '(7^5)^4').near && /multipliziert/.test(check(tb, '7^9').msg), 'große Potenz');
+  ok(check(tb, '7^21').ok === false, 'falsche Hochzahl');
+  for (const s of STATIONS.concat([MIX])) for (const l of [1, 2, 3]) for (let i = 0; i < n; i++) {
+    let t;
+    try { t = s.gen(l); } catch (e) { fails.push(`gen ${s.id}/${l}: ${e.stack}`); break; }
+    const tag = `S${t.st} L${l} ${String(t.q).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 70)}`;
+    if (t.kind === 'mc') {
+      const i0 = t.opts.findIndex(o => o.ok);
+      ok(i0 >= 0 && t.opts.filter(o => o.ok).length === 1 && t.opts.length >= 2, 'mc ' + tag);
+      ok(check(t, i0).ok && t.opts.every((o, k) => k === i0 || !check(t, k).ok), 'mc prüfen ' + tag);
+    } else {
+      const r = check(t, t.sol);
+      ok(r.ok, `Lösung nicht akzeptiert: ${tag} / ${t.sol} → ${r.msg}`);
+      if (t.form === 'pow') {
+        for (const tr of t.ptraps) { const rr = check(t, pS(tr.b, tr.e)); ok(!rr.ok, `Falle akzeptiert: ${tag} / ${pS(tr.b, tr.e)}`); }
+        const v = tq(() => qpow(t.want.b, t.want.e));
+        if (v && t.want.e > 1) ok(check(t, qS(v)).near, 'Wert nicht near: ' + tag);
+      } else {
+        ok((t.form === 'dec' ? t.val[1] <= 1e11 : t.val[1] <= 100000) && abs(t.val[0]) <= 1e10, 'zu groß: ' + tag + ' ' + t.sol);
+        for (const tr of t.traps) ok(!check(t, qS(tr.val)).ok, `Falle akzeptiert: ${tag} / ${qS(tr.val)}`);
+      }
+    }
+    ok(t.lines.length >= 1, 'Lösungsweg ' + tag);
+    ok(typeof s.hint(t) === 'string', 'Tipp ' + tag);
+  }
+  for (const s of STATIONS) {
+    for (const ex of s.examples()) {
+      try { const st = s.explore(ex.x); ok(st.length >= 2 && st.every(x => x.h && x.cap && x.lab), 'explore ' + s.id); }
+      catch (e) { fails.push(`explore ${s.id}: ${e.stack}`); }
+    }
+    try { s.bsp().forEach(t => ok(t.lines.length >= 2 && check(t, t.sol).ok, 'bsp ' + s.id)); } catch (e) { fails.push(`bsp ${s.id}: ${e.stack}`); }
+  }
+  return fails;
+}
+
+global.TL = { stations: STATIONS, mix: MIX, byId, check, preview, previewList, runTests, seed, parse, fmt, val, lineH, evalSteps, hero, cubeH };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<!-- =====================================================================
+     OBERFLÄCHE: Lernpfad, Stationen (Verstehen / Üben), Fortschritt.
+     Test-Haken für den Durchklick: window.TLUI
+     ===================================================================== -->
+<script>
+(function () {
+'use strict';
+const T = window.TL;
+const $ = (s, r = document) => r.querySelector(s);
+const main = $('#main');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ohne Speicher geht es auch */ } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* egal */ } },
+};
+const PER = 3, SLOTS = 9, MAXW = 5;       // je Station 3 Stufen × 3 Aufgaben; Lösung beim 5. Fehlversuch
+const LV = ['Leicht', 'Mittel', 'Schwer'];
+const STAR = 'M12 2.8l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.36l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93z';
+const starSvg = on => `<svg viewBox="0 0 24 24" class="${on ? 'on' : 'off'}" aria-hidden="true"><path d="${STAR}" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+const TLUI = window.TLUI = {};
+const nice = s => String(s).replace(/-/g, '−');
+
+// ---------- Fortschritt ----------
+// pw-v1 = { v: 1, salt, off, st: { Station: { Platz 0–8: { s: "free"|"hint"|"shown", w: Fehlversuche } } } }
+const KEY = 'pw-v1', POS = 'pw-pos';
+const migrate = d => d, remapPos = p => p;
+function loadData() {
+  const d = store.get(KEY, null);
+  if (d && d.st && d.salt) return d;
+  const nd = { v: 1, salt: 1 + Math.floor(Math.random() * 1e9), st: {} };
+  store.set(KEY, nd); return nd;
+}
+let data = loadData();
+const save = () => store.set(KEY, data);
+const slot = (id, i) => (data.st[id] || {})[i] || {};
+const setSlot = (id, i, v) => { (data.st[id] = data.st[id] || {})[i] = v; save(); };
+const isDone = x => x.s === 'free' || x.s === 'hint' || x.s === 'shown';
+function stats(ids) {
+  const c = { free: 0, hint: 0, shown: 0, total: ids.length * SLOTS };
+  ids.forEach(id => { for (let i = 0; i < SLOTS; i++) { const x = slot(id, i); if (isDone(x)) c[x.s]++; } });
+  c.done = c.free + c.hint + c.shown; return c;
+}
+const ALL = () => T.stations.map(s => s.id);
+const PCT = (x, t) => (t ? Math.round(100 * x / t) : 0);
+const levelStar = (id, l) => [0, 1, 2].every(k => { const x = slot(id, (l - 1) * PER + k); return x.s === 'free' || x.s === 'hint'; });
+const starCount = id => [1, 2, 3].filter(l => levelStar(id, l)).length;
+const starsH = id => { const n = starCount(id); return `<span class="stars" role="img" aria-label="${n} von 3 Sternen">${[0, 1, 2].map(i => starSvg(i < n)).join('')}</span>`; };
+const stackH = c => `<i class="stack" role="img" aria-label="${PCT(c.done, c.total)} Prozent bearbeitet, ${PCT(c.free, c.total)} Prozent ohne Hilfe"><b class="f" style="width:${100 * c.free / c.total}%"></b><b class="h" style="width:${100 * c.hint / c.total}%"></b><b class="s" style="width:${100 * c.shown / c.total}%"></b></i>`;
+const legendH = c => { const v = x => `${x} (${PCT(x, c.total)} %)`;
+  return `<div class="legend"><span><i class="f"></i>ohne Hilfe: ${v(c.free)}</span><span><i class="h"></i>mit Tipps: ${v(c.hint)}</span><span><i class="s"></i>Lösung angezeigt: ${v(c.shown)}</span><span><i class="o"></i>offen: ${v(c.total - c.done)}</span></div>`; };
+const progLine = c => `${PCT(c.done, c.total)} % bearbeitet · davon ${PCT(c.free, c.total)} % ohne Hilfe`;
+function genSlot(s, i) {
+  T.seed((data.salt + (s.sid || s.id) * 7919 + i * 104729 + ((data.off || {})[s.id] || 0) * 31337) | 0);
+  const t = s.gen(Math.floor(i / PER) + 1);
+  T.seed(1 + Math.floor(Math.random() * 1e9));
+  return t;
+}
+const firstOpen = id => { for (let i = 0; i < SLOTS; i++) if (!isDone(slot(id, i))) return i; return -1; };
+// Knopf, der erst beim zweiten Klick auslöst (Dialogfenster gehen nicht überall)
+function twoClick(b, label, ask, fn) {
+  b.onclick = () => {
+    if (b.dataset.s !== '1') { b.dataset.s = '1'; b.textContent = ask; setTimeout(() => { if (b.isConnected) { b.dataset.s = ''; b.textContent = label; } }, 4000); return; }
+    fn();
+  };
+}
+
+// ---------- Bewegung: Elemente mit gleichem data-k gleiten an ihren neuen Platz ----------
+function morph(el, html) {
+  const old = new Map();
+  const anim = !reduce && typeof el.animate === 'function';
+  if (anim) el.querySelectorAll('[data-k]').forEach(n => old.set(n.dataset.k, n.getBoundingClientRect()));
+  el.innerHTML = html;
+  if (!anim) return;
+  if (!old.size) { el.animate([{ opacity: 0.35 }, { opacity: 1 }], { duration: 250 }); return; }
+  el.querySelectorAll('[data-k]').forEach(n => {
+    const o = old.get(n.dataset.k), r = n.getBoundingClientRect();
+    if (o) {
+      const dx = o.left - r.left, dy = o.top - r.top;
+      if (Math.abs(dx) + Math.abs(dy) > 1) n.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 650, easing: 'cubic-bezier(.5,0,.25,1)' });
+    } else n.animate([{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'ease-out' });
+  });
+}
+
+// ---------- Startseite ----------
+function home() {
+  const all = T.stations.concat([T.mix]), c = stats(ALL());
+  const open = T.stations.find(s => firstOpen(s.id) >= 0);
+  const pos = store.get(POS, null);
+  const posS = pos && /^#s(\d+)/.exec(pos), posSt = posS && T.byId(+posS[1]);
+  main.innerHTML = `
+  <section class="card hero">
+    <div>
+      <p class="lbl">Lernpfad</p>
+      <h2>Potenzrechnung</h2>
+      <p>In zehn Stationen wiederholst und übst du das Rechnen mit Potenzen. Die Grundzahlen sind ganze Zahlen und Brüche, auch negative. Die Hochzahlen sind 0, 1, 2, 3 und so weiter. In der letzten Station lernst du auch negative Hochzahlen bei Zehnerpotenzen kennen, wie sie in Biologie, Chemie und Physik vorkommen. Jede Station beginnt mit einer kurzen <b>Erklärung</b> mit Bildern, Beispielen und den Potenzregeln. Danach kommen <b>9 Übungsaufgaben</b> in drei Stufen.</p>
+      <p>Nach jedem Fehlversuch bekommst du einen neuen, genaueren Tipp. Beim ${MAXW}. Fehlversuch wird die richtige Lösung angezeigt. Das wird im Fortschritt vermerkt. Einen Stern pro Stufe gibt es, wenn du alle 3 Aufgaben der Stufe selbst gelöst hast.</p>
+      <p class="btns">${posSt && pos !== '#start' ? `<a class="btn primary" href="${pos}">▶ Weiter, wo du aufgehört hast</a>` : ''}${open ? `<a class="btn${posSt ? '' : ' primary'}" href="#s${open.id}${c.done ? '-ueben' : ''}">${c.done ? `Nächste offene Aufgabe: Station ${open.id}` : 'Los geht’s mit Station 1'} →</a>` : ''}</p>
+      ${posSt && pos !== '#start' ? `<p class="goalinfo">Zuletzt: Station ${posSt.id} · ${posSt.title} (${/-ueben$/.test(pos) ? 'Üben' : 'Verstehen'})</p>` : ''}
+    </div>
+    <div class="herofx" aria-hidden="true">${T.hero()}</div>
+  </section>
+  <section class="card prog"><div class="ptop2"><h3>Dein Fortschritt: ${progLine(c)}</h3><span class="lbl">${c.done} von ${c.total} Aufgaben</span></div>${stackH(c)}${legendH(c)}</section>
+  <ol class="path">${all.map(s => { const x = s.mix ? null : stats([s.id]); return `
+    <li><a class="stn${!s.mix && x.done === x.total ? ' done' : ''}${s.mix ? ' goal' : ''}" href="#s${s.id}${s.mix ? '-ueben' : ''}">
+      <span class="num" aria-hidden="true">${s.mix ? '∑' : s.id}</span>
+      <span class="st-t"><b>${s.mix ? '' : `<span class="sr">Station ${s.id}: </span>`}${s.title}</b><small>${s.mix ? 'freies Training mit Aufgaben aus allen Stationen (zählt nicht zum Fortschritt)' : s.short}</small></span>
+      <span class="st-ex">${s.mix ? '' : `${PCT(x.done, x.total)} % bearbeitet<br><small>${PCT(x.free, x.total)} % ohne Hilfe</small>`}</span>
+      ${s.mix ? '' : `<span class="st-r">${starsH(s.id)}${stackH(x)}</span>`}
+    </a></li>`; }).join('')}
+  </ol>
+  <section class="card"><h3>Fortschritt sichern und zurücksetzen</h3>
+    <p>Dein Fortschritt wird <b>automatisch in diesem Browser auf diesem Gerät</b> gespeichert, auch wenn du die Datei schließt und später wieder öffnest. Öffne die Datei dafür immer vom selben Ort und im selben Browser. Mit einer Sicherungsdatei kannst du den Stand aufheben oder auf ein anderes Gerät mitnehmen.</p>
+    <div class="btns"><button class="btn" type="button" id="h-exp">💾 Fortschritt als Datei sichern</button><label class="btn">📂 Sicherung laden<input type="file" id="h-imp" accept=".json,application/json" hidden></label><button class="btn danger" type="button" id="h-reset">🗑 Gesamten Fortschritt löschen</button></div>
+    <p class="goalinfo" id="h-msg" aria-live="polite"></p>
+    <p class="goalinfo">Einzelne Stationen setzt du auf ihrer Üben-Seite zurück. Beim Zurücksetzen bekommst du neue Aufgaben mit anderen Zahlen.</p>
+  </section>`;
+  $('#h-exp').onclick = exportData;
+  $('#h-imp').onchange = e => { const f = e.target.files[0]; if (f) importData(f); e.target.value = ''; };
+  twoClick($('#h-reset'), '🗑 Gesamten Fortschritt löschen', 'Wirklich alles löschen? Nochmal klicken.', () => {
+    store.del(KEY); store.del(POS); for (let i = 1; i <= 11; i++) store.del('pw-lvl-' + i);
+    data = loadData(); home(); $('#h-msg').textContent = 'Der gesamte Fortschritt wurde gelöscht.';
+  });
+}
+function exportData() {
+  const blob = new Blob([JSON.stringify({ app: 'potenz-lernpfad', saved: new Date().toISOString(), data, pos: store.get(POS, null) }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Potenzrechnung_Fortschritt_' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function importData(file) {
+  const r = new FileReader();
+  r.onload = () => {
+    let j = null; try { j = JSON.parse(r.result); } catch (e) { /* unten */ }
+    const msg = $('#h-msg');
+    if (!j || j.app !== 'potenz-lernpfad' || !j.data || !j.data.st) { msg.textContent = 'Das ist keine gültige Sicherungsdatei des Lernpfads Potenzrechnung.'; return; }
+    const old = false; data = migrate(j.data); save(); if (j.pos) store.set(POS, old ? remapPos(j.pos) : j.pos); home();
+    $('#h-msg').textContent = 'Sicherung vom ' + new Date(j.saved).toLocaleString('de-DE') + ' geladen.';
+  };
+  r.readAsText(file);
+}
+
+// ---------- Station ----------
+function station(id, mode) {
+  const s = T.byId(id);
+  if (s.mix) mode = 'ueben';
+  main.innerHTML = `
+  <nav class="shead" aria-label="Station">
+    <a class="btn" href="#start">← Lernpfad</a>
+    <div class="stitle"><span class="num" aria-hidden="true">${s.mix ? '∑' : id}</span><div><p class="lbl">${s.mix ? 'Zum Schluss' : `Station ${id} von ${T.stations.length}`}</p><h2>${s.title}</h2></div></div>
+    ${s.mix ? '' : `<div class="seg"><a href="#s${id}"${mode !== 'ueben' ? ' aria-current="page"' : ''}>1. Verstehen</a><a href="#s${id}-ueben"${mode === 'ueben' ? ' aria-current="page"' : ''}>2. Üben</a></div>`}
+  </nav>
+  <div id="pane" class="view"></div>`;
+  const pane = $('#pane');
+  if (mode === 'ueben') practice(s, pane); else learn(s, pane);
+}
+
+function learn(s, pane) {
+  const c = stats([s.id]);
+  pane.innerHTML = `
+  <section class="card intro"><h3>Worum geht es?</h3>${s.intro}</section>
+  <section class="card" id="ex">
+    <div class="exhead"><h3>Schritt für Schritt</h3><span class="lbl">Wähle ein Beispiel</span></div>
+    <div class="chips" id="ex-chips"></div>
+    <div class="stagebox" id="ex-stage"></div>
+    <p class="cap" id="ex-cap" aria-live="polite"></p>
+    <div class="player">
+      <div class="chain" id="ex-chain"></div>
+      <div class="btns"><button class="btn" type="button" id="ex-prev">Zurück</button><button class="btn primary" type="button" id="ex-next">Weiter</button></div>
+    </div>
+  </section>
+  <div class="two"><section class="card merke"><h3>Merke</h3>${s.merke}</section><section class="card falle"><h3>Vorsicht, Falle!</h3>${s.falle}</section></div>
+  <section class="card"><h3>Beispiele mit Lösungsweg</h3>
+    <div class="bsp">${s.bsp().map(t => `<div class="wk"><p class="wq">${t.prompt}${t.qText ? ': ' + t.q : ''}</p>${T.lineH(t.lines)}</div>`).join('')}</div>
+  </section>
+  <div class="nextrow"><span class="goalinfo">Übungen dieser Station: ${progLine(c)}</span><a class="btn primary" href="#s${s.id}-ueben">Jetzt üben →</a></div>`;
+  explorer(s);
+}
+
+function explorer(s) {
+  const items = s.examples();
+  let cur = 0, step = 0, steps = [];
+  const chips = $('#ex-chips'), stage = $('#ex-stage'), cap = $('#ex-cap'), chain = $('#ex-chain');
+  const prev = $('#ex-prev'), next = $('#ex-next');
+  chips.innerHTML = items.map((it, i) => `<button type="button" class="chip" data-i="${i}" aria-pressed="${i === 0}">${it.label}</button>`).join('');
+  function draw() {
+    morph(stage, steps[step].h);
+    cap.innerHTML = steps[step].cap;
+    chain.innerHTML = steps.map((x, i) => (i ? '<span class="ar" aria-hidden="true">→</span>' : '')
+      + `<button type="button" class="cv${i < step ? ' past' : ''}" data-s="${i}"${i === step ? ' aria-current="step"' : ''}>${x.lab}</button>`).join('');
+    prev.disabled = step === 0;
+    next.textContent = step === steps.length - 1 ? 'Nochmal' : 'Weiter';
+  }
+  function load(i) {
+    cur = i; steps = s.explore(items[i].x); step = 0; draw();
+    chips.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === i)));
+  }
+  chips.onclick = e => { const b = e.target.closest('[data-i]'); if (b) load(+b.dataset.i); };
+  chain.onclick = e => { const b = e.target.closest('[data-s]'); if (b) { step = +b.dataset.s; draw(); } };
+  prev.onclick = () => { if (step > 0) { step--; draw(); } };
+  next.onclick = () => { step = step === steps.length - 1 ? 0 : step + 1; draw(); };
+  load(0);
+  TLUI.explorer = { steps: () => steps.length, step: () => step, next: () => next.click(), load, count: items.length };
+}
+
+// ---------- Üben ----------
+function helpStages(t) {
+  const base = T.byId(t.st);
+  const st = [base.hint(t), 'Erinnere dich an die Regeln:' + base.merke, 'Achte auf diese typischen Fehler:' + base.falle];
+  st.push(t.lines.length >= 3
+    ? 'So beginnt der Lösungsweg – rechne ab hier selbst weiter:' + T.lineH(t.lines.slice(0, -1))
+    : `Schau dir die <a href="#s${t.st}">Erklärung und die Beispiele mit Lösungsweg</a> dieser Station noch einmal an.`);
+  return st.slice(0, MAXW - 1);
+}
+function practice(s, pane) {
+  const counted = !s.mix;
+  let cur = counted ? Math.max(0, firstOpen(s.id)) : -1;
+  let t, w = 0, status = null, extraLvl = Math.min(3, Math.max(1, +store.get('pw-lvl-' + s.id, 1) || 1));
+  pane.innerHTML = `
+  ${counted ? `<div class="card ptop">
+    <div class="slots" id="p-slots" role="group" aria-label="Aufgaben dieser Station"></div>
+    <div class="pstat"><span id="p-stars"></span><span class="score" id="p-score" aria-live="polite"></span></div>
+  </div>` : `<div class="card ptop"><div class="seg" id="p-level" role="group" aria-label="Stufe">${LV.map((n, i) => `<button type="button" data-l="${i + 1}" aria-pressed="${extraLvl === i + 1}">${n}<small>${s.lvl[i]}</small></button>`).join('')}</div><p class="goalinfo">Freies Training: Diese Aufgaben zählen nicht zum Fortschritt.</p></div>`}
+  <form class="card task" id="p-form" autocomplete="off" novalidate>
+    <div class="tq"><p class="lbl" id="p-prompt"></p><span class="tag" id="p-tag" hidden></span><span class="tries" id="p-tries"></span></div>
+    <div class="qline" id="p-q"></div>
+    <div id="p-ans"></div>
+    <div class="actions">
+      <button class="btn primary" type="submit" id="p-check">Prüfen</button>
+      <button class="btn" type="button" id="p-next">Nächste Aufgabe</button>
+      <button class="btn" type="button" id="p-sol" hidden>Lösungsweg</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite" hidden></div>
+    <ul class="hints" id="p-hints"></ul>
+    <div class="solbox" id="p-solbox" hidden></div>
+  </form>
+  <p class="goalinfo">Nach jedem Fehlversuch erscheint ein neuer Tipp. Beim ${MAXW}. Fehlversuch wird die richtige Lösung angezeigt. Eingaben, die ich nicht lesen kann, und fast richtige Ergebnisse (zum Beispiel noch nicht zusammengefasst oder nicht gekürzt) zählen nicht als Fehlversuch.</p>
+  ${counted ? `<section class="card prog" id="p-prog"></section>` : ''}
+  ${s.mix ? '' : `<div class="nextrow"><a class="btn" href="#s${s.id}">← Zur Erklärung</a>${s.id < T.stations.length
+    ? `<a class="btn primary" href="#s${s.id + 1}">Nächste Station →</a>`
+    : `<a class="btn primary" href="#s${T.mix.id}-ueben">Gemischtes Training →</a>`}</div>`}`;
+  const form = $('#p-form'), fb = $('#p-fb'), solbox = $('#p-solbox'), ans = $('#p-ans'), checkBtn = $('#p-check'), hintsEl = $('#p-hints'), solBtn = $('#p-sol');
+  let inp = null, prevEl = null, stages = [];
+
+  function paintStats() {
+    if (!counted) return;
+    const c = stats([s.id]);
+    $('#p-slots').innerHTML = LV.map((n, l) => `<span class="slv"><span class="lbl">${n}</span>${[0, 1, 2].map(k => { const i = l * PER + k, x = slot(s.id, i);
+      return `<button type="button" class="sl${x.s ? ' ' + x.s : x.w ? ' tried' : ''}${i === cur ? ' cur' : ''}" data-i="${i}" title="${x.s === 'free' ? 'ohne Hilfe gelöst' : x.s === 'hint' ? 'mit Tipps gelöst' : x.s === 'shown' ? 'Lösung angezeigt' : x.w ? x.w + ' Fehlversuch(e)' : 'offen'}">${i + 1}</button>`; }).join('')}</span>`).join('')
+      + `<button type="button" class="sl extra${cur < 0 ? ' cur' : ''}" data-i="-1" title="Extra-Aufgabe, zählt nicht">+</button>`;
+    $('#p-stars').innerHTML = starsH(s.id);
+    $('#p-score').textContent = `${c.done} von ${c.total} bearbeitet`;
+    $('#p-prog').innerHTML = `<div class="ptop2"><h3>Station ${s.id}: ${progLine(c)}</h3><button class="btn danger sm" type="button" id="p-reset">Fortschritt dieser Station löschen</button></div>${stackH(c)}${legendH(c)}`;
+    twoClick($('#p-reset'), 'Fortschritt dieser Station löschen', 'Wirklich löschen? Nochmal klicken.', () => {
+      delete data.st[s.id]; data.off = data.off || {}; data.off[s.id] = (data.off[s.id] || 0) + 1; save();
+      cur = 0; openTask();
+    });
+  }
+  function showFb(cls, html) { fb.className = 'fb' + (cls ? ' ' + cls : ''); fb.innerHTML = html; fb.hidden = false; }
+  function paintHints() { hintsEl.innerHTML = stages.slice(0, Math.min(w, stages.length)).map((h, i) => `<li><b>Tipp ${i + 1}:</b> ${h}</li>`).join(''); }
+  function paintTries() { $('#p-tries').textContent = status || !w ? '' : 'Fehlversuche ' + '●'.repeat(w) + '○'.repeat(MAXW - w); }
+  const right = () => (t.kind === 'mc' ? `„${t.opts.find(o => o.ok).h}“` : t.solH);
+  const showSolution = () => { solbox.innerHTML = `<p class="lbl">Lösungsweg</p>${T.lineH(t.lines)}<p>Lösung: <b>${right()}</b></p>`; solbox.hidden = false; };
+  function keysFor() {
+    const d = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', '^', '/', '−'];
+    return t.kind === 'list' ? d.concat([';', '⌫']) : d.concat(['(', ')', '⌫']);
+  }
+  function lockInput() { if (inp) inp.disabled = true; ans.querySelectorAll('button').forEach(b => { b.disabled = true; }); }
+  function openTask() {
+    const st = cur >= 0 ? slot(s.id, cur) : {};
+    const fo = firstOpen(s.id);
+    t = cur >= 0 ? genSlot(s, cur) : s.gen(counted ? (fo < 0 ? 3 : Math.floor(fo / PER) + 1) : extraLvl);
+    w = st.w || 0; status = st.s || null; stages = helpStages(t);
+    $('#p-prompt').textContent = (cur >= 0 ? `Aufgabe ${cur + 1} von ${SLOTS} · ${LV[Math.floor(cur / PER)]} · ` : counted ? 'Extra-Aufgabe (zählt nicht) · ' : '') + t.prompt;
+    const tag = $('#p-tag'); tag.hidden = !t.tag; tag.textContent = t.tag || '';
+    const q = $('#p-q');
+    q.className = 'qline' + (t.qText ? ' text' : '');
+    q.innerHTML = t.q + (t.after ? `<span class="for">${t.after}</span>` : '');
+    fb.hidden = true; solbox.hidden = true; hintsEl.innerHTML = '';
+    checkBtn.textContent = 'Prüfen'; checkBtn.hidden = false; checkBtn.disabled = false;
+    solBtn.hidden = cur >= 0;
+    if (t.kind === 'mc') {
+      inp = null; prevEl = null; checkBtn.hidden = true;
+      ans.innerHTML = `<div class="opts${t.sym ? ' sym' : ''}" role="group" aria-label="Antworten">${t.opts.map((o, i) => `<button type="button" class="opt" data-i="${i}">${o.h}</button>`).join('')}</div>`;
+    } else {
+      const list = t.kind === 'list';
+      ans.innerHTML = `<div class="ansrow">
+        <input id="p-in" class="tin" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false"
+          aria-label="Deine Antwort" placeholder="${list ? 'zum Beispiel 1/3; 1/2; 3/4' : 'zum Beispiel 2^7 oder 8/27'}">
+        <div class="preview" id="p-prev" aria-live="polite"></div>
+        <div class="keypad" role="group" aria-label="Bildschirmtasten">${keysFor().map(k => `<button type="button" class="key${k === '−' ? ' mi' : ''}${k === '/' || k === '^' ? ' fk' : ''}" data-key="${k}" aria-label="${k === '⌫' ? 'Löschen' : k === '−' ? 'Minus' : k === ';' ? 'Strichpunkt' : k === '/' ? 'Bruchstrich' : k === '^' ? 'hoch, für die Hochzahl' : k}">${k === '/' ? 'Bruch /' : k === '^' ? 'hoch ^' : k}</button>`).join('')}</div>
+      </div>`;
+      inp = $('#p-in'); prevEl = $('#p-prev');
+      inp.addEventListener('input', onInput);
+    }
+    if (status === 'free' || status === 'hint') {
+      if (inp) { inp.value = nice(t.sol); inp.classList.add('good'); onInput(); }
+      else ans.querySelector(`.opt[data-i="${t.opts.findIndex(o => o.ok)}"]`).classList.add('good');
+      lockInput(); checkBtn.hidden = false; checkBtn.textContent = 'Nächste Aufgabe';
+      showFb('ok', `<p class="head">Schon gelöst – ${status === 'free' ? 'ohne Hilfe' : 'mit Tipps'}.</p><p class="lbl">So geht es</p>${T.lineH(t.lines)}`);
+    } else if (status === 'shown') {
+      if (inp) { inp.value = nice(t.sol); onInput(); }
+      lockInput(); checkBtn.hidden = false; checkBtn.textContent = 'Nächste Aufgabe';
+      showFb('no', `<p class="head">Hier wurde nach ${MAXW} Fehlversuchen die Lösung angezeigt.</p>`); showSolution();
+    } else {
+      if (w) { paintHints(); showFb('', `<p>Du hattest hier schon ${w} Fehlversuch${w > 1 ? 'e' : ''}. Deine Tipps stehen unten. Noch ${MAXW - w} Versuch${MAXW - w > 1 ? 'e' : ''} bis zur Lösung.</p>`); }
+      if (inp) try { inp.focus({ preventScroll: true }); } catch (e) { inp.focus(); }
+    }
+    paintTries(); paintStats();
+  }
+  function onInput() {
+    inp.classList.remove('bad');
+    const v = inp.value.trim();
+    if (!v) { prevEl.innerHTML = ''; return; }
+    const h = t.kind === 'list' ? T.previewList(v) : T.preview(v);
+    prevEl.innerHTML = h ? `So lese ich das: <b>${h}</b>` : 'So lese ich das: …';
+  }
+  function finish(st) {
+    status = st;
+    if (cur >= 0) setSlot(s.id, cur, { s: st, w });
+    lockInput(); checkBtn.hidden = false; checkBtn.disabled = false; checkBtn.textContent = 'Nächste Aufgabe';
+    paintTries(); paintStats();
+    try { checkBtn.focus({ preventScroll: true }); } catch (e) { /* egal */ }
+  }
+  function evaluate(r) {
+    if (r.ok) {
+      const before = cur >= 0 ? starCount(s.id) : 0;
+      finish(w === 0 ? 'free' : 'hint');
+      const star = cur >= 0 && starCount(s.id) > before ? `<p class="star">${starSvg(true)} Neuer Stern für „${LV[Math.floor(cur / PER)]}“!</p>` : '';
+      showFb('ok', `<p class="head">Richtig!${w === 0 ? ' Ohne Hilfe geschafft.' : ''}</p>${star}<p class="lbl">So geht es</p>${T.lineH(t.lines)}`);
+      if (inp) inp.classList.add('good');
+      return;
+    }
+    if (r.syntax || r.near) {
+      showFb('no', `<p class="head">${r.near ? 'Fast!' : 'Das kann ich noch nicht lesen.'}</p><p>${r.msg}</p><p class="lbl">Das zählt nicht als Fehlversuch.</p>`);
+      if (inp) { inp.classList.add('bad'); inp.focus({ preventScroll: true }); }
+      return;
+    }
+    w++;
+    if (w >= MAXW) {
+      finish('shown');
+      showFb('no', `<p class="head">Das war der ${MAXW}. Fehlversuch.</p><p>${r.msg}</p><p>Hier ist die richtige Lösung. Vergleiche sie genau mit deinem Weg.</p>`);
+      if (inp) { inp.value = nice(t.sol); onInput(); }
+      showSolution(); return;
+    }
+    if (cur >= 0) setSlot(s.id, cur, { w });
+    paintHints(); paintTries(); paintStats();
+    showFb('no', `<p class="head">Noch nicht richtig.</p><p>${r.msg}</p>`
+      + (w <= stages.length ? '<p>Unten steht ein neuer Tipp.</p>' : '')
+      + (w === MAXW - 1 ? '<p><b>Beim nächsten Fehlversuch wird die Lösung angezeigt.</b></p>' : ''));
+    if (inp) { inp.classList.add('bad'); inp.focus({ preventScroll: true }); }
+  }
+  function goNext() {
+    if (!counted) { cur = -1; openTask(); return; }
+    const n = firstOpen(s.id);
+    if (cur >= 0 && n >= 0) { let k = cur + 1; while (k < SLOTS && isDone(slot(s.id, k))) k++; cur = k < SLOTS ? k : n; }
+    else cur = n;
+    openTask();
+    if (cur < 0 && firstOpen(s.id) < 0) showFb('ok', '<p class="head">Alle 9 Aufgaben dieser Station sind bearbeitet! 🎉</p><p>Hier kannst du mit Extra-Aufgaben weiterüben – sie zählen nicht zum Fortschritt.</p>');
+  }
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (status) { goNext(); return; }
+    if (!inp) return;
+    const v = inp.value.trim();
+    if (!v) { showFb('', '<p>Gib zuerst eine Antwort ein.</p>'); return; }
+    evaluate(T.check(t, v));
+  });
+  ans.addEventListener('click', e => {
+    const o = e.target.closest('.opt');
+    if (o && !status) {
+      if (o.disabled) return;
+      const r = T.check(t, +o.dataset.i);
+      o.classList.add(r.ok ? 'good' : 'bad');
+      if (!r.ok) o.disabled = true;
+      evaluate(r);
+      return;
+    }
+    const k = e.target.closest('[data-key]');
+    if (!k || !inp || status) return;
+    const key = k.dataset.key, a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+    if (key === '⌫') {
+      if (a !== b) inp.setRangeText('', a, b, 'end');
+      else if (a > 0) inp.setRangeText('', a - 1, a, 'end');
+    } else inp.setRangeText(key === ';' ? '; ' : key === '␣' ? ' ' : key, a, b, 'end');
+    onInput();
+    try { inp.focus({ preventScroll: true }); } catch (err) { inp.focus(); }
+  });
+  solBtn.addEventListener('click', showSolution);
+  $('#p-next').addEventListener('click', goNext);
+  if (counted) $('#p-slots').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; cur = +b.dataset.i; openTask(); });
+  else $('#p-level').addEventListener('click', e => {
+    const b = e.target.closest('[data-l]'); if (!b) return;
+    extraLvl = +b.dataset.l; store.set('pw-lvl-' + s.id, extraLvl);
+    $('#p-level').querySelectorAll('[data-l]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    openTask();
+  });
+  if (counted && firstOpen(s.id) < 0) cur = -1;
+  openTask();
+  TLUI.practice = {
+    task: () => t, cur: () => cur, status: () => status, wrong: () => w,
+    open(i) { cur = i; openTask(); },
+    answer(v) { inp.value = v; onInput(); form.requestSubmit(); return { cls: fb.className, text: fb.textContent }; },
+    choose(i) { $(`.opt[data-i="${i}"]`).click(); return { cls: fb.className, text: fb.textContent }; },
+    next: goNext,
+    hints: () => hintsEl.children.length,
+    sol: () => solbox.hidden ? '' : solbox.textContent,
+    preview: () => (prevEl ? prevEl.innerHTML : ''),
+  };
+}
+
+// ---------- Navigation: letzte Stelle merken ----------
+function route() {
+  const m = /^#s(\d+)(-ueben)?$/.exec(location.hash);
+  if (m && T.byId(+m[1])) { station(+m[1], m[2] ? 'ueben' : 'lernen'); store.set(POS, location.hash); }
+  else { home(); if (location.hash === '#start') store.set(POS, '#start'); }
+  window.scrollTo(0, 0);
+}
+TLUI.route = route;
+TLUI.reload = () => { data = loadData(); route(); };
+addEventListener('hashchange', route);
+if (!location.hash) { const p = store.get(POS, null); if (p && /^#s\d+(-ueben)?$/.test(p)) history.replaceState(null, '', p); }
+try { const th = store.get('pw-theme', null); if (th) document.documentElement.dataset.theme = th; } catch (e) { /* egal */ }
+route();
+
+$('#theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  store.set('pw-theme', root.dataset.theme);
+});
+})();
+</script>
+</body>
+</html>

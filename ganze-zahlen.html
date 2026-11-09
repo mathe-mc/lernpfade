@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lernpfad Ganze Zahlen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap">
+<style>
+/* Gleiche Familie wie der Terme-Lernpfad: Papier, Tinte, Petrol (Bedienung), Bernstein (Hervorhebung).
+   Dazu ein festes Farbpaar für Vorzeichen: Blau = positiv, Himbeere = negativ. */
+:root {
+  --bg: #f4f1ea; --dot: rgba(90, 75, 40, .13); --card: #fffdf9; --card-2: #f6f2e9;
+  --ink: #1e2430; --ink-2: #5b606c; --ink-3: #8c909a; --line: #e6dfd1; --line-2: #cbc1ae;
+  --pri: #0e6b6b; --pri-ink: #ffffff; --pri-soft: #dcefeb;
+  --red: #d1382c; --hop: #ffc02e; --hop-ink: #2e2200; --hop-soft: #fff0c2; --hop-strong: #a86a00;
+  --ok: #1b7a45; --ok-soft: #e0f3e6; --warn: #a3560a; --warn-soft: #fff1de;
+  --pos: #2c5fc0; --pos-soft: #e1e9fb; --neg: #c22f5f; --neg-soft: #fbe3ec;
+  --k1: #0e6b6b; --k1s: #dcefeb; --k2: #a86a00; --k2s: #fff0c2; --k3: #6a4bc4; --k3s: #ece6fb;
+  --shadow: 0 1px 2px rgba(40, 32, 15, .05), 0 8px 24px rgba(40, 32, 15, .06);
+  --f: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --ease: cubic-bezier(.5, 0, .25, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161d1c; --dot: rgba(220, 235, 225, .07); --card: #1e2826; --card-2: #25302e;
+    --ink: #edf2ee; --ink-2: #b3c0ba; --ink-3: #82918b; --line: #34433f; --line-2: #4f625c;
+    --pri: #5cc6bc; --pri-ink: #0a1d1b; --pri-soft: #1f3b38; --red: #ff7b6b;
+    --hop: #f2b62c; --hop-ink: #1d1600; --hop-soft: rgba(242, 182, 44, .17); --hop-strong: #ffcb55;
+    --ok: #6fd69a; --ok-soft: #1b3326; --warn: #ffbf6e; --warn-soft: #3a2d18;
+    --pos: #8fb2ff; --pos-soft: rgba(143, 178, 255, .16); --neg: #ff8fb8; --neg-soft: rgba(255, 143, 184, .15);
+    --k1: #5cc6bc; --k1s: #1f3b38; --k2: #ffcb55; --k2s: rgba(242, 182, 44, .17); --k3: #b9a4ff; --k3s: rgba(185, 164, 255, .16);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .2);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161d1c; --dot: rgba(220, 235, 225, .07); --card: #1e2826; --card-2: #25302e;
+  --ink: #edf2ee; --ink-2: #b3c0ba; --ink-3: #82918b; --line: #34433f; --line-2: #4f625c;
+  --pri: #5cc6bc; --pri-ink: #0a1d1b; --pri-soft: #1f3b38; --red: #ff7b6b;
+  --hop: #f2b62c; --hop-ink: #1d1600; --hop-soft: rgba(242, 182, 44, .17); --hop-strong: #ffcb55;
+  --ok: #6fd69a; --ok-soft: #1b3326; --warn: #ffbf6e; --warn-soft: #3a2d18;
+  --pos: #8fb2ff; --pos-soft: rgba(143, 178, 255, .16); --neg: #ff8fb8; --neg-soft: rgba(255, 143, 184, .15);
+  --k1: #5cc6bc; --k1s: #1f3b38; --k2: #ffcb55; --k2s: rgba(242, 182, 44, .17); --k3: #b9a4ff; --k3s: rgba(185, 164, 255, .16);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 8px 24px rgba(0, 0, 0, .2);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100vh;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.4px);
+  background-size: 22px 22px;
+  color: var(--ink);
+  font: 16px/1.5 var(--f);
+}
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -.015em; text-wrap: balance; }
+h1 { font-size: clamp(1.25rem, 3vw, 1.6rem); }
+h2 { font-size: clamp(1.3rem, 3.4vw, 1.75rem); }
+h3 { font-size: 1.12rem; margin-bottom: 10px; }
+p { margin: 0 0 10px; }
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0; padding-left: 1.25em; display: grid; gap: 6px; }
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--pri); outline-offset: 2px; }
+[hidden] { display: none !important; }
+sup { font-size: .62em; vertical-align: .75em; line-height: 0; margin-left: .03em; font-weight: 700; }
+.fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-size: .8em; line-height: 1.15; margin: 0 .08em; }
+.fr > span { padding: 0 .2em; }
+.fr > span + span { border-top: 1.5px solid currentColor; }
+
+.k1 { --kb: var(--k1); --ks: var(--k1s); } .k2 { --kb: var(--k2); --ks: var(--k2s); } .k3 { --kb: var(--k3); --ks: var(--k3s); }
+.pos { --kb: var(--pos); --ks: var(--pos-soft); } .neg { --kb: var(--neg); --ks: var(--neg-soft); }
+.nv { color: var(--neg); } .pv { color: var(--pos); }
+.hl { background: var(--hop); color: var(--hop-ink); border-radius: 6px; padding: 0 .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.box { display: inline-block; width: 1.05em; height: 1.1em; border: 2.5px dashed var(--ink-3); border-radius: 7px; vertical-align: -.15em; margin: 0 .15em; }
+
+/* ---------- Kopf ---------- */
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-bottom: 18px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo {
+  width: 46px; height: 46px; flex: none; border-radius: 13px; background: var(--pri); color: var(--pri-ink);
+  display: flex; align-items: center; justify-content: center; font: 700 19px/1 var(--f); letter-spacing: -.02em;
+}
+.logo i { font-style: normal; color: var(--hop); }
+
+.seg { display: inline-flex; gap: 3px; padding: 3px; background: var(--card-2); border: 1px solid var(--line); border-radius: 13px; }
+.seg button, .seg a {
+  border: 0; background: transparent; cursor: pointer; font-weight: 600; color: var(--ink-2); text-decoration: none;
+  padding: 7px 16px; min-height: 42px; border-radius: 10px; line-height: 1.15;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.seg button small { font-weight: 400; font-size: .74rem; opacity: .85; }
+.seg button:hover, .seg a:hover { background: var(--pri-soft); color: var(--ink); }
+.seg button[aria-pressed="true"], .seg a[aria-current="page"] { background: var(--pri); color: var(--pri-ink); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+  min-height: 44px; padding: 8px 16px; border-radius: 12px; cursor: pointer;
+  border: 1.5px solid var(--line-2); background: var(--card); color: var(--ink); font-weight: 600;
+}
+.btn:hover { border-color: var(--pri); }
+.btn.primary { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
+.btn.primary:hover { filter: brightness(1.07); }
+.btn:disabled { opacity: .4; cursor: default; filter: none; border-color: var(--line-2); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn.icon { padding: 8px 11px; }
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 20px 22px; min-width: 0; }
+.view { display: grid; gap: 16px; }
+.view > * { min-width: 0; }
+.lbl { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 0; }
+
+/* ---------- Lernpfad (Startseite) ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px 28px; align-items: center; }
+.hero p { max-width: 62ch; color: var(--ink-2); }
+.hero h2 { margin: 4px 0 10px; }
+.herofx { display: grid; gap: 8px; justify-items: center; padding: 14px; border-radius: 14px; background: var(--card-2); border: 1px dashed var(--line-2); min-width: 0; overflow: hidden; }
+.herofx .eqbig { font-size: 1.3rem; margin: 0; }
+.herofx .lbl { justify-self: start; }
+.herofx .nl { min-width: 0; }
+.path { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; }
+.path::before { content: ""; position: absolute; left: 33px; top: 26px; bottom: 26px; border-left: 3px dashed var(--line-2); }
+.stn {
+  position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr) auto auto; align-items: center; gap: 6px 16px;
+  padding: 12px 16px 12px 12px; text-decoration: none; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+  transition: border-color .2s, transform .2s;
+}
+.stn:hover { border-color: var(--pri); transform: translateX(3px); }
+.num {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.1rem;
+  background: var(--card); border: 3px solid var(--pri); color: var(--pri); position: relative; z-index: 1; flex: none;
+}
+.stn.done .num { background: var(--pri); color: var(--pri-ink); }
+.stn.goal .num { border-color: var(--hop-strong); color: var(--hop-strong); }
+.st-t { display: grid; min-width: 0; }
+.st-t b { font-size: 1.05rem; }
+.st-t small { color: var(--ink-2); font-size: .86rem; }
+.st-ex { font-weight: 600; color: var(--ink-2); white-space: nowrap; font-size: .98rem; }
+.st-ex small { font-weight: 500; }
+.stars { display: inline-flex; gap: 2px; }
+.stars svg { width: 20px; height: 20px; }
+.stars .on { fill: var(--hop); stroke: var(--hop-strong); }
+.stars .off { fill: none; stroke: var(--line-2); }
+
+/* ---------- Station ---------- */
+.shead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; }
+.stitle { display: flex; align-items: center; gap: 12px; margin-right: auto; min-width: 0; }
+.intro p, .intro li { max-width: 68ch; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.merke { background: var(--pri-soft); border-color: var(--pri); }
+.falle { background: var(--warn-soft); border-color: var(--warn); }
+.merke h3 { color: var(--pri); }
+.falle h3 { color: var(--warn); }
+.nextrow { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }
+.figwrap { overflow-x: auto; margin: 6px 0 12px; padding: 8px 0; }
+.figwrap .nl { margin-top: -54px; }
+
+.dictwrap { overflow-x: auto; margin: 4px 0 10px; }
+.dict { border-collapse: collapse; width: 100%; min-width: 440px; font-size: .95rem; }
+.dict th { text-align: left; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); padding: 6px 10px; border-bottom: 2px solid var(--line); }
+.dict td { padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.dict td.z { font-weight: 700; font-size: 1.25rem; color: var(--pri); text-align: center; }
+.dict td:last-child { white-space: nowrap; font-weight: 600; }
+
+/* Vorzeichen-Regeln */
+.vz { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-width: 460px; width: 100%; margin: 6px 0 10px; }
+.vz > span { padding: 8px 10px; border-radius: 10px; background: var(--card); border: 1.5px solid var(--line); font-weight: 600; text-align: center; white-space: nowrap; font-size: 1.05rem; }
+.vz > span.p { border-color: var(--pos); } .vz > span.n { border-color: var(--neg); }
+.vz > span.on { background: var(--hop-soft); border-color: var(--hop-strong); }
+.vz b { font-size: 1.15em; }
+.ladder { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 8px 0 12px; }
+.ladder span { padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--line-2); font-weight: 600; }
+.ladder i { font-style: normal; color: var(--ink-3); font-weight: 700; }
+
+/* ---------- Zahlengerade (SVG) ---------- */
+.nl { display: block; width: 100%; min-width: 480px; max-width: 760px; height: auto; margin: 0 auto; }
+.nl text { font: 600 18px var(--f); fill: var(--ink); }
+.nl text.nl-l { fill: var(--ink-2); font-weight: 500; font-size: 17px; }
+.nl text.nl-l.n { fill: var(--neg); }
+.nl text.nl-l.z { fill: var(--ink); font-weight: 700; }
+.nl-ax { stroke: var(--ink); stroke-width: 2.5; }
+.nl-ah { fill: var(--ink); }
+.nl-t { stroke: var(--ink-2); stroke-width: 1.6; }
+.nl-t.z { stroke: var(--ink); stroke-width: 3; }
+.nl-nz { fill: var(--neg-soft); } .nl-pz { fill: var(--pos-soft); }
+.nl .pos { --c: var(--pos); } .nl .neg { --c: var(--neg); } .nl .hop { --c: var(--hop-strong); } .nl .ink { --c: var(--ink); }
+.nl-j { fill: none; stroke: var(--c, var(--ink)); stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 1; }
+.nl-jh { fill: var(--c, var(--ink)); }
+.nl text.nl-jl { fill: var(--c, var(--ink)); font-size: 17px; }
+.nl-sp { fill: none; stroke: var(--c, var(--ink-2)); stroke-width: 2.4; }
+.nl text.nl-sl { fill: var(--c, var(--ink-2)); font-size: 17px; }
+.nl-p circle { fill: var(--c, var(--hop)); stroke: var(--card); stroke-width: 3; }
+.nl text.nl-pl { fill: var(--c, var(--ink)); font-size: 20px; font-weight: 700; }
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pop { from { opacity: 0; } to { opacity: 1; } }
+.nl-j.new { animation: draw .6s var(--ease); }
+.nl .new-h { animation: pop .25s .5s backwards; }
+
+/* ---------- Erklär-Bühne ---------- */
+.exhead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.chip {
+  border: 1.5px solid var(--line-2); background: var(--card); border-radius: 999px; cursor: pointer;
+  padding: 4px 13px; min-height: 38px; color: var(--ink); font-weight: 500;
+}
+.chip:hover { border-color: var(--pri); }
+.chip[aria-pressed="true"] { background: var(--pri); border-color: var(--pri); color: var(--pri-ink); }
+.stagebox {
+  margin-top: 16px; min-height: 240px; padding: 18px 10px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line);
+  display: grid; align-content: center; justify-items: center; gap: 14px; overflow-x: auto; overflow-y: hidden;
+}
+.stagebox > * { max-width: 100%; }
+.stagebox > .nl { max-width: 760px; }
+.cap { margin: 14px 0 0; min-height: 3em; font-size: 1.02rem; max-width: 72ch; }
+.cap b { background: var(--hop); color: var(--hop-ink); padding: 0 6px; border-radius: 6px; }
+.player { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; margin-top: 14px; }
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; min-width: 0; }
+.cv {
+  border: 1.5px solid var(--line); background: var(--card); color: var(--ink-3); cursor: pointer;
+  border-radius: 10px; padding: 3px 10px; min-height: 36px; font-weight: 600; white-space: nowrap; font-size: .9rem;
+}
+.cv.past { color: var(--ink-2); }
+.cv[aria-current="step"] { color: var(--ink); border-color: var(--pri); background: var(--pri-soft); }
+.ar { color: var(--ink-3); font-weight: 600; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.eqbig { font: 600 clamp(1.45rem, 4.6vw, 2.05rem)/1.35 var(--f); text-align: center; margin: 0; }
+.eqbig.sm { font-size: clamp(1.2rem, 3.8vw, 1.6rem); }
+.eqbig.dim { color: var(--ink-3); }
+.run { margin: 0; font-weight: 600; font-size: clamp(1.05rem, 3.2vw, 1.3rem); text-align: center; color: var(--ink-2); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+.op { font-weight: 700; color: var(--ink-3); font-size: 1.2rem; }
+.duo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 680px; }
+.duo > div { display: grid; gap: 8px; justify-items: center; padding: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+
+.phrase { font-size: clamp(1.05rem, 3.2vw, 1.3rem); line-height: 2; text-align: center; margin: 0; max-width: 46ch; }
+.phrase .sg { border-radius: 6px; padding: 2px 3px; transition: background-color .3s, box-shadow .3s; }
+.phrase .sg.on { background: var(--ks); box-shadow: inset 0 -3px 0 var(--kb); }
+
+/* Kärtchen und Gruppen */
+.fc {
+  display: inline-block; vertical-align: middle; text-align: center; min-width: 44px; height: 44px; padding: 0 10px; border-radius: 10px; position: relative;
+  border: 2px solid var(--kb, var(--line-2)); background: var(--ks, var(--card)); font: 600 1.25rem/40px var(--f); white-space: nowrap;
+}
+.fc.big { height: 54px; line-height: 50px; padding: 0 14px; font-size: 1.45rem; }
+.fc::after {
+  content: ""; position: absolute; left: -6%; right: -6%; top: 50%; height: 3px; border-radius: 2px; background: var(--red);
+  transform: rotate(-35deg) scaleX(0); transition: transform .45s var(--ease);
+}
+.fc.cut { opacity: .55; }
+.fc.cut::after { transform: rotate(-35deg) scaleX(1); }
+.grp { display: inline-grid; justify-items: center; gap: 8px; padding: 10px; border: 2px dashed var(--kb, var(--line-2)); border-radius: 14px; }
+.gl { font-size: .88rem; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.pair { display: inline-grid; justify-items: center; gap: 6px; padding: 8px; border: 2px dashed var(--pos); border-radius: 14px; }
+.pair .gl { color: var(--pos); }
+
+/* Plättchen */
+.pls { display: grid; gap: 10px; justify-items: start; }
+.plrow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.plrow .gl { min-width: 4.2em; text-align: right; margin-right: 6px; font-size: 1rem; }
+.pl {
+  width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; position: relative;
+  font: 700 1.2rem/1 var(--f); color: var(--card); background: var(--kb);
+}
+.pl.cut { opacity: .4; }
+.pl.cut::after { content: ""; position: absolute; left: -5px; right: -5px; top: 50%; height: 3px; margin-top: -1.5px; background: var(--ink); border-radius: 2px; transform: rotate(-35deg); }
+
+/* Muster-Tabelle */
+.mt { border-collapse: collapse; font-weight: 600; font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+.mt td { padding: 4px 10px; text-align: right; }
+.mt td.d { color: var(--ink-3); font-size: .85rem; font-weight: 500; text-align: left; }
+.mt tr.new td { background: var(--hop-soft); }
+.mt tr.new td:first-child { border-radius: 8px 0 0 8px; }
+.mt tr.new td:last-child { border-radius: 0 8px 8px 0; }
+
+/* Schrittweise rechnen */
+.calc { display: grid; gap: 6px; justify-items: start; }
+.calc .ln { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; font: 600 clamp(1.25rem, 4vw, 1.7rem)/1.3 var(--f); color: var(--ink-3); }
+.calc .ln.now { color: var(--ink); }
+.calc .lc { font-size: .8rem; font-weight: 500; color: var(--ink-3); }
+
+/* Lösungswege */
+.lines { display: grid; gap: 8px; }
+.ln { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; }
+.lm { font-weight: 600; font-size: 1.22rem; }
+.lc { font-size: .85rem; color: var(--ink-2); }
+.lines .nl { max-width: 560px; margin: 0; }
+.lines .ln:has(.nl) { display: block; overflow-x: auto; }
+.bsp { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.wk { padding: 14px 16px; border-radius: 14px; background: var(--card-2); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.wq { margin: 0; font-size: .85rem; color: var(--ink-2); font-weight: 500; }
+.wk .lines { overflow-x: auto; }
+
+/* ---------- Üben ---------- */
+.ptop { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+.pstat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.score { font-weight: 600; color: var(--ink-2); display: flex; align-items: baseline; gap: 6px; }
+.task { display: grid; gap: 16px; }
+.tq { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.tag { font-size: .78rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--pri-soft); color: var(--pri); }
+.qline { font: 600 clamp(1.5rem, 5vw, 2.1rem)/1.3 var(--f); margin: 0; overflow-x: auto; }
+.qline.text { font-size: clamp(1.1rem, 3.4vw, 1.35rem); font-weight: 500; max-width: 60ch; }
+.qline .for { display: block; font-size: .6em; color: var(--ink-2); font-weight: 500; margin-top: 6px; }
+.qline.text .for { font-size: .82em; }
+.qline .nl { margin: 0; max-width: 640px; }
+.ansrow { display: grid; gap: 10px; }
+.tin {
+  font: 600 1.6rem/1.1 var(--f); height: 58px; padding: 0 14px; width: 100%; max-width: 520px;
+  border: 2px solid var(--pri); border-radius: 13px; background: var(--card); color: var(--ink);
+}
+.tin:focus { outline: none; box-shadow: 0 0 0 4px var(--pri-soft); }
+.tin.bad { border-color: var(--warn); background: var(--warn-soft); }
+.tin.good { border-color: var(--ok); background: var(--ok-soft); }
+.preview { min-height: 1.6em; color: var(--ink-2); font-size: 1rem; }
+.preview b { color: var(--ink); font-size: 1.15rem; }
+.keypad { display: flex; flex-wrap: wrap; gap: 6px; max-width: 620px; }
+.key {
+  min-width: 46px; min-height: 44px; padding: 0 10px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1.15rem;
+  border: 1.5px solid var(--line-2); background: var(--card-2); color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.key:hover { border-color: var(--pri); }
+.key.mi { color: var(--neg); border-color: var(--neg); font-size: 1.35rem; }
+.opts { display: grid; gap: 8px; }
+.opts.sym { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); max-width: 420px; }
+.opt {
+  text-align: left; padding: 12px 16px; min-height: 52px; border-radius: 12px; cursor: pointer; font-size: 1.05rem; font-weight: 500;
+  border: 1.5px solid var(--line-2); background: var(--card); color: var(--ink);
+}
+.opts.sym .opt { text-align: center; font-size: 1.8rem; font-weight: 700; min-height: 64px; }
+.opt:hover { border-color: var(--pri); }
+.opt.good { border-color: var(--ok); background: var(--ok-soft); }
+.opt.bad { border-color: var(--warn); background: var(--warn-soft); }
+.opt:disabled { cursor: default; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.fb { padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line); display: grid; gap: 8px; background: var(--card-2); }
+.fb.ok { background: var(--ok-soft); border-color: var(--ok); }
+.fb.no { background: var(--warn-soft); border-color: var(--warn); }
+.fb .head { font-weight: 700; font-size: 1.1rem; margin: 0; }
+.fb .star { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.fb .star svg { width: 22px; height: 22px; fill: var(--hop); stroke: var(--hop-strong); }
+.fb .lines { overflow-x: auto; }
+.solbox { padding: 14px 18px; border-radius: 14px; border: 1px dashed var(--line-2); display: grid; gap: 10px; overflow-x: auto; }
+.goalinfo { color: var(--ink-3); font-size: .88rem; margin: 0; }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.foot { margin-top: 26px; color: var(--ink-3); font-size: .85rem; text-align: center; }
+
+/* ---------- Fortschritt ---------- */
+.stack { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--line); min-width: 70px; }
+.stack b { display: block; height: 100%; transition: width .4s var(--ease); }
+.stack .f, .legend .f { background: var(--ok); } .stack .h, .legend .h { background: var(--hop); } .stack .s, .legend .s { background: var(--red); }
+.legend .o { background: var(--line); }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: .9rem; color: var(--ink-2); }
+.legend span { white-space: nowrap; }
+.legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.prog { display: grid; gap: 10px; }
+.prog h3 { margin: 0; }
+.ptop2 { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.st-r { display: grid; gap: 6px; justify-items: end; min-width: 80px; }
+.st-r .stack { width: 100%; height: 8px; }
+.btn.danger { border-color: var(--red); color: var(--red); }
+.btn.sm { min-height: 36px; padding: 4px 12px; font-size: .9rem; }
+.slots { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: flex-end; }
+.slv { display: inline-flex; align-items: center; gap: 5px; }
+.slv .lbl { margin-right: 3px; }
+.sl {
+  min-width: 40px; min-height: 40px; border-radius: 10px; cursor: pointer; font-weight: 700;
+  border: 2px solid var(--line-2); background: var(--card); color: var(--ink-2);
+}
+.sl:hover { border-color: var(--pri); }
+.sl.tried { border-style: dashed; border-color: var(--warn); }
+.sl.free { background: var(--ok); border-color: var(--ok); color: var(--card); }
+.sl.hint { background: var(--hop); border-color: var(--hop-strong); color: var(--hop-ink); }
+.sl.shown { background: var(--red); border-color: var(--red); color: var(--card); }
+.sl.cur { outline: 3px solid var(--pri); outline-offset: 2px; }
+.sl.extra { color: var(--pri); border-style: dashed; }
+.tries { margin-left: auto; font-size: .85rem; color: var(--ink-3); letter-spacing: 1px; white-space: nowrap; }
+.hints { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.hints:empty { display: none; }
+.hints > li { background: var(--hop-soft); border-radius: 12px; padding: 10px 14px 10px 40px; position: relative; overflow-x: auto; }
+.hints > li::before { content: "💡"; position: absolute; left: 12px; top: 9px; }
+.hints > li ul, .hints > li ol { margin-top: 6px; }
+.hints > li .lines { margin-top: 8px; padding: 10px 12px; background: var(--card); border-radius: 10px; overflow-x: auto; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; }
+  .two { grid-template-columns: 1fr; }
+  .stn { grid-template-columns: 44px minmax(0, 1fr) auto; }
+  .st-ex { grid-column: 2 / -1; grid-row: 2; font-size: .9rem; }
+  .st-r { grid-column: 3; grid-row: 1 / span 2; }
+}
+@media (max-width: 640px) {
+  .wrap { padding-top: 14px; }
+  .card { padding: 16px; border-radius: 16px; }
+  .shead .seg { width: 100%; }
+  .shead .seg a { flex: 1; }
+  .player { flex-direction: column; align-items: stretch; }
+  .btns .btn { flex: 1; }
+  .ptop .seg { width: 100%; }
+  .ptop .seg button { flex: 1; padding-inline: 6px; }
+  .tin { font-size: 1.35rem; height: 52px; }
+  .key { min-width: 42px; }
+  .actions .btn { flex: 1 1 40%; }
+  .fb { padding: 12px; }
+  .lm { font-size: 1.1rem; }
+  .fc { min-width: 38px; height: 40px; line-height: 36px; font-size: 1.1rem; padding: 0 8px; }
+  .duo { grid-template-columns: 1fr; }
+  .pl { width: 28px; height: 28px; font-size: 1rem; }
+  .nl { min-width: 0; }
+  .nl text { font-size: 27px; }
+  .nl text.nl-l, .nl text.nl-jl, .nl text.nl-sl { font-size: 25px; }
+  .nl text.nl-pl { font-size: 30px; }
+  .stagebox { padding-inline: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stn, .fc::after, .phrase .sg { transition: none; }
+  .nl-j.new, .nl .new-h { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#start" aria-label="Zum Lernpfad">
+      <span class="logo" aria-hidden="true">±<i>3</i></span>
+      <h1>Lernpfad Ganze Zahlen</h1>
+    </a>
+    <button class="btn icon" id="theme" type="button" title="Hell / Dunkel" aria-label="Hell oder dunkel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </header>
+  <main id="main" class="view"></main>
+  <p class="foot">Zehn Stationen, jede mit kurzer Erklärung und Übungen. Dein Fortschritt wird automatisch in diesem Browser gespeichert.</p>
+</div>
+
+<!-- =====================================================================
+     RECHENKERN (ohne DOM): Brüche, Parser für Schülereingaben, Zahlengerade
+     als SVG, Prüfung mit Fehlerdiagnose, Stationen mit Erklär-Schritten
+     und Aufgaben-Generatoren. Test: TL.runTests()
+     ===================================================================== -->
+<script id="kern">
+(function (global) {
+'use strict';
+
+// ---------- Zufall (für Tests mit Startwert) ----------
+let rnd = Math.random;
+function seed(s) {
+  rnd = () => { s = (s + 0x6D2B79F5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+const ri = (a, b) => a + Math.floor(rnd() * (b - a + 1));
+const pick = a => a[Math.floor(rnd() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sgn = () => (rnd() < 0.5 ? -1 : 1);
+const nz = (a, b) => { let v; do v = ri(a, b); while (!v); return v; };
+const sum = l => l.reduce((s, x) => s + x, 0);
+const abs = Math.abs;
+function err(msg) { const e = new Error(msg); e.user = true; return e; }
+
+// ---------- Brüche [Zähler, Nenner] (für falsche Eingaben wie 7 : 2) ----------
+function gcd(a, b) { a = abs(a); b = abs(b); while (b) [a, b] = [b, a % b]; return a; }
+function Q(n, d = 1) {
+  if (d === 0) throw err('Durch 0 kann man nicht teilen.');
+  if (d < 0) { n = -n; d = -d; }
+  const g = gcd(n, d) || 1;
+  return [n / g + 0, d / g];
+}
+const qadd = (a, b) => Q(a[0] * b[1] + b[0] * a[1], a[1] * b[1]);
+const qmul = (a, b) => Q(a[0] * b[0], a[1] * b[1]);
+const qdiv = (a, b) => Q(a[0] * b[1], a[1] * b[0]);
+const qneg = a => [-a[0] + 0, a[1]];
+const qeq = (a, b) => a[0] === b[0] && a[1] === b[1];
+const qzero = a => a[0] === 0;
+
+// ---------- HTML ----------
+const MI = '−';
+const nH = n => (n < 0 ? MI + -n : String(n));                    // −5
+const pN = n => (n < 0 ? `(${MI}${-n})` : String(n));              // (−5), aber 5
+const sN = n => `(${n < 0 ? MI : '+'}${abs(n)})`;                  // (−5) bzw. (+5)
+const cN = n => (n < 0 ? `<span class="nv">${nH(n)}</span>` : n > 0 ? `<span class="pv">${n}</span>` : '0');
+const supH = e => `<sup>${e}</sup>`;
+const fracH = (t, b) => `<span class="fr"><span>${t}</span><span>${b}</span></span>`;
+const qH = q => (q[1] === 1 ? nH(q[0]) : (q[0] < 0 ? MI : '') + fracH(abs(q[0]), q[1]));
+const A = n => (n < 0 ? `(${n})` : String(n));                     // Quelltext für den Parser
+const plainNum = q => (q[1] === 1 ? String(q[0]) : `${q[0]}/${q[1]}`);
+const ul = items => `<ul>${items.map(x => `<li>${x}</li>`).join('')}</ul>`;
+const ol = items => `<ol>${items.map(x => `<li>${x}</li>`).join('')}</ol>`;
+const eqbig = (h, cls = '') => `<p class="eqbig ${cls}">${h}</p>`;
+const chipRow = (items, op = '·') => `<div class="row">${items.join(`<span class="op">${op}</span>`)}</div>`;
+const LT = '&lt;', GT = '&gt;';
+const relH = r => (r === '<' ? LT : r === '>' ? GT : '=');
+
+// ---------- Parser für Eingaben ----------
+const SUPS = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+function tokenize(s) {
+  s = String(s).replace(/[−–—]/g, '-').replace(/[·⋅×∙*]/g, '*').replace(/[:÷/]/g, '/')
+    .replace(/[[{]/g, '(').replace(/[\]}]/g, ')');
+  const t = []; let i = 0;
+  while (i < s.length) {
+    const ch = s[i];
+    if (/\s/.test(ch)) { i++; continue; }
+    if (/[0-9.,]/.test(ch)) {
+      let j = i; while (j < s.length && /[0-9.,]/.test(s[j])) j++;
+      let str = s.slice(i, j);
+      if (/^\d{1,3}(\.\d{3})+$/.test(str)) str = str.replace(/\./g, '');   // 2.400 = zweitausendvierhundert
+      str = str.replace(',', '.');
+      if (!/^\d+(\.\d+)?$/.test(str)) throw err(`„${s.slice(i, j)}“ ist keine gültige Zahl.`);
+      const [ip, fp = ''] = str.split('.');
+      t.push({ t: 'num', q: Q(+(ip + fp), 10 ** fp.length) });
+      i = j; continue;
+    }
+    if (SUPS.includes(ch)) {
+      let j = i, e = '';
+      while (j < s.length && SUPS.includes(s[j])) { e += SUPS.indexOf(s[j]); j++; }
+      t.push({ t: 'sup', e: +e }); i = j; continue;
+    }
+    if ('+-*/()^'.includes(ch)) { t.push({ t: ch }); i++; continue; }
+    if (/[a-zäöüß]/i.test(ch)) throw err('Hier brauchst du keine Buchstaben, nur Zahlen und Rechenzeichen.');
+    if (ch === '=') throw err('Schreib nur das Ergebnis, ohne „=“.');
+    if (ch === '°' || ch === '€') throw err('Gib nur die Zahl ein, ohne Einheit.');
+    throw err(`Das Zeichen „${ch}“ kenne ich nicht.`);
+  }
+  return t;
+}
+const opName = t => ({ '*': '·', '/': ':' }[t] || t);
+function parse(src) {
+  const toks = tokenize(src);
+  if (!toks.length) throw err('Gib zuerst etwas ein.');
+  let p = 0;
+  const peek = () => toks[p];
+  const more = () => { if (!peek()) throw err('Nach dem Rechenzeichen fehlt noch etwas.'); };
+  function expr() {
+    const terms = [{ s: 1, a: term() }];
+    while (peek() && (peek().t === '+' || peek().t === '-')) {
+      const s = toks[p++].t === '-' ? -1 : 1; more();
+      terms.push({ s, a: term() });
+    }
+    return terms.length === 1 ? terms[0].a : { t: 'add', terms };
+  }
+  function term() {
+    const f = [{ op: '*', a: unary() }];
+    for (;;) {
+      const k = peek(); if (!k) break;
+      if (k.t === '*' || k.t === '/') { p++; more(); f.push({ op: k.t, a: unary() }); continue; }
+      if (k.t === '(') { f.push({ op: '*', a: unary() }); continue; }
+      if (k.t === 'num') throw err(toks[p - 1].t === ')' ? 'Zwischen „)“ und der Zahl fehlt ein Rechenzeichen.' : 'Zwischen zwei Zahlen fehlt ein Rechenzeichen.');
+      break;
+    }
+    return f.length === 1 ? f[0].a : { t: 'mul', f };
+  }
+  function unary() {
+    const k = peek();
+    if (k && k.t === '-') { p++; more(); return { t: 'neg', a: unary() }; }
+    if (k && k.t === '+') { p++; more(); return { t: 'pos', a: unary() }; }
+    return power();
+  }
+  function power() {
+    let b = atom();
+    for (;;) {
+      const k = peek();
+      if (k && k.t === 'sup') { p++; b = { t: 'pow', b, e: k.e }; continue; }
+      if (k && k.t === '^') {
+        p++;
+        const e = toks[p++];
+        if (e && e.t === '-') throw err('Negative Hochzahlen brauchst du hier nicht.');
+        if (!e || e.t !== 'num' || e.q[1] !== 1) throw err('Nach ^ muss eine ganze Zahl kommen, zum Beispiel 3^2.');
+        if (e.q[0] > 99) throw err('Diese Hochzahl ist zu groß.');
+        b = { t: 'pow', b, e: e.q[0] }; continue;
+      }
+      break;
+    }
+    return b;
+  }
+  function atom() {
+    const k = toks[p++];
+    if (!k) throw err('Am Ende fehlt noch etwas.');
+    if (k.t === 'num') return { t: 'num', q: k.q };
+    if (k.t === '(') {
+      if (peek() && peek().t === ')') throw err('Die Klammer ist leer.');
+      if (!peek()) throw err('Eine Klammer ist nicht geschlossen.');
+      const e = expr();
+      const c = toks[p++];
+      if (!c || c.t !== ')') throw err('Eine Klammer ist nicht geschlossen.');
+      return { ...e, p: true };
+    }
+    if (k.t === ')') throw err('Da ist eine Klammer „)“ zu viel.');
+    if (k.t === 'sup' || k.t === '^') throw err('Vor der Hochzahl fehlt die Grundzahl.');
+    throw err(`An dieser Stelle passt „${opName(k.t)}“ nicht.`);
+  }
+  const ast = expr();
+  if (p < toks.length) throw err(toks[p].t === ')' ? 'Da ist eine Klammer „)“ zu viel.' : 'Da ist ein Zeichen zu viel.');
+  return ast;
+}
+function val(a) {
+  switch (a.t) {
+    case 'num': return a.q;
+    case 'neg': return qneg(val(a.a));
+    case 'pos': return val(a.a);
+    case 'add': return a.terms.reduce((s, x) => qadd(s, x.s < 0 ? qneg(val(x.a)) : val(x.a)), [0, 1]);
+    case 'mul': return a.f.reduce((s, x) => {
+      const v = val(x.a);
+      if (x.op === '/') { if (qzero(v)) throw err('Durch 0 kann man nicht teilen.'); return qdiv(s, v); }
+      return qmul(s, v);
+    }, [1, 1]);
+    case 'pow': {
+      const b = val(a.b);
+      if (abs(b[0]) !== b[1] && b[0] !== 0 && a.e > 15) throw err('Diese Hochzahl ist zu groß.');
+      let r = [1, 1]; for (let i = 0; i < a.e; i++) r = qmul(r, b); return r;
+    }
+  }
+  throw new Error('unbekannter Knoten');
+}
+
+// ---------- Formatierung eines Syntaxbaums ----------
+function fmt(a, pos = 'top') {
+  let h, need = false;
+  const outer = pos !== 'top' && pos !== 'first';
+  switch (a.t) {
+    case 'num':
+      h = qH([abs(a.q[0]), a.q[1]]);
+      if (a.q[0] < 0) { h = MI + h; if (outer) need = true; }
+      break;
+    case 'neg': h = MI + fmt(a.a, 'un'); if (outer) need = true; break;
+    case 'pos': h = '+' + fmt(a.a, 'un'); if (outer) need = true; break;
+    case 'pow': h = fmt(a.b, 'base') + supH(a.e); if (pos === 'base') need = true; break;
+    case 'mul':
+      h = a.f.map((f, i) => (i === 0 ? '' : f.op === '/' ? ' : ' : ' · ') + fmt(f.a, f.op === '/' ? 'div' : 'factor')).join('');
+      if (pos === 'base' || pos === 'un' || pos === 'div') need = true;
+      break;
+    case 'add':
+      h = a.terms.map((x, i) => (i === 0 ? '' : x.s < 0 ? ' − ' : ' + ') + fmt(x.a, i === 0 ? 'first' : 'term')).join('');
+      if (outer && pos !== 'term') need = true;
+      break;
+  }
+  if (a.p && pos !== 'top') need = true;
+  if (need) h = `(${h})`;
+  if (a.hl) h = `<span class="hl">${h}</span>`;
+  return h;
+}
+const srcH = src => fmt(parse(src));
+function preview(src) { try { return fmt(parse(src)); } catch (e) { if (e.user) return null; throw e; } }
+function splitList(s) { return String(s).replace(/[−–—]/g, '-').split(/[;,\s<>|]+/).filter(Boolean); }
+function previewList(s) {
+  const it = splitList(s);
+  if (!it.length || it.some(x => !/^[+-]?\d+$/.test(x))) return null;
+  return it.map(x => nH(+x)).join(' ; ');
+}
+
+// ---------- Schrittweise rechnen (Klammer, Hoch, Punkt, Strich) ----------
+function mapKids(a, f) {
+  switch (a.t) {
+    case 'neg': case 'pos': return { ...a, a: f(a.a) };
+    case 'pow': return { ...a, b: f(a.b) };
+    case 'mul': return { ...a, f: a.f.map(x => ({ ...x, a: f(x.a) })) };
+    case 'add': return { ...a, terms: a.terms.map(x => ({ ...x, a: f(x.a) })) };
+    default: return a;
+  }
+}
+const unmark = a => JSON.parse(JSON.stringify(a, (k, v) => (k === 'hl' ? undefined : v)));
+const numN = q => ({ t: 'num', q, hl: true });
+function stKl(a, root) { return a.p && (a.t === 'add' || a.t === 'mul') && !root ? numN(val(a)) : mapKids(a, x => stKl(x, false)); }
+function stPow(a) { return a.t === 'pow' ? numN(val(a)) : mapKids(a, stPow); }
+function stPunkt(a) {
+  const b = mapKids(a, stPunkt);
+  if (b.t === 'mul') return numN(val(b));
+  if ((b.t === 'neg' || b.t === 'pos') && b.a.t === 'num' && b.a.hl) return numN(val(b));
+  return b;
+}
+function evalSteps(src) {
+  const a0 = parse(src);
+  const steps = [{ lab: 'Aufgabe', h: fmt(a0), cap: 'Schau dir die Aufgabe an: Gibt es Klammern? Potenzen? Mal und geteilt?' }];
+  let a = a0;
+  const stages = [
+    ['Klammer', x => stKl(x, true), 'Zuerst rechnest du die Klammer aus.'],
+    ['Hoch', stPow, 'Dann die Potenzen: „hoch“ kommt vor „mal“.'],
+    ['Punkt', stPunkt, 'Punkt vor Strich: Jetzt wird mal und geteilt gerechnet. Achte auf die Vorzeichen-Regeln.'],
+    ['Strich', x => numN(val(x)), 'Zum Schluss plus und minus.'],
+  ];
+  for (const [lab, f, cap] of stages) {
+    const b = f(unmark(a));
+    if (fmt(unmark(b)) !== fmt(unmark(a))) { steps.push({ lab, h: fmt(b), cap }); a = b; }
+  }
+  const value = val(a0);
+  steps[steps.length - 1].cap += ` Das Ergebnis ist <b>${qH(value)}</b>.`;
+  return { steps, value };
+}
+
+// ---------- Zahlengerade als SVG ----------
+// o = { lo, hi, step, every, labels, pts:[{v,lab,cls}], jumps:[{a,b,cls,lab,fresh}], spans:[{a,b,lab,cls}] }
+function nl(o) {
+  const lo = o.lo, hi = o.hi, step = o.step || 1, every = o.every || step, W = 720, H = 180, ay = 106, L = 40, R = W - 40;
+  const X = v => L + (v - lo) * (R - L) / (hi - lo), f = n => n.toFixed(1);
+  let s = `<svg class="nl" viewBox="0 0 ${W} ${H}" role="img" aria-label="${o.aria || 'Zahlengerade'}">`;
+  if (lo < 0) s += `<rect class="nl-nz" x="${L - 18}" y="${ay - 6}" width="${f(X(Math.min(0, hi)) - L + 18)}" height="12" rx="3"/>`;
+  if (hi > 0) s += `<rect class="nl-pz" x="${f(X(Math.max(0, lo)))}" y="${ay - 6}" width="${f(R + 18 - X(Math.max(0, lo)))}" height="12" rx="3"/>`;
+  s += `<line class="nl-ax" x1="${L - 22}" y1="${ay}" x2="${R + 20}" y2="${ay}"/><path class="nl-ah" d="M${R + 32} ${ay} l-13 -7 v14z"/>`;
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+    const x = f(X(v)), big = v % every === 0, z = v === 0;
+    s += `<line class="nl-t${z ? ' z' : ''}" x1="${x}" y1="${ay - (big || z ? 10 : 6)}" x2="${x}" y2="${ay + (big || z ? 10 : 6)}"/>`;
+    if ((big || z) && o.labels !== false) s += `<text class="nl-l${v < 0 ? ' n' : ''}${z ? ' z' : ''}" x="${x}" y="${ay + 32}" text-anchor="middle">${nH(v)}</text>`;
+  }
+  for (const sp of o.spans || []) {
+    const x1 = f(X(Math.min(sp.a, sp.b))), x2 = f(X(Math.max(sp.a, sp.b))), y = ay + 46;
+    s += `<g class="${sp.cls || ''}${sp.fresh ? ' new-h' : ''}"><path class="nl-sp" d="M${x1} ${y - 8} V${y} H${x2} V${y - 8}"/>`
+      + `<text class="nl-sl" x="${f((X(sp.a) + X(sp.b)) / 2)}" y="${y + 22}" text-anchor="middle">${sp.lab || ''}</text></g>`;
+  }
+  for (const j of o.jumps || []) {
+    if (j.a === j.b) continue;
+    const x1 = X(j.a), x2 = X(j.b), y = ay - 9, d = abs(x2 - x1), h = Math.min(66, 16 + d * 0.32), mx = (x1 + x2) / 2, cy = y - 2 * h;
+    const dx = x2 - mx, dy = y - cy, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+    const bx = x2 - ux * 13, by = y - uy * 13, px = -uy * 6.5, py = ux * 6.5;
+    s += `<g class="${j.cls || 'ink'}"><path class="nl-j${j.fresh ? ' new' : ''}" pathLength="1" d="M${f(x1)} ${y} Q${f(mx)} ${f(cy)} ${f(x2)} ${y}"/>`
+      + `<path class="nl-jh${j.fresh ? ' new-h' : ''}" d="M${f(x2)} ${y} L${f(bx + px)} ${f(by + py)} L${f(bx - px)} ${f(by - py)}Z"/>`
+      + (j.lab ? `<text class="nl-jl${j.fresh ? ' new-h' : ''}" x="${f(mx)}" y="${f(y - h - 8)}" text-anchor="middle">${j.lab}</text>` : '') + '</g>';
+  }
+  for (const pt of o.pts || []) {
+    const x = f(X(pt.v));
+    s += `<g class="nl-p ${pt.cls || 'hop'}"><circle cx="${x}" cy="${ay}" r="8.5"/>`
+      + (pt.lab ? `<text class="nl-pl" x="${x}" y="${ay - (pt.high ? 70 : 20)}" text-anchor="middle">${pt.lab}</text>` : '') + '</g>';
+  }
+  return s + '</svg>';
+}
+// passenden Ausschnitt für eine Reihe von Zahlen wählen
+function rng(vals, minSpan = 14) {
+  let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+  const span = Math.max(hi - lo, minSpan);
+  const step = [1, 2, 5, 10, 25, 50, 100].find(s => span / s <= 44);
+  const every = [1, 2, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000].find(e => e % step === 0 && span / e <= 14);
+  const pad = Math.max(1, Math.round(span * 0.06));
+  lo = Math.floor((lo - pad) / every) * every; hi = Math.ceil((hi + pad) / every) * every;
+  while (hi - lo < minSpan) { lo -= every; if (hi - lo < minSpan) hi += every; }
+  return { lo, hi, step, every };
+}
+const sg = n => (n < 0 ? 'neg' : 'pos');
+
+// ---------- Prüfen ----------
+function check(task, input) {
+  if (task.kind === 'mc') {
+    const o = task.opts[input];
+    return o.ok ? { ok: true } : { ok: false, msg: o.msg || 'Das passt nicht.' };
+  }
+  if (task.kind === 'list') {
+    const it = splitList(input);
+    if (!it.length) return { ok: false, syntax: true, msg: 'Gib zuerst die Zahlen ein.' };
+    const bad = it.find(x => !/^[+-]?\d+$/.test(x));
+    if (bad) return { ok: false, syntax: true, msg: `„${bad}“ kann ich nicht lesen. Trenne die Zahlen mit Strichpunkt, zum Beispiel −5; −2; 0; 3.` };
+    const got = it.map(Number), want = task.vals;
+    if (got.length !== want.length) return { ok: false, syntax: true, msg: `Es sind ${want.length} Zahlen. Du hast ${got.length} eingegeben.` };
+    const same = [...got].sort((a, b) => a - b).every((x, i) => x === want[i]);
+    if (!same) return { ok: false, msg: 'Da stimmt eine Zahl nicht mit der Aufgabe überein. Schreib alle Zahlen genau ab, mit Vorzeichen.' };
+    if (got.every((x, i) => x === want[i])) return { ok: true };
+    if (got.every((x, i) => x === want[want.length - 1 - i])) return { ok: false, msg: 'Du hast von groß nach klein geordnet. Gefragt ist von klein nach groß.' };
+    const neg = want.filter(x => x < 0), gn = got.filter(x => x < 0);
+    if (gn.length > 1 && gn.every((x, i) => x === neg[neg.length - 1 - i])) return { ok: false, msg: 'Schau dir die negativen Zahlen noch einmal an: Je größer der Betrag, desto kleiner ist eine negative Zahl. −9 ist kleiner als −2.' };
+    return { ok: false, msg: 'Die Reihenfolge stimmt noch nicht. Denk an die Zahlengerade: Je weiter links, desto kleiner.' };
+  }
+  let ast, c;
+  try { ast = parse(input); c = val(ast); }
+  catch (e) { if (!e.user) throw e; return { ok: false, syntax: true, msg: e.message }; }
+  if (qeq(c, task.val)) {
+    const plain = ast.t === 'num' || ((ast.t === 'neg' || ast.t === 'pos') && ast.a.t === 'num');
+    return plain ? { ok: true } : { ok: false, near: true, msg: 'Der Wert stimmt, aber rechne noch ganz aus, bis nur eine Zahl dasteht.' };
+  }
+  for (const t of task.traps || []) if (qeq(c, t.val)) return { ok: false, msg: t.msg };
+  if (!qzero(task.val) && qeq(c, qneg(task.val))) return { ok: false, msg: task.signMsg || 'Der Betrag stimmt, aber das Vorzeichen nicht.' };
+  return { ok: false, msg: task.wrongMsg || 'Das stimmt noch nicht. Rechne Schritt für Schritt und achte auf die Vorzeichen.' };
+}
+
+// ---------- Bausteine ----------
+function numTask(o) {
+  const v = Array.isArray(o.val) ? o.val : Q(o.val);
+  const t = Object.assign({ kind: 'number', after: '', lines: [] }, o);
+  t.val = v; t.sol = plainNum(v); t.solH = qH(v);
+  t.traps = (o.traps || []).filter(([x]) => Number.isInteger(x) && !qeq(Q(x), v)).map(([x, msg]) => ({ val: Q(x), msg }));
+  return t;
+}
+function lineH(lines) {
+  return `<div class="lines">${lines.map((l, i) => `<div class="ln"><span class="lm">${i && !l.noeq ? '= ' : ''}${l.m}</span>${l.c ? `<span class="lc">${l.c}</span>` : ''}</div>`).join('')}</div>`;
+}
+const exT = list => list.map(t => ({ label: t.q, x: t }));
+const SIGNT = (on, op = '·') => `<div class="vz">${[['+', '+', '+'], ['+', MI, MI], [MI, '+', MI], [MI, MI, '+']].map(([a, b, r], i) =>
+  `<span class="${r === '+' ? 'p' : 'n'}${on === i ? ' on' : ''}">(${a}) ${op} (${b}) = <b>${r}</b></span>`).join('')}</div>`;
+const signIdx = (a, b) => (a >= 0 ? (b >= 0 ? 0 : 1) : (b >= 0 ? 2 : 3));
+const VZT = on => `<div class="vz">${[['+', '+', '+'], ['+', MI, MI], [MI, '+', MI], [MI, MI, '+']].map(([a, b, r], i) =>
+  `<span class="${r === '+' ? 'p' : 'n'}${on && on.includes(i) ? ' on' : ''}">${a} (${b}3) → <b>${r}</b> 3</span>`).join('')}</div>`;
+
+// =====================================================================
+// Station 1: Zahlengerade, ordnen, Betrag und Gegenzahl
+// =====================================================================
+const MARK = [null, { lo: -6, hi: 6, step: 1, every: 2 }, { lo: -20, hi: 20, step: 1, every: 5 }, { lo: -50, hi: 50, step: 5, every: 25 }];
+function mark1(l, v) {
+  const c = MARK[l];
+  if (v === undefined) do v = ri(c.lo / c.step + 1, c.hi / c.step - 1) * c.step; while (v % c.every === 0 || (v > 0 && rnd() < 0.6));
+  const n0 = Math.floor(v / c.every) * c.every, k = (v - n0) / c.step;
+  return numTask({
+    st: 1, prompt: 'Welche Zahl ist markiert?', q: nl({ ...c, pts: [{ v, lab: '?', cls: 'hop' }], aria: 'Zahlengerade mit einem markierten Punkt' }), val: v, data: { mode: 'mark' },
+    traps: [[-v, v < 0 ? 'Der Punkt liegt links von der 0. Dort stehen die negativen Zahlen, mit Minus.' : 'Der Punkt liegt rechts von der 0. Dort stehen die positiven Zahlen.']],
+    wrongMsg: `Zähle die Striche genau. Ein Strich bedeutet ${c.step}.`,
+    lines: [{ m: `Ein Strich bedeutet ${c.step}. Von ${nH(n0)} aus sind es ${k} Strich${k > 1 ? 'e' : ''} nach rechts.`, noeq: true }, { m: `Die Zahl ist ${nH(v)}.`, noeq: true }],
+  });
+}
+function cmp1(a, b, ah, bh, extra) {
+  const rel = a < b ? '<' : a > b ? '>' : '=';
+  const lo = Math.min(a, b), hi = Math.max(a, b);
+  let why = rel === '=' ? `Beide Seiten haben den Wert ${nH(a)}.` : `${nH(lo)} liegt auf der Zahlengerade weiter links als ${nH(hi)}. Weiter links heißt kleiner.`;
+  if (a < 0 && b < 0) why += ' Bei negativen Zahlen gilt: Je größer der Betrag, desto kleiner die Zahl.';
+  if (extra) why = extra + ' ' + why;
+  const opts = ['<', '>', '='].map(r => ({ h: relH(r), ok: r === rel, msg: why }));
+  return {
+    st: 1, kind: 'mc', sym: true, prompt: 'Setze das richtige Zeichen ein: <, > oder =', q: `${ah}<span class="box"></span>${bh}`, opts,
+    lines: [{ m: `${ah} ${relH(rel)} ${bh}`, noeq: true }, { m: why, noeq: true }], sol: rel, solH: relH(rel), data: { mode: 'cmp' },
+  };
+}
+function gegen1(a) {
+  return numTask({
+    st: 1, prompt: 'Gib die Gegenzahl an', q: `Gegenzahl von ${nH(a)}`, val: -a, data: { mode: 'gegen' },
+    traps: [[a, 'Die Gegenzahl hat das andere Vorzeichen.']],
+    lines: [{ m: nl({ lo: -10, hi: 10, every: 2, pts: [{ v: a, lab: nH(a), cls: sg(a) }, { v: -a, lab: nH(-a), cls: 'hop' }] }), noeq: true }, { m: `Gegenzahl von ${nH(a)} = ${nH(-a)}`, noeq: true, c: 'gleich weit von 0, auf der anderen Seite' }],
+  });
+}
+function betrag1(a) {
+  return numTask({
+    st: 1, prompt: 'Gib den Betrag an', q: `|${nH(a)}|`, val: abs(a), data: { mode: 'betrag' },
+    traps: [[-abs(a), 'Der Betrag ist der Abstand von 0. Ein Abstand ist nie negativ.']],
+    lines: [{ m: `|${nH(a)}|`, c: 'Abstand von 0' }, { m: String(abs(a)) }],
+  });
+}
+function abst1(a, b) {
+  const lo = Math.min(a, b), hi = Math.max(a, b);
+  return numTask({
+    st: 1, prompt: 'Wie weit liegen die beiden Zahlen auseinander?', q: `${nH(a)} und ${nH(b)}`, val: hi - lo, data: { mode: 'abst' },
+    traps: lo < 0 && hi > 0 ? [[hi + lo, `Zähle die Schritte über die 0 hinweg: von ${nH(lo)} bis 0 sind es ${-lo}, von 0 bis ${hi} sind es ${hi}.`], [abs(hi + lo), `Zähle die Schritte über die 0 hinweg: von ${nH(lo)} bis 0 sind es ${-lo}, von 0 bis ${hi} sind es ${hi}.`]] : [],
+    signMsg: 'Ein Abstand ist nie negativ.',
+    lines: [{ m: nl({ ...rng([lo, hi]), pts: [{ v: lo, lab: nH(lo), cls: sg(lo) }, { v: hi, lab: nH(hi), cls: sg(hi) }], spans: [{ a: lo, b: hi, lab: String(hi - lo), cls: 'hop' }] }), noeq: true },
+      { m: lo < 0 && hi > 0 ? `${-lo} + ${hi} = ${hi - lo}` : `${nH(hi)} − ${pN(lo)} = ${hi - lo}`, noeq: true, c: lo < 0 && hi > 0 ? 'bis zur 0 und dann weiter' : 'größere minus kleinere Zahl' }],
+  });
+}
+function zwischen1(a, b) {
+  const n = b - a - 1, list = []; for (let i = a + 1; i < b; i++) list.push(nH(i));
+  return numTask({
+    st: 1, prompt: 'Zähle', q: `Wie viele ganze Zahlen liegen zwischen ${nH(a)} und ${nH(b)}?`, qText: true, val: n, data: { mode: 'zw' },
+    traps: [[n + 1, `Die Grenzen ${nH(a)} und ${nH(b)} zählen nicht mit. Und vergiss die 0 nicht!`], [n + 2, `Die Grenzen ${nH(a)} und ${nH(b)} zählen nicht mit.`], [n - 1, 'Hast du die 0 mitgezählt? Die 0 ist auch eine ganze Zahl.']],
+    lines: [{ m: list.join(', '), noeq: true }, { m: `Das sind ${n} Zahlen.`, noeq: true, c: 'die Grenzen zählen nicht mit' }],
+  });
+}
+function ord1(nums) {
+  const s = [...nums].sort((x, y) => x - y);
+  return {
+    st: 1, kind: 'list', prompt: 'Ordne von klein nach groß', q: nums.map(nH).join('<span class="op"> ; </span>'), vals: s,
+    sol: s.join('; '), solH: s.map(nH).join(' ' + LT + ' '), data: { mode: 'ord' },
+    lines: [{ m: nl({ ...rng(s), pts: s.map((v, i) => ({ v, lab: nH(v), cls: sg(v), high: i % 2 === 1 })) }), noeq: true }, { m: s.map(nH).join(' ' + LT + ' '), noeq: true, c: 'von links nach rechts' }],
+  };
+}
+function gen1(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.35) return mark1(1);
+    if (r < 0.6) return gegen1(nz(-15, 15));
+    const a = -ri(1, 9), b = ri(0, 9);
+    return rnd() < 0.5 ? cmp1(a, b, nH(a), nH(b)) : cmp1(b, a, nH(b), nH(a));
+  }
+  if (l === 2) {
+    if (r < 0.25) return mark1(2);
+    if (r < 0.45) return betrag1(nz(-30, 30) < 0 ? -ri(2, 40) : ri(2, 40) * (rnd() < 0.7 ? -1 : 1));
+    if (r < 0.75) { const a = -ri(1, 20); let b; do b = -ri(1, 20); while (b === a); return cmp1(a, b, nH(a), nH(b)); }
+    const a = -ri(2, 9), b = ri(1, 9); return rnd() < 0.5 ? abst1(a, b) : abst1(b, a);
+  }
+  if (r < 0.25) { const set = new Set(); while (set.size < 5) set.add(ri(-25, 15)); const nums = [...set]; if (nums.filter(x => x < 0).length < 2) return gen1(3); return ord1(nums); }
+  if (r < 0.4) return mark1(3);
+  if (r < 0.55) { const a = -ri(2, 9), b = ri(1, 8); return zwischen1(a, b); }
+  if (r < 0.75) { const a = -ri(10, 60), b = rnd() < 0.5 ? ri(5, 60) : -ri(2, 9); return abst1(a, b); }
+  const x = -ri(2, 12), y = pick([abs(x), -abs(x) + ri(-3, 3), ri(-12, 12)]);
+  return pick([() => cmp1(abs(x), y, `|${nH(x)}|`, nH(y), `|${nH(x)}| = ${abs(x)}.`), () => cmp1(x, -abs(y) || -1, nH(x), `${MI}|${nH(-abs(y) || -1)}|`, `${MI}|${nH(-abs(y) || -1)}| = ${nH(-abs(y) || -1)}.`)])();
+}
+const S1EX = [
+  { label: 'Wo liegt −3?', mode: 'zeigen', v: -3 },
+  { label: 'Gegenzahl von 4', mode: 'gegen', v: 4 },
+  { label: 'Betrag von −5', mode: 'betrag', v: -5 },
+  { label: '−6 oder −2: Was ist kleiner?', mode: 'vgl', a: -6, b: -2 },
+  { label: 'Ordnen: 3, −4, 0, −1, 5', mode: 'ord', list: [3, -4, 0, -1, 5] },
+];
+function explore1(e) {
+  const R = { lo: -8, hi: 8, step: 1, every: 1 };
+  if (e.mode === 'zeigen') {
+    const v = e.v, js = []; for (let i = 0; i > v; i--) js.push({ a: i, b: i - 1, cls: 'neg', fresh: true });
+    return [
+      { lab: 'Null', h: nl({ ...R, pts: [{ v: 0, lab: '0', cls: 'ink' }] }), cap: 'In der Mitte der Zahlengerade liegt die 0. Rechts davon liegen die <b>positiven</b> Zahlen, links davon die <b>negativen</b> Zahlen. Negative Zahlen schreibt man mit Minus.' },
+      { lab: 'Zählen', h: nl({ ...R, jumps: js }), cap: `Für ${nH(v)} gehst du von 0 aus ${-v} Schritte nach links.` },
+      { lab: nH(v), h: nl({ ...R, pts: [{ v, lab: nH(v), cls: 'neg' }] }), cap: `Hier liegt ${nH(v)}. Das Thermometer zeigt so ${nH(v)} °C: 3 Grad unter null. Jede negative Zahl ist kleiner als 0.` },
+    ];
+  }
+  if (e.mode === 'gegen') {
+    const v = e.v;
+    return [
+      { lab: 'Zahl', h: nl({ ...R, pts: [{ v, lab: nH(v), cls: sg(v) }] }), cap: `Die Zahl ${nH(v)} liegt ${abs(v)} Schritte ${v > 0 ? 'rechts' : 'links'} von der 0.` },
+      { lab: 'Spiegeln', h: nl({ ...R, pts: [{ v, lab: nH(v), cls: sg(v) }, { v: -v, lab: nH(-v), cls: sg(-v) }], spans: [{ a: 0, b: v, lab: String(abs(v)), cls: sg(v) }, { a: -v, b: 0, lab: String(abs(v)), cls: sg(-v), fresh: true }] }),
+        cap: 'Die <b>Gegenzahl</b> liegt genau gleich weit von 0 entfernt, aber auf der anderen Seite. Die 0 ist wie ein Spiegel.' },
+      { lab: 'Gegenzahl', h: eqbig(`Gegenzahl von ${cN(v)} ist ${cN(-v)}`, 'sm') + eqbig(`Gegenzahl von ${cN(-v)} ist ${cN(v)}`, 'sm'), cap: 'Zahl und Gegenzahl haben verschiedene Vorzeichen. Die Gegenzahl von 0 ist 0.' },
+    ];
+  }
+  if (e.mode === 'betrag') {
+    const v = e.v;
+    return [
+      { lab: 'Zahl', h: nl({ ...R, pts: [{ v, lab: nH(v), cls: sg(v) }] }), cap: `Wie weit ist ${nH(v)} von der 0 entfernt?` },
+      { lab: 'Abstand', h: nl({ ...R, pts: [{ v, lab: nH(v), cls: sg(v) }], spans: [{ a: v, b: 0, lab: `${abs(v)} Schritte`, cls: 'hop', fresh: true }] }), cap: `Von ${nH(v)} bis 0 sind es ${abs(v)} Schritte.` },
+      { lab: 'Betrag', h: eqbig(`|${cN(v)}| = ${abs(v)}`) + eqbig(`|${cN(-v)}| = ${abs(v)}`, 'sm'), cap: `Der <b>Betrag</b> ist der Abstand von 0. Man schreibt ihn mit zwei senkrechten Strichen. Ein Abstand ist nie negativ: |${nH(v)}| = ${abs(v)}.` },
+    ];
+  }
+  if (e.mode === 'vgl') {
+    const { a, b } = e;
+    return [
+      { lab: 'Zahlen', h: eqbig(`${cN(a)} <span class="box"></span> ${cN(b)}`), cap: `Welche Zahl ist kleiner? Viele denken: ${-a} ist mehr als ${-b}. Aber Achtung!` },
+      { lab: 'Zahlengerade', h: nl({ ...R, pts: [{ v: a, lab: nH(a), cls: 'neg' }, { v: b, lab: nH(b), cls: 'neg' }], spans: [{ a, b: 0, lab: String(-a), cls: 'neg' }] }), cap: `${nH(a)} liegt weiter links als ${nH(b)}. Auf der Zahlengerade gilt: Weiter links heißt kleiner.` },
+      { lab: 'Ergebnis', h: eqbig(`${cN(a)} ${LT} ${cN(b)}`), cap: `Bei negativen Zahlen gilt: Je größer der Betrag, desto kleiner die Zahl. Denk ans Thermometer: ${nH(a)} °C ist kälter als ${nH(b)} °C.` },
+    ];
+  }
+  const s = [...e.list].sort((x, y) => x - y);
+  return [
+    { lab: 'Zahlen', h: eqbig(e.list.map(cN).join(' ; ')), cap: 'Diese Zahlen sollen von klein nach groß geordnet werden.' },
+    { lab: 'Eintragen', h: nl({ ...R, pts: e.list.map((v, i) => ({ v, lab: nH(v), cls: v ? sg(v) : 'ink', high: i % 2 === 1 })) }), cap: 'Trage alle Zahlen auf der Zahlengerade ein.' },
+    { lab: 'Ablesen', h: eqbig(s.map(cN).join(` ${LT} `)), cap: 'Lies von links nach rechts ab. Das ist die Reihenfolge von klein nach groß.' },
+  ];
+}
+
+// =====================================================================
+// Station 2: Addieren
+// =====================================================================
+function add2(a, b, c) {
+  if (c !== undefined) {
+    const v = a + b + c;
+    return numTask({
+      st: 2, prompt: 'Berechne', q: `${nH(a)} + ${pN(b)} + ${pN(c)}`, val: v, data: { a, b, c },
+      traps: [[abs(a) + abs(b) + abs(c), 'Achte auf die Vorzeichen: Negative Zahlen ziehen nach links.']],
+      lines: [{ m: `${nH(a)} + ${pN(b)} + ${pN(c)}` }, { m: `${nH(a + b)} + ${pN(c)}`, c: 'zuerst die ersten beiden' }, { m: nH(v) }],
+    });
+  }
+  const v = a + b, same = a * b > 0, A = abs(a), B = abs(b), big = A >= B ? a : b;
+  const traps = [];
+  if (same) traps.push([Math.sign(a) * abs(A - B), 'Gleiche Vorzeichen: Die Beträge werden addiert.']);
+  else traps.push([Math.sign(big) * (A + B), 'Verschiedene Vorzeichen: Ziehe den kleineren Betrag vom größeren ab.'], [(A + B), 'Verschiedene Vorzeichen: Ziehe den kleineren Betrag vom größeren ab.']);
+  return numTask({
+    st: 2, prompt: 'Berechne', q: `${nH(a)} + ${pN(b)}`, val: v, data: { a, b }, traps,
+    signMsg: same ? `Beide Zahlen sind ${a < 0 ? 'negativ' : 'positiv'}. Dann ist auch das Ergebnis ${a < 0 ? 'negativ' : 'positiv'}.` : `Das Ergebnis bekommt das Vorzeichen der Zahl mit dem größeren Betrag, hier ${nH(big)}.`,
+    lines: [{ m: `${nH(a)} + ${pN(b)}` },
+      v === 0 ? { m: '0', c: 'Zahl plus Gegenzahl' } : same ? { m: `${v < 0 ? MI : '+'}(${A} + ${B})`, c: 'gleiche Vorzeichen: Beträge addieren' } : { m: `${big < 0 ? MI : '+'}(${Math.max(A, B)} − ${Math.min(A, B)})`, c: 'verschiedene Vorzeichen: größerer minus kleinerer Betrag' },
+      ...(v === 0 ? [] : [{ m: nH(v) }])].concat(v === 0 ? [{ m: '0' }] : []),
+  });
+}
+function gen2(l) {
+  for (;;) {
+    let a, b;
+    if (l === 1) { a = nz(-9, 9); b = nz(-9, 9); }
+    else if (l === 2) { a = nz(-30, 30); b = nz(-30, 30); if (abs(a) < 4 || abs(b) < 4) continue; }
+    else {
+      if (rnd() < 0.5) { const c = nz(-40, 40); a = nz(-40, 40); b = nz(-40, 40); if ([a, b, c].filter(x => x < 0).length < 1) continue; return add2(a, b, c); }
+      a = nz(-99, 99); b = nz(-99, 99); if (abs(a) < 11 || abs(b) < 11) continue;
+    }
+    if (a > 0 && b > 0) continue;
+    return add2(a, b);
+  }
+}
+function plH(a, b) {
+  const pairs = a * b < 0 ? Math.min(abs(a), abs(b)) : 0, v = a + b;
+  const row = (n, lab, cut) => `<div class="plrow"><span class="gl">${lab}</span>${Array.from({ length: abs(n) }, (_, i) => `<span class="pl ${sg(n)}${i < cut ? ' cut' : ''}">${n < 0 ? MI : '+'}</span>`).join('') || '<span class="op">0</span>'}</div>`;
+  return `<div class="pls">${row(a, nH(a), pairs)}${row(b, pN(b), pairs)}<div class="plrow"><span class="gl">= ${nH(v)}</span>${Array.from({ length: abs(v) }, () => `<span class="pl ${sg(v)}">${v < 0 ? MI : '+'}</span>`).join('') || '<span class="op">nichts übrig: 0</span>'}</div></div>`;
+}
+function explore2(t) {
+  const { a, b } = t.data, v = a + b, R = rng([a, v]);
+  const j1 = { a: 0, b: a, cls: sg(a), lab: nH(a) }, j2 = { a, b: v, cls: sg(b), lab: (b < 0 ? MI : '+') + abs(b) };
+  const same = a * b > 0, A = abs(a), B = abs(b), big = A >= B ? a : b;
+  return [
+    { lab: 'Start', h: nl({ ...R, jumps: [{ ...j1, fresh: true }] }), cap: `Der erste Pfeil zeigt ${nH(a)}: von 0 aus ${A} Schritte nach ${a < 0 ? 'links' : 'rechts'}.` },
+    { lab: 'Dazu', h: nl({ ...R, jumps: [j1, { ...j2, fresh: true }] }), cap: `Plus ${pN(b)}: Der zweite Pfeil startet an der Spitze des ersten. ${b < 0 ? 'Eine negative Zahl zeigt nach <b>links</b>.' : 'Eine positive Zahl zeigt nach <b>rechts</b>.'}` },
+    { lab: 'Ergebnis', h: nl({ ...R, jumps: [j1, j2], pts: [{ v, lab: nH(v), cls: 'hop', high: true }] }), cap: `Die Spitze des zweiten Pfeils zeigt das Ergebnis: ${t.q} = <b>${nH(v)}</b>.` },
+    { lab: 'Plättchen', h: plH(a, b), cap: same ? 'Mit Plättchen: Blaue Plättchen sind +1, rote sind −1. Hier sind alle Plättchen gleich. Du zählst sie einfach zusammen.' : 'Mit Plättchen: Blaue Plättchen sind +1, rote sind −1. Ein blaues und ein rotes Plättchen ergeben zusammen 0. Sie heben sich auf. Was übrig bleibt, ist das Ergebnis.' },
+    { lab: 'Regel', h: eqbig(t.q + ' = ' + (same ? `${v < 0 ? MI : '+'}(${A} + ${B})` : `${big < 0 ? MI : '+'}(${Math.max(A, B)} − ${Math.min(A, B)})`) + ` = ${cN(v)}`, 'sm'),
+      cap: same ? 'Gleiche Vorzeichen: Addiere die Beträge. Das Vorzeichen bleibt.' : 'Verschiedene Vorzeichen: Ziehe den kleineren Betrag vom größeren ab. Das Ergebnis bekommt das Vorzeichen der Zahl mit dem größeren Betrag.' },
+  ];
+}
+
+// =====================================================================
+// Station 3: Subtrahieren
+// =====================================================================
+function sub3(a, b, c) {
+  if (c !== undefined) {
+    const v = a - b - c;
+    return numTask({
+      st: 3, prompt: 'Berechne', q: `${nH(a)} − ${pN(b)} − ${pN(c)}`, val: v, data: { a, b, c },
+      traps: [[a + b + c, 'Du hast addiert. Bei „−“ wird subtrahiert: Addiere die Gegenzahl.'], [a - abs(b) - abs(c), 'Minus eine negative Zahl gibt plus: − (−5) = + 5.']],
+      signMsg: 'Prüfe das Vorzeichen. Schreib alles als Plus-Aufgabe mit den Gegenzahlen.',
+      lines: [{ m: `${nH(a)} − ${pN(b)} − ${pN(c)}` }, { m: `${nH(a)} + ${pN(-b)} + ${pN(-c)}`, c: 'plus die Gegenzahlen' }, { m: `${nH(a - b)} + ${pN(-c)}` }, { m: nH(v) }],
+    });
+  }
+  const v = a - b;
+  return numTask({
+    st: 3, prompt: 'Berechne', q: `${nH(a)} − ${pN(b)}`, val: v, data: { a, b },
+    traps: [[a + b, b < 0 ? `Minus ${pN(b)} heißt plus ${-b}. Wer eine negative Zahl wegnimmt, bekommt mehr.` : 'Du hast addiert. Bei „−“ wird subtrahiert.']],
+    signMsg: `Prüfe das Vorzeichen. Schreib die Aufgabe als Plus-Aufgabe: ${nH(a)} + ${pN(-b)}.`,
+    lines: [{ m: `${nH(a)} − ${pN(b)}` }, { m: `${nH(a)} + ${pN(-b)}`, c: 'plus die Gegenzahl' }, { m: nH(v) }],
+  });
+}
+function gen3(l) {
+  if (l === 1) {
+    if (rnd() < 0.5) { const a = ri(1, 8); return sub3(a, ri(a + 1, 15)); }
+    return sub3(-ri(1, 9), ri(1, 9));
+  }
+  if (l === 2) {
+    if (rnd() < 0.75) return sub3(nz(-20, 20), -ri(2, 20));
+    return sub3(-ri(3, 25), ri(3, 25));
+  }
+  if (rnd() < 0.5) return sub3(nz(-40, 40), nz(-40, 40), nz(-40, 40));
+  return sub3(nz(-99, 99), rnd() < 0.6 ? -ri(11, 99) : ri(11, 99));
+}
+function explore3(t) {
+  const { a, b } = t.data, v = a - b, R = rng([a, v]);
+  const j1 = { a: 0, b: a, cls: sg(a), lab: nH(a) }, j2 = { a, b: v, cls: sg(-b), lab: (b > 0 ? MI : '+') + abs(b) };
+  return [
+    { lab: 'Aufgabe', h: eqbig(t.q), cap: b < 0 ? `Hier wird eine negative Zahl abgezogen. Stell dir vor: Jemand nimmt dir ${-b} € Schulden weg. Dann hast du mehr!` : `Von ${nH(a)} werden ${b} abgezogen.` },
+    { lab: 'Umschreiben', h: eqbig(`${nH(a)} <span class="hl">+ ${pN(-b)}</span>`), cap: `Subtrahieren heißt: die <b>Gegenzahl</b> addieren. Aus „− ${pN(b)}“ wird „+ ${pN(-b)}“.` },
+    { lab: 'Pfeile', h: nl({ ...R, jumps: [j1, { ...j2, fresh: true }] }), cap: `Jetzt rechnest du wie beim Addieren: Start bei ${nH(a)}, dann ${abs(b)} Schritte nach ${b > 0 ? 'links' : 'rechts'}.` },
+    { lab: 'Ergebnis', h: nl({ ...R, jumps: [j1, j2], pts: [{ v, lab: nH(v), cls: 'hop', high: true }] }) + eqbig(`${t.q} = ${nH(a)} + ${pN(-b)} = <b>${nH(v)}</b>`, 'sm'), cap: b < 0 ? 'Minus minus gibt plus: Eine negative Zahl abziehen ist dasselbe wie die positive Zahl addieren.' : `Weil ${b} ${b > abs(a) && a >= 0 ? 'größer als ' + a + ' ist' : 'abgezogen wird'}, landest du ${v < 0 ? 'links von der 0' : 'weiter links'}.` },
+  ];
+}
+
+// =====================================================================
+// Station 4: Der Betrag (Abstand von 0) und Rechnen mit Beträgen
+// =====================================================================
+const bH = n => `|${nH(n)}|`;
+const BETRAG_NIE = 'Ein Betrag ist ein Abstand und deshalb nie negativ.';
+function bTask(o) { return numTask(Object.assign({ st: 4, prompt: 'Berechne' }, o)); }
+function bet4(a) {
+  return bTask({ prompt: 'Gib den Betrag an', q: bH(a), val: abs(a), data: { k: 'b' },
+    traps: [[-abs(a), BETRAG_NIE]],
+    lines: [{ m: bH(a), c: `Abstand von ${nH(a)} bis 0` }, { m: String(abs(a)) }] });
+}
+function minus4(a) {
+  return bTask({ q: `${MI}${bH(a)}`, val: -abs(a), data: { k: 'm' },
+    signMsg: 'Das Minus steht außerhalb der Betragsstriche. Es bleibt stehen: Zuerst den Betrag nehmen, dann kommt das Minus davor.',
+    lines: [{ m: `${MI}${bH(a)}` }, { m: `${MI}${abs(a)}`, c: 'zuerst der Betrag, das Minus davor bleibt' }] });
+}
+function both4(k) {
+  return { st: 4, kind: 'list', prompt: 'Welche Zahlen haben diesen Betrag? Gib beide an, von klein nach groß.', q: `|<span class="box"></span>| = ${k}`,
+    vals: [-k, k], sol: `${-k}; ${k}`, solH: `${nH(-k)} und ${k}`, data: { k: 'both' },
+    lines: [{ m: nl({ ...rng([-k, k]), pts: [{ v: -k, lab: nH(-k), cls: 'neg' }, { v: k, lab: String(k), cls: 'pos' }], spans: [{ a: -k, b: 0, lab: String(k), cls: 'neg' }, { a: 0, b: k, lab: String(k), cls: 'pos' }] }), noeq: true },
+      { m: `|${nH(-k)}| = ${k} und |${k}| = ${k}`, noeq: true, c: 'eine Zahl links, eine rechts von 0' }] };
+}
+// Rechnen mit Beträgen: |a| op |b|
+function ops4(a, op, b) {
+  const A = abs(a), B = abs(b), v = op === '+' ? A + B : op === '−' ? A - B : A * B;
+  const raw = op === '+' ? a + b : op === '−' ? a - b : a * b;
+  const q = `${bH(a)} ${op === '·' ? '·' : op} ${bH(b)}`;
+  return bTask({ q, val: v, data: { k: 'ops', a, b, op },
+    traps: [[raw, `Nimm zuerst die Beträge: ${bH(a)} = ${A} und ${bH(b)} = ${B}. Dann rechne.`]],
+    signMsg: op === '−' ? `Zuerst die Beträge: ${A} ${op} ${B}. ${A < B ? 'Weil die zweite Zahl größer ist, wird das Ergebnis negativ.' : ''}` : `Beide Beträge sind positiv, also ist auch das Ergebnis positiv.`,
+    lines: [{ m: q }, { m: `${A} ${op} ${B}`, c: 'zuerst die Beträge' }, { m: nH(v) }] });
+}
+// Rechnung im Betrag: |a ± b|
+function inner4(a, op, b) {
+  if (a > 0 && b > 0) a = -a;
+  const w = op === '+' ? a + b : a - b, v = abs(w);
+  const q = `|${nH(a)} ${op} ${pN(b)}|`;
+  const sep = op === '+' ? abs(a) + abs(b) : abs(a) - abs(b);
+  return bTask({ q, val: v, data: { k: 'in', a, b, op },
+    traps: [[op === '+' ? abs(a) + abs(b) : abs(abs(a) - abs(b)), 'Die Betragsstriche wirken wie eine Klammer: Rechne zuerst innen aus, dann nimm den Betrag.'], [w, BETRAG_NIE], [sep, 'Rechne zuerst innen aus, dann nimm den Betrag.'], [abs(a) + abs(b), 'Rechne zuerst innen aus, mit den Vorzeichen. Erst danach nimmst du den Betrag.']],
+    signMsg: BETRAG_NIE,
+    lines: [{ m: q }, { m: bH(w), c: 'zuerst innen rechnen' }, { m: String(v), c: 'dann den Betrag' }] });
+}
+function mixed4() {
+  const a = nz(-12, 12), b = -ri(2, 9), c = nz(-9, 9), d = nz(-9, 9);
+  return pick([
+    () => { const w = b + c, v = abs(a) - abs(w), q = `${bH(a)} − |${nH(b)} + ${pN(c)}|`;
+      return bTask({ q, val: v, data: { k: 'mix' }, traps: [[abs(a) - abs(b) - abs(c), 'Rechne zuerst innen im zweiten Betrag aus.'], [a - w, 'Nimm zuerst die Beträge, sie sind nie negativ.']],
+        lines: [{ m: q }, { m: `${abs(a)} − ${bH(w)}`, c: 'innen rechnen, Betrag von ' + nH(a) }, { m: `${abs(a)} − ${abs(w)}`, c: 'Betrag' }, { m: nH(v) }] }); },
+    () => { const v = -abs(c) + abs(b) * abs(d), q = `${MI}${bH(c)} + ${bH(b)} · ${bH(d)}`;
+      return bTask({ q, val: v, data: { k: 'mix' }, traps: [[abs(c) + abs(b) * abs(d), 'Das Minus vor dem ersten Betrag bleibt stehen.'], [(-abs(c) + abs(b)) * abs(d), 'Punkt vor Strich: Zuerst wird malgenommen.']],
+        lines: [{ m: q }, { m: `${MI}${abs(c)} + ${abs(b)} · ${abs(d)}`, c: 'Beträge' }, { m: `${MI}${abs(c)} + ${abs(b * d)}`, c: 'Punkt vor Strich' }, { m: nH(v) }] }); },
+    () => { const w = b * d, v = abs(w) - abs(a), q = `|${pN(b)} · ${pN(d)}| − ${bH(a)}`;
+      return bTask({ q, val: v, data: { k: 'mix' }, traps: [[w - abs(a), BETRAG_NIE], [w - a, 'Nimm zuerst die Beträge.']],
+        lines: [{ m: q }, { m: `${bH(w)} − ${abs(a)}`, c: 'innen rechnen' }, { m: `${abs(w)} − ${abs(a)}`, c: 'Betrag' }, { m: nH(v) }] }); },
+  ])();
+}
+function cmp4() {
+  const x = nz(-15, 15), y = nz(-15, 15);
+  const t = pick([
+    () => cmp1(abs(x), abs(y), bH(x), bH(y), `${bH(x)} = ${abs(x)} und ${bH(y)} = ${abs(y)}.`),
+    () => cmp1(abs(x), y, bH(x), nH(y), `${bH(x)} = ${abs(x)}.`),
+    () => cmp1(-abs(x), y, `${MI}${bH(x)}`, nH(y), `${MI}${bH(x)} = ${nH(-abs(x))}.`),
+  ])();
+  t.st = 4; return t;
+}
+function gen4b(l) {
+  const r = rnd();
+  if (l === 1) {
+    if (r < 0.4) return bet4(-ri(2, 50));
+    if (r < 0.7) return both4(ri(2, 25));
+    return minus4(rnd() < 0.7 ? -ri(2, 20) : ri(2, 20));
+  }
+  if (l === 2) {
+    if (r < 0.25) return cmp4();
+    const a = nz(-20, 20), b = nz(-20, 20);
+    if (a > 0 && b > 0) return gen4b(2);
+    return ops4(a, pick(['+', '−', '−', '·']), r < 0.6 ? b : nz(-9, 9));
+  }
+  if (r < 0.35) return inner4(nz(-15, 15), '+', nz(-15, 15));
+  if (r < 0.6) return inner4(nz(-15, 15), '−', nz(-15, 15));
+  return mixed4();
+}
+const S4BEX = [
+  { label: '|−6| und |6|', mode: 'zwei', v: 6 },
+  { label: 'Betrag 4: welche Zahlen?', mode: 'welche', v: 4 },
+  { label: '|−7| + |3|', mode: 'ops', a: -7, b: 3 },
+  { label: '|−3 + 8|', mode: 'innen', a: -3, b: 8 },
+  { label: '−|−4|', mode: 'minus', v: -4 },
+];
+function explore4b(e) {
+  const R = { lo: -8, hi: 8 };
+  if (e.mode === 'zwei') {
+    const v = e.v;
+    return [
+      { lab: '−' + v, h: nl({ ...R, pts: [{ v: -v, lab: nH(-v), cls: 'neg' }], spans: [{ a: -v, b: 0, lab: `${v} Schritte`, cls: 'neg', fresh: true }] }), cap: `${nH(-v)} ist ${v} Schritte von der 0 entfernt. Also ist |${nH(-v)}| = ${v}.` },
+      { lab: String(v), h: nl({ ...R, pts: [{ v: -v, lab: nH(-v), cls: 'neg' }, { v, lab: String(v), cls: 'pos' }], spans: [{ a: -v, b: 0, lab: `${v} Schritte`, cls: 'neg' }, { a: 0, b: v, lab: `${v} Schritte`, cls: 'pos', fresh: true }] }), cap: `Auch ${v} ist ${v} Schritte von der 0 entfernt.` },
+      { lab: 'Betrag', h: eqbig(`|${cN(-v)}| = |${cN(v)}| = <b>${v}</b>`) + eqbig('|0| = 0', 'sm'), cap: 'Der <b>Betrag</b> ist der Abstand von 0. Eine Zahl und ihre Gegenzahl haben den gleichen Betrag. Beim Betrag lässt du einfach das Vorzeichen weg.' },
+    ];
+  }
+  if (e.mode === 'welche') {
+    const v = e.v;
+    return [
+      { lab: 'Frage', h: eqbig(`|<span class="box"></span>| = ${v}`), cap: `Gesucht sind alle Zahlen, die ${v} Schritte von der 0 entfernt sind.` },
+      { lab: 'Abstand', h: nl({ ...R, pts: [{ v: 0, lab: '0', cls: 'ink' }], spans: [{ a: -v, b: 0, lab: String(v), cls: 'neg', fresh: true }, { a: 0, b: v, lab: String(v), cls: 'pos', fresh: true }] }), cap: `Geh von 0 aus ${v} Schritte nach links und ${v} Schritte nach rechts.` },
+      { lab: 'Zwei Zahlen', h: nl({ ...R, pts: [{ v: -v, lab: nH(-v), cls: 'neg' }, { v, lab: String(v), cls: 'pos' }], spans: [{ a: -v, b: 0, lab: String(v), cls: 'neg' }, { a: 0, b: v, lab: String(v), cls: 'pos' }] }) + eqbig(`${cN(-v)} und ${cN(v)}`, 'sm'), cap: `Es gibt zwei Zahlen mit dem Betrag ${v}: ${nH(-v)} und ${v}. Nur die 0 ist allein: Nur |0| = 0.` },
+    ];
+  }
+  if (e.mode === 'ops') {
+    const { a, b } = e;
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${bH(a)} + ${bH(b)}`), cap: 'Hier werden zwei Beträge addiert.' },
+      { lab: 'Beträge', h: eqbig(`<span class="hl">${abs(a)}</span> + <span class="hl">${abs(b)}</span>`), cap: `Ersetze zuerst jeden Betrag durch seine Zahl ohne Vorzeichen: ${bH(a)} = ${abs(a)}, ${bH(b)} = ${abs(b)}.` },
+      { lab: 'Ergebnis', h: eqbig(`${bH(a)} + ${bH(b)} = <b>${abs(a) + abs(b)}</b>`) + eqbig(`ohne Betrag: ${nH(a)} + ${b} = ${nH(a + b)}`, 'sm dim'), cap: 'Weil Beträge nie negativ sind, rechnest du danach nur noch mit positiven Zahlen. Ohne Betragsstriche käme etwas ganz anderes heraus.' },
+    ];
+  }
+  if (e.mode === 'innen') {
+    const { a, b } = e, w = a + b;
+    return [
+      { lab: 'Aufgabe', h: eqbig(`|${nH(a)} + ${b}|`), cap: 'Hier steht eine ganze Rechnung zwischen den Betragsstrichen.' },
+      { lab: 'Innen', h: eqbig(`|<span class="hl">${nH(w)}</span>|`), cap: `Betragsstriche wirken wie eine Klammer. Rechne zuerst innen: ${nH(a)} + ${b} = ${nH(w)}.` },
+      { lab: 'Betrag', h: eqbig(`|${nH(a)} + ${b}| = |${nH(w)}| = <b>${abs(w)}</b>`, 'sm'), cap: `Dann nimmst du den Betrag: |${nH(w)}| = ${abs(w)}.` },
+      { lab: 'Vergleich', h: `<div class="duo"><div>${eqbig(`|${nH(a)} + ${b}| = ${abs(w)}`, 'sm')}<span class="gl">erst innen rechnen</span></div><div>${eqbig(`${bH(a)} + ${bH(b)} = ${abs(a) + abs(b)}`, 'sm')}<span class="gl">erst die Beträge</span></div></div>`, cap: 'Achtung: Das ist nicht dasselbe! Ob die Rechnung innerhalb oder außerhalb der Betragsstriche steht, macht einen Unterschied.' },
+    ];
+  }
+  const v = e.v;
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${MI}${bH(v)}`), cap: 'Vor den Betragsstrichen steht ein Minus.' },
+    { lab: 'Betrag', h: eqbig(`${MI}<span class="hl">${abs(v)}</span>`), cap: `Zuerst der Betrag: ${bH(v)} = ${abs(v)}. Das Minus vor den Strichen bleibt stehen.` },
+    { lab: 'Ergebnis', h: eqbig(`${MI}${bH(v)} = <b>${nH(-abs(v))}</b>`), cap: 'Ein Betrag ist nie negativ, aber das Minus davor macht das Ergebnis negativ. Vergleiche: |−4| = 4, aber −|−4| = −4.' },
+  ];
+}
+
+// =====================================================================
+// Station 5: Plus und Minus vor Klammern, lange Summen
+// =====================================================================
+// Glied {o: Rechenzeichen ±1, n: Zahl, par: in Klammern mit Vorzeichen}
+function tH(t, i) {
+  const inner = t.par || (i > 0 && t.n < 0) ? sN(t.n) : nH(t.n);
+  if (i === 0) return (t.o < 0 ? MI : '') + inner;
+  return ` ${t.o < 0 ? MI : '+'} ${inner}`;
+}
+const seqH = es => es.map((e, i) => (i === 0 ? nH(e) : ` ${e < 0 ? MI : '+'} ${abs(e)}`)).join('');
+function sum4(terms) {
+  const es = terms.map(t => t.o * t.n), v = sum(es), q = terms.map(tH).join('');
+  const P = es.filter(e => e > 0), M = es.filter(e => e < 0), sP = sum(P), sM = -sum(M);
+  const lines = [{ m: q }, { m: seqH(es), c: 'Vorzeichen zusammenfassen' }];
+  if (P.length && M.length && es.length > 2) lines.push({ m: `${sP} − ${sM}`, c: 'Plus-Zahlen und Minus-Zahlen getrennt addieren' });
+  lines.push({ m: nH(v) });
+  return numTask({
+    st: 5, prompt: 'Berechne', q, val: v, data: { terms },
+    traps: [[sum(terms.map(t => t.o * abs(t.n))), 'Achte auf das Vorzeichen in der Klammer: + (−3) wird zu − 3.'],
+      [sum(es.map(abs)), 'Du hast alle Zahlen addiert. Achte auf die Minuszeichen.'],
+      [sum(terms.map(t => t.n)), 'Das Rechenzeichen vor der Klammer zählt auch: − (−3) wird zu + 3.']],
+    signMsg: 'Prüfe das Vorzeichen: Sind die Minus-Zahlen zusammen größer als die Plus-Zahlen, ist das Ergebnis negativ.',
+    lines,
+  });
+}
+function sign4() {
+  const o = sgn(), s = sgn(), k = ri(2, 9), r = o * s > 0 ? '+' : MI;
+  const why = o * s > 0 ? 'Gleiche Zeichen ergeben +.' : 'Verschiedene Zeichen ergeben −.';
+  return {
+    st: 5, kind: 'mc', sym: true, prompt: 'Welches Zeichen bleibt übrig, wenn die Klammer wegfällt?', q: `${o < 0 ? MI : '+'} (${s < 0 ? MI : '+'}${k}) = <span class="box"></span> ${k}`,
+    opts: ['+', MI].map(x => ({ h: x, ok: x === r, msg: why })), sol: r, solH: r, data: { mode: 'sign' },
+    lines: [{ m: `${o < 0 ? MI : '+'} (${s < 0 ? MI : '+'}${k}) = ${r} ${k}`, noeq: true }, { m: why, noeq: true }],
+  };
+}
+function gen4(l) {
+  if (l === 1 && rnd() < 0.45) return sign4();
+  const n = l === 1 ? 3 : l === 2 ? 4 : ri(5, 6), max = l === 1 ? 9 : l === 2 ? 20 : 50, pp = l === 1 ? 1 : l === 2 ? 0.7 : 0.6;
+  for (;;) {
+    const terms = [];
+    for (let i = 0; i < n; i++) terms.push({ o: i === 0 ? (l === 3 && rnd() < 0.3 ? -1 : 1) : sgn(), n: nz(-max, max), par: rnd() < pp });
+    if (terms[0].o < 0) terms[0].par = true;
+    if (!terms.some(t => t.o < 0 && t.n < 0)) continue;
+    if (!terms.some(t => t.o > 0 && t.n < 0 && (t.par || t !== terms[0]))) continue;
+    return sum4(terms);
+  }
+}
+function explore4(t) {
+  const terms = t.data.terms, es = terms.map(u => u.o * u.n), v = sum(es);
+  const P = [], M = []; es.forEach((e, i) => (e > 0 ? P : M).push({ e, i }));
+  const sP = sum(P.map(x => x.e)), sM = -sum(M.map(x => x.e));
+  const chip = (e, i) => `<span class="fc ${sg(e)}" data-k="e${i}">${e < 0 ? MI : '+'}${abs(e)}</span>`;
+  const grp = (cls, lab, inner) => `<div class="grp ${cls}"><span class="gl">${lab}</span><div class="row">${inner}</div></div>`;
+  const used = [...new Set(terms.filter(u => u.par || u.n < 0).map(u => signIdx(u.o, u.n)))];
+  return [
+    { lab: 'Aufgabe', h: eqbig(t.q, 'sm'), cap: 'Vor den Klammern stehen Rechenzeichen, in den Klammern Vorzeichen. Zuerst machst du aus jedem Paar ein einziges Zeichen.' },
+    { lab: 'Vorzeichen', h: VZT(used) + `<div class="row">${es.map(chip).join('')}</div>`, cap: `Gleiche Zeichen ergeben +, verschiedene Zeichen ergeben −. So wird aus der Aufgabe: ${seqH(es)}.` },
+    { lab: 'Sortieren', h: `<div class="row">${grp('pos', 'Plus-Zahlen', P.map(x => chip(x.e, x.i)).join('') || '<span class="op">keine</span>')}${grp('neg', 'Minus-Zahlen', M.map(x => chip(x.e, x.i)).join('') || '<span class="op">keine</span>')}</div>`, cap: 'Sortiere: Alle Plus-Zahlen in eine Gruppe, alle Minus-Zahlen in die andere.' },
+    { lab: 'Sammeln', h: `<div class="row">${grp('pos', P.map(x => x.e).join(' + ') + ' = ' + sP, P.length ? chip(sP, P[0].i) : '<span class="op">0</span>')}${grp('neg', M.map(x => -x.e).join(' + ') + ' = ' + sM, M.length ? chip(-sM, M[0].i) : '<span class="op">0</span>')}</div>`, cap: 'Addiere in jeder Gruppe die Beträge. Das ist leicht, weil alle das gleiche Vorzeichen haben.' },
+    { lab: 'Ergebnis', h: eqbig(`${sP} − ${sM} = <b>${nH(v)}</b>`), cap: `Zum Schluss: Plus-Summe minus Minus-Summe. ${sM > sP ? 'Die Minus-Zahlen sind mehr, darum ist das Ergebnis negativ.' : sM < sP ? 'Die Plus-Zahlen sind mehr, darum ist das Ergebnis positiv.' : 'Beide sind gleich groß, darum ist das Ergebnis 0.'}` },
+  ];
+}
+
+// =====================================================================
+// Station 6: Multiplizieren
+// =====================================================================
+function mul5(fs) {
+  const v = fs.reduce((p, x) => p * x, 1), negs = fs.filter(x => x < 0).length, q = fs.map(pN).join(' · ');
+  const zero = fs.includes(0);
+  return numTask({
+    st: 6, prompt: 'Berechne', q, val: v, data: { fs },
+    traps: fs.length === 2 && !zero ? [[fs[0] + fs[1], 'Du hast addiert. Der Punkt · heißt mal.']] : [],
+    signMsg: `Zähle die Minuszeichen: ${negs} Stück. ${negs % 2 ? 'Ungerade Anzahl, also ist das Ergebnis negativ.' : 'Gerade Anzahl, also ist das Ergebnis positiv.'}`,
+    wrongMsg: zero ? 'Ist ein Faktor 0, ist das ganze Produkt 0.' : 'Das stimmt noch nicht. Rechne zuerst ohne Vorzeichen, dann bestimme das Vorzeichen.',
+    lines: zero ? [{ m: q }, { m: '0', c: 'ein Faktor ist 0' }]
+      : [{ m: q }, { m: `${v < 0 ? MI : '+'}(${fs.map(abs).join(' · ')})`, c: `${negs} Minuszeichen → ${negs % 2 ? 'minus' : 'plus'}` }, { m: nH(v) }],
+  });
+}
+function gen5(l) {
+  if (l === 1) { const a = -ri(2, 9), b = ri(2, 9); return mul5(rnd() < 0.5 ? [a, b] : [b, a]); }
+  if (l === 2) {
+    if (rnd() < 0.1) return mul5(shuffle([0, nz(-12, 12)]));
+    for (;;) { const a = nz(-12, 12), b = nz(-12, 12); if (abs(a) < 2 || abs(b) < 2 || (a > 0 && b > 0)) continue; if (rnd() < 0.5 && !(a < 0 && b < 0)) continue; return mul5([a, b]); }
+  }
+  for (;;) {
+    const n = ri(3, 4), fs = [];
+    for (let i = 0; i < n; i++) fs.push(pick([-1, -2, -3, 2, 3, -4, 4, -5, 5, -6, 6, -1]));
+    const p = abs(fs.reduce((x, y) => x * y, 1));
+    if (p > 360 || fs.filter(x => x < 0).length < 2) continue;
+    return mul5(fs);
+  }
+}
+function explore5(e) {
+  if (e.mode === 'wieder') {
+    const [a, b] = e.fs, v = a * b, R = rng([v]);
+    const js = []; for (let i = 0; i < b; i++) js.push({ a: i * a, b: (i + 1) * a, cls: sg(a), lab: nH(a), fresh: true });
+    return [
+      { lab: 'Aufgabe', h: eqbig(`${pN(a)} · ${b}`), cap: `Malnehmen heißt wiederholt addieren. ${pN(a)} · ${b} heißt: ${b}-mal die Zahl ${nH(a)}.` },
+      { lab: 'Summe', h: eqbig(Array(b).fill(pN(a)).join(' + '), 'sm'), cap: `Schreib es als Summe: ${b}-mal ${pN(a)}.` },
+      { lab: 'Pfeile', h: nl({ ...R, jumps: js }), cap: `Auf der Zahlengerade: ${b} Pfeile, jeder ${abs(a)} Schritte nach links.` },
+      { lab: 'Ergebnis', h: nl({ ...R, jumps: js.map(j => ({ ...j, fresh: false })), pts: [{ v, lab: nH(v), cls: 'hop', high: true }] }) + eqbig(`${pN(a)} · ${b} = <b>${nH(v)}</b>`, 'sm') + SIGNT(signIdx(a, b)), cap: 'Minus mal Plus gibt Minus. Ebenso Plus mal Minus: 3 · (−4) = −12.' },
+    ];
+  }
+  if (e.mode === 'muster') {
+    const [a, b] = e.fs;
+    const row = (k, nw) => `<tr${nw ? ' class="new"' : ''}><td>${pN(a)} · ${pN(k)}</td><td>=</td><td>${cN(a * k)}</td><td class="d">${k < 3 ? `+${-a}` : ''}</td></tr>`;
+    const tab = (to, from) => { let h = '<table class="mt">'; for (let k = 3; k >= to; k--) h += row(k, k < from); return h + '</table>'; };
+    return [
+      { lab: 'Bekannt', h: tab(0, -99), cap: `Diese Ergebnisse kennst du schon. Schau, wie sie sich ändern: Jede Zeile wird um ${-a} größer.` },
+      { lab: 'Weiter', h: tab(-2, 0), cap: `Das Muster geht weiter: 0 + ${-a} = ${-a}, dann ${-2 * a}. Die Ergebnisse werden positiv!` },
+      { lab: 'Ergebnis', h: tab(b, -2), cap: `Also ist ${pN(a)} · ${pN(b)} = <b>${a * b}</b>. Minus mal Minus gibt Plus!` },
+      { lab: 'Regel', h: SIGNT(3), cap: 'Die Vorzeichen-Regel beim Malnehmen: Gleiche Vorzeichen ergeben Plus, verschiedene ergeben Minus.' },
+    ];
+  }
+  const fs = e.fs, v = fs.reduce((x, y) => x * y, 1), negs = fs.filter(x => x < 0).length;
+  const c = (x, i, on) => `<span class="fc big${on && x < 0 ? ' neg' : ''}" data-k="f${i}">${pN(x)}</span>`;
+  return [
+    { lab: 'Aufgabe', h: chipRow(fs.map((x, i) => c(x, i, false))), cap: 'Mehrere Faktoren mit Vorzeichen. Du musst nicht Schritt für Schritt rechnen.' },
+    { lab: 'Minus zählen', h: chipRow(fs.map((x, i) => c(x, i, true))) + eqbig(`${negs} Minuszeichen`, 'sm'), cap: `Zähle die Minuszeichen: ${negs}. ${negs % 2 ? 'Ungerade Anzahl: Ein Minus bleibt übrig, das Ergebnis ist negativ.' : 'Gerade Anzahl: Je zwei Minus ergeben Plus, das Ergebnis ist positiv.'}` },
+    { lab: 'Beträge', h: eqbig(`${fs.map(abs).join(' · ')} = ${abs(v)}`), cap: 'Rechne die Zahlen ohne Vorzeichen aus.' },
+    { lab: 'Ergebnis', h: eqbig(`${fs.map(pN).join(' · ')} = <b>${nH(v)}</b>`, 'sm'), cap: 'Vorzeichen und Betrag zusammen ergeben das Ergebnis.' },
+  ];
+}
+
+// =====================================================================
+// Station 7: Dividieren
+// =====================================================================
+function div6(a, b) {
+  const v = a / b, q = `${pN(a)} : ${pN(b)}`;
+  return numTask({
+    st: 7, prompt: 'Berechne', q, val: v, data: { a, b },
+    traps: a ? [[a * b, 'Du hast multipliziert. Der Doppelpunkt : heißt geteilt.']] : [],
+    signMsg: 'Prüfe das Vorzeichen: Gleiche Vorzeichen ergeben Plus, verschiedene ergeben Minus, genau wie beim Malnehmen.',
+    wrongMsg: a === 0 ? '0 geteilt durch eine Zahl ist immer 0.' : `Mach die Probe: Ergebnis mal ${pN(b)} muss ${nH(a)} geben.`,
+    lines: a === 0 ? [{ m: q }, { m: '0', c: `denn 0 · ${pN(b)} = 0` }]
+      : [{ m: q }, { m: `${v < 0 ? MI : '+'}(${abs(a)} : ${abs(b)})`, c: (a < 0) === (b < 0) ? 'gleiche Vorzeichen → plus' : 'verschiedene Vorzeichen → minus' }, { m: nH(v) }, { m: `Probe: ${pN(v)} · ${pN(b)} = ${nH(a)}`, noeq: true }],
+  });
+}
+function chain6() {
+  const b = nz(-9, 9) || 2, k = nz(-9, 9), c = nz(-9, 9);
+  if (abs(b) < 2 || abs(c) < 2) return chain6();
+  const a = b * k, v = k * c;
+  if (rnd() < 0.5) {
+    const q = `${pN(a)} : ${pN(b)} · ${pN(c)}`;
+    return numTask({ st: 7, prompt: 'Berechne von links nach rechts', q, val: v, data: { chain: true }, traps: [[a / (b * c) === Math.trunc(a / (b * c)) ? a / (b * c) : 0.5, 'Bei mal und geteilt rechnest du von links nach rechts.']],
+      signMsg: 'Prüfe das Vorzeichen: Zähle alle Minuszeichen.',
+      lines: [{ m: q }, { m: `${pN(k)} · ${pN(c)}`, c: 'zuerst teilen (von links nach rechts)' }, { m: nH(v) }] });
+  }
+  const q = `${pN(k)} · ${pN(c)} : ${pN(b)}`;
+  const w = k * c; if (w % b) return chain6();
+  return numTask({ st: 7, prompt: 'Berechne von links nach rechts', q, val: w / b, data: { chain: true },
+    signMsg: 'Prüfe das Vorzeichen: Zähle alle Minuszeichen.',
+    lines: [{ m: q }, { m: `${pN(w)} : ${pN(b)}`, c: 'zuerst malnehmen' }, { m: nH(w / b) }] });
+}
+function gen6(l) {
+  if (l === 1) { const b = ri(2, 9), k = nz(-9, 9); if (k > 0 && rnd() < 0.7) return gen6(1); const s = rnd() < 0.5; return s ? div6(k * b, b) : div6(-k * b, -b); }
+  if (l === 2) {
+    if (rnd() < 0.1) return div6(0, nz(-9, 9));
+    for (;;) { const b = nz(-12, 12), k = nz(-12, 12); if (abs(b) < 2 || abs(k) < 2) continue; if (b > 0 && k * b > 0) continue; return div6(k * b, b); }
+  }
+  if (rnd() < 0.6) return chain6();
+  const b = nz(-25, 25), k = nz(-20, 20); if (abs(b) < 3 || abs(k) < 3) return gen6(3); return div6(k * b, b);
+}
+function explore6(t) {
+  const { a, b } = t.data, v = a / b;
+  if (a === 0) return [
+    { lab: 'Aufgabe', h: eqbig(`0 : ${pN(b)} = ?`), cap: 'Was ist 0 geteilt durch eine Zahl?' },
+    { lab: 'Umkehren', h: eqbig(`? · ${pN(b)} = 0`), cap: `Welche Zahl mal ${pN(b)} ergibt 0? Nur die 0.` },
+    { lab: 'Ergebnis', h: eqbig(`0 : ${pN(b)} = <b>0</b>`), cap: '0 geteilt durch eine Zahl ist immer 0. Aber Vorsicht: Durch 0 teilen geht nicht!' },
+  ];
+  return [
+    { lab: 'Aufgabe', h: eqbig(`${pN(a)} : ${pN(b)} = ?`), cap: 'Dividieren ist das Gegenteil von Multiplizieren.' },
+    { lab: 'Umkehren', h: eqbig(`<span class="hl">?</span> · ${pN(b)} = ${nH(a)}`), cap: `Frage dich: Welche Zahl mal ${pN(b)} ergibt ${nH(a)}?` },
+    { lab: 'Betrag', h: eqbig(`${abs(v)} · ${abs(b)} = ${abs(a)}`, 'sm'), cap: `Ohne Vorzeichen ist das leicht: ${abs(a)} : ${abs(b)} = ${abs(v)}.` },
+    { lab: 'Vorzeichen', h: eqbig(`<span class="hl">${pN(v)}</span> · ${pN(b)} = ${nH(a)}`, 'sm') + SIGNT(signIdx(a, b), ':'), cap: `${(a < 0) === (b < 0) ? 'Gleiche Vorzeichen: Das Ergebnis ist positiv.' : 'Verschiedene Vorzeichen: Das Ergebnis ist negativ.'} Die Regeln sind die gleichen wie beim Malnehmen.` },
+    { lab: 'Ergebnis', h: eqbig(`${pN(a)} : ${pN(b)} = <b>${nH(v)}</b>`), cap: `Probe: ${pN(v)} · ${pN(b)} = ${nH(a)}. Stimmt!` },
+  ];
+}
+
+// =====================================================================
+// Station 8: Potenzen mit negativer Grundzahl
+// =====================================================================
+function pw7(b, e) {
+  const v = b ** e, q = `(${nH(b)})${supH(e)}`;
+  return numTask({
+    st: 8, prompt: 'Berechne', q, val: v, data: { b, e },
+    traps: [[b * e, `Die Hochzahl ${e} heißt: ${e}-mal mit sich selbst malnehmen, nicht mal ${e}.`], [-(abs(b) * e), `Die Hochzahl ${e} heißt: ${e}-mal mit sich selbst malnehmen, nicht mal ${e}.`]],
+    signMsg: e % 2 ? `Ungerade Hochzahl: ${e} Minuszeichen. Eins bleibt übrig, das Ergebnis ist negativ.` : `Gerade Hochzahl: Die ${e} Minuszeichen bilden Paare. Das Ergebnis ist positiv.`,
+    lines: [{ m: q }].concat(e <= 6 ? [{ m: Array(e).fill(pN(b)).join(' · '), c: `${e} Faktoren` }] : [{ m: `${e % 2 ? MI : '+'}1`, c: e % 2 ? 'ungerade Hochzahl → minus' : 'gerade Hochzahl → plus' }]).concat([{ m: nH(v) }]),
+  });
+}
+function nopar7(a, e) {
+  const v = -(a ** e), q = `${MI}${a}${supH(e)}`;
+  return numTask({
+    st: 8, prompt: 'Berechne', q, val: v, data: { a, e, nopar: true },
+    traps: [[-a * e, `Die Hochzahl heißt: ${e}-mal mit sich selbst malnehmen, nicht mal ${e}.`]],
+    signMsg: `Ohne Klammer gehört das Minus nicht zur Grundzahl: ${MI}${a}${supH(e)} = ${MI}(${Array(e).fill(a).join(' · ')}). Erst hoch, dann das Minus.`,
+    lines: [{ m: q }, { m: `${MI}(${Array(e).fill(a).join(' · ')})`, c: 'ohne Klammer: erst hoch, dann das Minus' }, { m: nH(v) }],
+  });
+}
+function mix7(src, traps) {
+  const { steps, value } = evalSteps(src);
+  return numTask({ st: 8, prompt: 'Berechne', q: srcH(src), val: value, traps, data: { src },
+    signMsg: 'Prüfe die Vorzeichen: Gerade Hochzahl mit Klammer → plus. Ohne Klammer bleibt das Minus vorne.',
+    lines: steps.map((s, i) => ({ m: s.h, c: i ? s.lab : '' })) });
+}
+function gen7(l) {
+  if (l === 1) return rnd() < 0.65 ? pw7(-ri(2, 9), 2) : pw7(-ri(2, 5), 3);
+  if (l === 2) {
+    const r = rnd();
+    if (r < 0.35) return pw7(-2, ri(3, 6));
+    if (r < 0.5) return pw7(-1, ri(5, 99));
+    if (r < 0.65) return pw7(-3, ri(3, 4));
+    return nopar7(ri(2, 9), rnd() < 0.8 ? 2 : 3);
+  }
+  const a = ri(2, 6), b = ri(2, 4), n = ri(2, 5), c = ri(2, 9);
+  return pick([
+    () => mix7(`(-${a})^2 + (-${b})^3`, [[a * a + b ** 3, `(${MI}${b})${supH(3)} ist negativ: ungerade Hochzahl.`]]),
+    () => mix7(`-${a}^2 + (-${a})^2`, [[2 * a * a, `${MI}${a}${supH(2)} = ${MI}${a * a}, aber (${MI}${a})${supH(2)} = ${a * a}.`], [-2 * a * a, `${MI}${a}${supH(2)} = ${MI}${a * a}, aber (${MI}${a})${supH(2)} = ${a * a}.`]]),
+    () => mix7(`(-2)^${n} - 2^${n}`, [[0, `(${MI}2)${supH(n)} und 2${supH(n)} sind nur bei gerader Hochzahl gleich.`]]),
+    () => mix7(`${c} - (-${b})^2`, [[c + b * b, `(${MI}${b})${supH(2)} = ${b * b}. Davor steht noch ein Minus: ${c} − ${b * b}.`]]),
+    () => mix7(`(-1)^${ri(11, 40)} * ${a}^2`, []),
+  ])();
+}
+function explore7(e) {
+  if (e.mode === 'ohne') {
+    const a = e.a;
+    return [
+      { lab: 'Zwei Aufgaben', h: `<div class="duo"><div>${eqbig(`(${MI}${a})${supH(2)}`)}<span class="gl">mit Klammer</span></div><div>${eqbig(`${MI}${a}${supH(2)}`)}<span class="gl">ohne Klammer</span></div></div>`, cap: 'Sie sehen fast gleich aus. Der Unterschied ist die Klammer.' },
+      { lab: 'Auflösen', h: `<div class="duo"><div>${eqbig(`(${MI}${a}) · (${MI}${a})`, 'sm')}<span class="gl">das Minus wird mitquadriert</span></div><div>${eqbig(`${MI}(${a} · ${a})`, 'sm')}<span class="gl">das Minus bleibt draußen</span></div></div>`, cap: `Mit Klammer gehört das Minus zur Grundzahl. Ohne Klammer wird nur die ${a} quadriert, das Minus kommt danach.` },
+      { lab: 'Ergebnis', h: `<div class="duo"><div>${eqbig(`(${MI}${a})${supH(2)} = <b>${a * a}</b>`)}</div><div>${eqbig(`${MI}${a}${supH(2)} = <b>${MI}${a * a}</b>`)}</div></div>`, cap: `Darum: (${MI}${a})${supH(2)} = ${a * a}, aber ${MI}${a}${supH(2)} = ${MI}${a * a}. Achte immer auf die Klammer!` },
+    ];
+  }
+  const { b, e: n } = e, v = b ** n;
+  const f = i => `<span class="fc neg" data-k="f${i}">${pN(b)}</span>`;
+  const pairs = []; for (let i = 0; i + 1 < n; i += 2) pairs.push(`<span class="pair"><span class="row">${f(i)}<span class="op">·</span>${f(i + 1)}</span><span class="gl">= +${b * b}</span></span>`);
+  if (n % 2) pairs.push(`<span class="grp neg"><span class="row">${f(n - 1)}</span><span class="gl">bleibt ${nH(b)}</span></span>`);
+  return [
+    { lab: 'Aufgabe', h: eqbig(`(${MI}${abs(b)})${supH(n)}`), cap: `Die Hochzahl ${n} sagt: Nimm die Grundzahl ${pN(b)} ${n}-mal als Faktor.` },
+    { lab: 'Faktoren', h: chipRow(Array.from({ length: n }, (_, i) => f(i))), cap: `Das sind ${n} Faktoren, jeder mit einem Minuszeichen.` },
+    { lab: 'Paare', h: `<div class="row">${pairs.join('<span class="op">·</span>')}</div>`, cap: `Je zwei Minus ergeben Plus. ${n % 2 ? 'Bei ungerader Hochzahl bleibt ein Minus übrig.' : 'Bei gerader Hochzahl gehen alle Minus in Paaren auf.'}` },
+    { lab: 'Ergebnis', h: eqbig(`(${MI}${abs(b)})${supH(n)} = <b>${nH(v)}</b>`), cap: `Gerade Hochzahl → positiv. Ungerade Hochzahl → negativ. Hier ist die Hochzahl ${n % 2 ? 'ungerade' : 'gerade'}.` },
+  ];
+}
+
+// =====================================================================
+// Station 9: Rechenreihenfolge
+// =====================================================================
+function make8(src, traps) {
+  const { steps, value } = evalSteps(src);
+  return numTask({
+    st: 9, prompt: 'Berechne', q: srcH(src), val: value, traps, data: { src },
+    signMsg: 'Der Betrag stimmt, aber das Vorzeichen nicht. Prüfe jeden Schritt mit den Vorzeichen-Regeln.',
+    lines: steps.map((s, i) => ({ m: s.h, c: i ? s.lab : '' })),
+  });
+}
+const PVS = 'Punkt vor Strich: Zuerst wird mal oder geteilt gerechnet.';
+function gen8(l) {
+  const n9 = () => nz(-9, 9), b9 = () => { let v; do v = nz(-9, 9); while (abs(v) < 2); return v; };
+  if (l === 1) {
+    const a = n9(), b = b9(), c = b9();
+    return pick([
+      () => make8(`${a} + ${A(b)}*${A(c)}`, [[(a + b) * c, PVS]]),
+      () => make8(`${a} - ${A(b * c)}/${A(c)}`, ((a - b * c) % c === 0 ? [[(a - b * c) / c, PVS]] : [])),
+      () => { const d = b9(); return make8(`${A(a || 2)}*${b} + ${A(c)}*${A(d)}`, [[((a || 2) * b + c) * d, PVS]]); },
+    ])();
+  }
+  if (l === 2) {
+    const a = n9(), b = b9(), c = b9(), d = b9();
+    return pick([
+      () => make8(`(${a} + ${A(b)})*${A(c)}`, [[a + b * c, 'Zuerst die Klammer ausrechnen.']]),
+      () => (c === d ? gen8(2) : make8(`${a} - ${A(b)}*(${c} - ${A(d)})`, [[(a - b) * (c - d), PVS], [a - b * c - d, 'Die Klammer zuerst ausrechnen, dann mal.']])),
+      () => { const m = c - d; if (abs(m) < 2) return gen8(2); const k = n9(), x = n9(), y = k * m - x; return make8(`(${x} + ${A(y)})/(${c} - ${A(d)})`, []); },
+    ])();
+  }
+  const a = n9(), b = ri(2, 7), c = b9(), d = b9();
+  return pick([
+    () => make8(`${a} + (-${b})^2`, [[a - b * b, `(${MI}${b})${supH(2)} ist positiv: Minus mal Minus gibt Plus.`]]),
+    () => make8(`-${b}^2 + ${A(c)}*${A(d)}`, [[b * b + c * d, `${MI}${b}${supH(2)} = ${MI}${b * b}: Erst quadrieren, dann kommt das Minus davor.`]]),
+    () => { const k = ri(2, 4), x = n9(), y = x - pick([-4, -3, -2, 2, 3, 4]); return make8(`${A(k * sgn())}*(${x} - ${A(y)})^2`, [[(k * (x - y)) ** 2, 'Hoch vor Punkt: Zuerst wird die Klammer quadriert, dann malgenommen.']]); },
+    () => make8(`${a} - (${b} - ${A(c)})*${A(d)}`, [[(a - (b - c)) * d, PVS]]),
+  ])();
+}
+function explore8(t) {
+  const { steps } = evalSteps(t.data.src);
+  return steps.map((s, i) => ({
+    lab: s.lab, cap: s.cap,
+    h: `<div class="calc">${steps.slice(0, i + 1).map((x, j) => `<div class="ln${j === i ? ' now' : ''}"><span class="lm">${j ? '= ' : ''}${x.h}</span><span class="lc">${j ? x.lab : ''}</span></div>`).join('')}</div>`,
+  }));
+}
+
+// =====================================================================
+// Station 10: Sachaufgaben
+// =====================================================================
+const C = '°C';
+const S9 = {
+  1: [
+    () => { const a = -ri(2, 9), d = ri(3, 15); return { text: `Am Morgen ist es ${nH(a)} ${C}. Bis zum Mittag steigt die Temperatur um ${d} ${C}. Wie warm ist es am Mittag?`, src: `${a} + ${d}`, unit: C, say: v => `Am Mittag ist es ${nH(v)} ${C}.`, traps: [[a - d, '„Steigt“ heißt: Es wird wärmer, also plus.']] }; },
+    () => { const a = ri(1, 8), d = ri(a + 2, a + 12); return { text: `Am Abend sind es ${a} ${C}. In der Nacht sinkt die Temperatur um ${d} ${C}. Wie viel Grad sind es in der Nacht?`, src: `${a} - ${d}`, unit: C, say: v => `In der Nacht sind es ${nH(v)} ${C}.`, traps: [[a + d, '„Sinkt“ heißt: Es wird kälter, also minus.']] }; },
+    () => { const a = -ri(1, 3), d = ri(3, 9); return { text: `Ein Aufzug steht im ${-a}. Untergeschoss, also im Stockwerk ${nH(a)}. Er fährt ${d} Stockwerke nach oben. In welchem Stockwerk hält er?`, src: `${a} + ${d}`, unit: 'Stockwerk', say: v => `Er hält im Stockwerk ${nH(v)}.`, traps: [[a - d, 'Nach oben heißt plus.']] }; },
+    () => { const a = -ri(5, 25), d = ri(2, 12); return { text: `Ein Taucher ist ${-a} m unter der Wasseroberfläche, also bei ${nH(a)} m. Er taucht ${d} m tiefer. Wo ist er jetzt?`, src: `${a} - ${d}`, unit: 'm', say: v => `Er ist jetzt bei ${nH(v)} m.`, traps: [[a + d, 'Tiefer heißt: weiter nach unten, also minus.']] }; },
+  ],
+  2: [
+    () => { const a = -ri(10, 60), e = ri(20, 90), h = ri(10, 80); return { text: `Lisas Konto steht bei ${nH(a)} €. Sie zahlt ${e} € ein und hebt danach ${h} € ab. Wie hoch ist der Kontostand jetzt?`, src: `${a} + ${e} - ${h}`, unit: '€', say: v => `Der Kontostand ist ${nH(v)} €.`, traps: [[a - e + h, 'Einzahlen heißt plus, abheben heißt minus.']] }; },
+    () => { const t = ri(1, 12), n = -ri(2, 12); return { text: `Am Tag zeigt das Thermometer ${t} ${C}, in der Nacht ${nH(n)} ${C}. Um wie viel Grad ist es am Tag wärmer?`, src: `${t} - (${n})`, unit: C, say: v => `Am Tag ist es um ${v} ${C} wärmer.`, traps: [[t + n, 'Unterschied heißt: höhere Temperatur minus tiefere Temperatur. Und minus (−) gibt plus.']] }; },
+    () => { const a = -ri(10, 30), u = ri(3, 9), d = ri(5, 15); return { text: `Ein Taucher ist bei ${nH(a)} m. Er taucht ${u} m auf und danach ${d} m tiefer. Wo ist er jetzt?`, src: `${a} + ${u} - ${d}`, unit: 'm', say: v => `Er ist jetzt bei ${nH(v)} m.`, traps: [[a - u + d, 'Auftauchen heißt nach oben (plus), tiefer heißt nach unten (minus).']] }; },
+    () => { const a = ri(2, 6), d = a + ri(1, 3); return { text: `Ein Aufzug fährt vom ${a}. Stock ${d} Stockwerke nach unten. Das Erdgeschoss ist Stockwerk 0. In welchem Stockwerk hält er?`, src: `${a} - ${d}`, unit: 'Stockwerk', say: v => `Er hält im Stockwerk ${nH(v)}, also im ${-v}. Untergeschoss.`, traps: [[a + d, 'Nach unten heißt minus.']] }; },
+  ],
+  3: [
+    () => { let ts; do ts = Array.from({ length: 5 }, () => ri(-9, 5)); while (sum(ts) % 5 || ts.filter(x => x < 0).length < 2 || ts.every(x => x === ts[0])); return { text: `In einer Woche wird morgens die Temperatur gemessen: Montag ${nH(ts[0])} ${C}, Dienstag ${nH(ts[1])} ${C}, Mittwoch ${nH(ts[2])} ${C}, Donnerstag ${nH(ts[3])} ${C}, Freitag ${nH(ts[4])} ${C}. Berechne den Mittelwert.`, src: `(${ts[0]} + ${ts.slice(1).map(A).join(' + ')}) / 5`, unit: C, say: v => `Der Mittelwert ist ${nH(v)} ${C}.`, traps: [[sum(ts), 'Das ist die Summe. Für den Mittelwert teilst du noch durch 5.']] }; },
+    () => { const n = ri(3, 6), r = ri(15, 40), k = ri(30, n * r - 10); return { text: `Ein Konto steht bei ${k} €. ${n} Monate lang werden jeden Monat ${r} € abgebucht. Wie hoch ist der Kontostand danach?`, src: `${k} + ${n}*(-${r})`, unit: '€', say: v => `Der Kontostand ist dann ${nH(v)} €.`, traps: [[k + n * r, 'Abbuchen heißt: Geld geht weg, also minus.'], [k - r, `Es wird ${n}-mal abgebucht, nicht nur einmal.`]] }; },
+    () => { const s = ri(1, 6), r = ri(2, 3), h = ri(4, 6); return { text: `Um 18 Uhr sind es ${s} ${C}. Danach sinkt die Temperatur jede Stunde um ${r} ${C}. Wie viel Grad zeigt das Thermometer um ${18 + h} Uhr?`, src: `${s} + ${h}*(-${r})`, unit: C, say: v => `Um ${18 + h} Uhr sind es ${nH(v)} ${C}.`, traps: [[s + h * r, 'Sinken heißt minus.'], [s - r, `Von 18 bis ${18 + h} Uhr sind es ${h} Stunden.`]] }; },
+    () => { const f = ri(8, 30) * 100, u = -ri(2, 9) * 50; return { text: `Ein Flugzeug fliegt in ${f} m Höhe. Darunter ist ein U-Boot in ${-u} m Tiefe, also bei ${nH(u)} m. Wie groß ist der Höhenunterschied?`, src: `${f} - (${u})`, unit: 'm', say: v => `Der Höhenunterschied ist ${v} m.`, traps: [[f + u, 'Unterschied: oben minus unten. Und minus (−) gibt plus.']] }; },
+  ],
+};
+function make9(o) {
+  const { steps, value } = evalSteps(o.src);
+  return numTask({
+    st: 10, prompt: 'Löse die Sachaufgabe', q: o.text, qText: true, after: `Gib nur die Zahl ein (in ${o.unit}).`, val: value, traps: o.traps, data: o,
+    signMsg: 'Der Betrag stimmt, aber das Vorzeichen nicht. Liegt das Ergebnis über oder unter null?',
+    wrongMsg: 'Das stimmt noch nicht. Schreib zuerst eine Rechnung: Startwert, dann jede Änderung mit + oder −.',
+    lines: [{ m: steps[0].h, c: 'als Rechnung', noeq: true }].concat(steps.slice(1).map(s => ({ m: s.h }))).concat([{ m: o.say(value[0]), noeq: true, c: 'Antwort' }]),
+  });
+}
+function gen9(l) { return make9(pick(S9[l])()); }
+const S9EX = [
+  { label: 'Temperatur steigt', parts: [['Am Morgen ist es ', 0], ['−4 °C', 1], ['. Bis Mittag ', 0], ['steigt die Temperatur um 7 °C', 2], ['.', 0]], start: -4, ch: [7], src: '-4 + 7', say: 'Am Mittag ist es 3 °C.' },
+  { label: 'Kontostand', parts: [['Das Konto steht bei ', 0], ['−20 €', 1], ['. Tim ', 0], ['zahlt 50 € ein', 2], [' und ', 0], ['hebt 45 € ab', 3], ['.', 0]], start: -20, ch: [50, -45], src: '-20 + 50 - 45', say: 'Der Kontostand ist −15 €.' },
+  { label: 'Taucher', parts: [['Ein Taucher ist bei ', 0], ['−6 m', 1], ['. Er ', 0], ['taucht 8 m tiefer', 2], ['.', 0]], start: -6, ch: [-8], src: '-6 - 8', say: 'Er ist jetzt bei −14 m.' },
+  { label: 'Temperatur-Unterschied', diff: true, parts: [['Am Tag sind es ', 0], ['5 °C', 1], [', in der Nacht ', 0], ['−3 °C', 2], ['. Um wie viel ist es am Tag wärmer?', 0]], a: 5, b: -3, src: '5 - (-3)', say: 'Am Tag ist es um 8 °C wärmer.' },
+];
+const K3 = ['', 'k1', 'k2', 'k3'];
+function phraseH(parts, on) {
+  return `<p class="phrase">${parts.map(([t, id]) => `<span class="sg${id && on.includes(id) ? ' on ' + K3[id] : ''}">${t}</span>`).join('')}</p>`;
+}
+function explore9(e) {
+  const res = val(parse(e.src))[0];
+  if (e.diff) {
+    const R = rng([e.a, e.b]);
+    return [
+      { lab: 'Lesen', h: phraseH(e.parts, []), cap: 'Lies den Text. Gesucht ist ein Unterschied.' },
+      { lab: 'Werte', h: phraseH(e.parts, [1, 2]) + nl({ ...R, pts: [{ v: e.a, lab: nH(e.a), cls: 'pos' }, { v: e.b, lab: nH(e.b), cls: 'neg' }] }), cap: 'Trage beide Werte auf der Zahlengerade ein, wie auf einem liegenden Thermometer.' },
+      { lab: 'Abstand', h: nl({ ...R, pts: [{ v: e.a, lab: nH(e.a), cls: 'pos' }, { v: e.b, lab: nH(e.b), cls: 'neg' }], spans: [{ a: e.b, b: e.a, lab: `${res} Grad`, cls: 'hop', fresh: true }] }), cap: `Zähle die Schritte: ${-e.b} bis zur 0 und dann ${e.a} weiter. Zusammen ${res}.` },
+      { lab: 'Rechnung', h: eqbig(`${srcH(e.src)} = ${nH(e.a)} + ${-e.b} = <b>${res}</b>`, 'sm'), cap: `Unterschied = höherer Wert minus tieferer Wert. ${e.say}` },
+    ];
+  }
+  const pos = [e.start]; e.ch.forEach(d => pos.push(pos[pos.length - 1] + d));
+  const R = rng(pos);
+  const js = e.ch.map((d, i) => ({ a: pos[i], b: pos[i + 1], cls: sg(d), lab: (d < 0 ? MI : '+') + abs(d) }));
+  const steps = [
+    { lab: 'Lesen', h: phraseH(e.parts, []), cap: 'Lies den Text. Suche den Startwert und die Änderungen.' },
+    { lab: 'Start', h: phraseH(e.parts, [1]) + nl({ ...R, pts: [{ v: e.start, lab: nH(e.start), cls: sg(e.start) }] }), cap: `Der Startwert ist ${nH(e.start)}. Er ist negativ, weil er unter null liegt.` },
+  ];
+  e.ch.forEach((d, i) => steps.push({
+    lab: (d < 0 ? MI : '+') + abs(d),
+    h: phraseH(e.parts, [1, ...e.ch.slice(0, i + 1).map((_, k) => k + 2)]) + nl({ ...R, pts: [{ v: e.start, lab: nH(e.start), cls: sg(e.start) }], jumps: js.slice(0, i + 1).map((j, k) => ({ ...j, fresh: k === i })) }),
+    cap: d > 0 ? `Mehr werden (steigen, einzahlen, nach oben) heißt plus: + ${d}.` : `Weniger werden (sinken, abheben, tiefer) heißt minus: − ${-d}.`,
+  }));
+  steps.push({ lab: 'Antwort', h: nl({ ...R, jumps: js, pts: [{ v: res, lab: nH(res), cls: 'hop', high: true }] }) + eqbig(`${srcH(e.src)} = <b>${nH(res)}</b>`, 'sm'), cap: `Schreib einen Antwortsatz: ${e.say}` });
+  return steps;
+}
+
+// =====================================================================
+// Stationen
+// =====================================================================
+const s2 = supH(2), s3 = supH(3);
+const STATIONS = [
+  {
+    id: 1, title: 'Die Zahlengerade', short: 'Negative Zahlen, ordnen, Betrag', sample: '−7 < −2',
+    lvl: ['ablesen, Gegenzahl', 'Betrag, Abstand', 'ordnen, zählen'],
+    intro: `<p>Zahlen mit Minus heißen <b>negative Zahlen</b>. Du kennst sie vom Thermometer (−5 °C bedeutet 5 Grad unter null), vom Aufzug (Stockwerk −1 ist der Keller) oder vom Konto (−20 € sind Schulden).</p>
+      <p>Die positiven Zahlen, die negativen Zahlen und die 0 zusammen heißen <b>ganze Zahlen</b>. Auf der Zahlengerade liegen die negativen Zahlen links von der 0, die positiven rechts davon.</p>
+      <div class="figwrap">${nl({ lo: -7, hi: 7, pts: [{ v: -5, lab: '−5', cls: 'neg' }, { v: 3, lab: '3', cls: 'pos' }] })}</div>`,
+    merke: ul(['Je weiter rechts eine Zahl liegt, desto größer ist sie.', 'Jede negative Zahl ist kleiner als 0 und kleiner als jede positive Zahl.', 'Die <b>Gegenzahl</b> liegt gleich weit von 0 entfernt, auf der anderen Seite: Die Gegenzahl von −4 ist 4.', 'Der <b>Betrag</b> ist der Abstand von 0. Er ist nie negativ: |−4| = 4.']),
+    falle: ul(['−7 ist kleiner als −2, obwohl 7 größer als 2 ist. −7 liegt weiter links.', '|−6| ist 6, nicht −6.', 'Die 0 ist weder positiv noch negativ.']),
+    hint: () => 'Stell dir die Zahlengerade vor: Links von der 0 liegen die negativen Zahlen. Weiter links heißt kleiner. Der Betrag ist der Abstand von 0.',
+    gen: gen1, examples: () => S1EX.map(e => ({ label: e.label, x: e })), explore: explore1,
+    bsp: () => [abst1(-5, 3), betrag1(-12), ord1([2, -6, 0, -1, -9])],
+  },
+  {
+    id: 2, title: 'Addieren', short: 'Plus mit negativen Zahlen', sample: '(−5) + 8 = 3',
+    lvl: ['bis 10', 'bis 30', 'große Zahlen, drei Zahlen'],
+    intro: `<p>Beim Addieren hilft die Zahlengerade: Starte bei der ersten Zahl. Eine positive Zahl addieren heißt: nach <b>rechts</b> gehen. Eine negative Zahl addieren heißt: nach <b>links</b> gehen.</p>
+      <p>Steht eine negative Zahl hinter einem Rechenzeichen, schreibst du sie in Klammern: 4 + (−9). So stehen nie zwei Zeichen direkt nebeneinander.</p>`,
+    merke: ul(['Gleiche Vorzeichen: Beträge addieren, das Vorzeichen bleibt. (−4) + (−3) = −7.', 'Verschiedene Vorzeichen: Den kleineren Betrag vom größeren abziehen. Das Ergebnis bekommt das Vorzeichen der Zahl mit dem größeren Betrag. (−9) + 4 = −5.', 'Zahl plus Gegenzahl ist 0: (−6) + 6 = 0.']),
+    falle: ul(['(−9) + 4 ist −5, nicht −13 und nicht 5.', '(−4) + (−3) ist −7, nicht 7. Zwei negative Zahlen ergeben zusammen etwas Negatives.', 'Prüfe am Ende: Welche Zahl hat den größeren Betrag? Ihr Vorzeichen bekommt das Ergebnis.']),
+    hint: () => 'Haben beide Zahlen das gleiche Vorzeichen? Dann Beträge addieren. Verschiedene Vorzeichen? Dann größerer minus kleinerer Betrag, Vorzeichen vom größeren Betrag.',
+    gen: gen2, examples: () => exT([add2(-2, 5), add2(3, -7), add2(-4, -3), add2(-6, 6)]), explore: explore2,
+    bsp: () => [add2(-12, 5), add2(-8, -9), add2(23, -40)],
+  },
+  {
+    id: 3, title: 'Subtrahieren', short: 'Minus heißt: Gegenzahl addieren', sample: '6 − (−3) = 9',
+    lvl: ['ins Negative', 'minus negative Zahl', 'große Zahlen, drei Zahlen'],
+    intro: `<p>Subtrahieren heißt: die <b>Gegenzahl addieren</b>. Aus 5 − 8 wird 5 + (−8). Aus 6 − (−3) wird 6 + 3.</p>
+      <p>Stell dir ein Konto vor: Wenn dir jemand 3 € Schulden wegnimmt, hast du danach mehr Geld. Deshalb gilt: Minus minus gibt plus.</p>`,
+    merke: ul(['a − b = a + (Gegenzahl von b).', '3 − 8 = 3 + (−8) = −5.', '6 − (−3) = 6 + 3 = 9.', 'Nach dem Umschreiben rechnest du wie beim Addieren.']),
+    falle: ul(['6 − (−3) ist 9, nicht 3.', '3 − 8 ist −5. Ist die zweite Zahl größer, wird das Ergebnis negativ.', '(−4) − 5 ist −9, nicht −1.']),
+    hint: () => 'Schreib die Aufgabe um: Aus „− Zahl“ wird „+ Gegenzahl“. Dann rechne wie beim Addieren.',
+    gen: gen3, examples: () => exT([sub3(3, 8), sub3(-4, 5), sub3(6, -3), sub3(-2, -7)]), explore: explore3,
+    bsp: () => [sub3(4, 11), sub3(-7, -12), sub3(-15, 8, -6)],
+  },
+  {
+    id: 4, sid: 40, title: 'Der Betrag', short: 'Abstand von 0, Rechnen mit Beträgen', sample: '|−7| + |3| = 10',
+    lvl: ['Betrag bestimmen', 'mit Beträgen rechnen', 'Rechnung im Betrag'],
+    intro: `<p>Der <b>Betrag</b> einer Zahl ist ihr Abstand von der 0 auf der Zahlengerade. Man schreibt ihn mit zwei senkrechten Strichen: |−5| sprichst du „Betrag von minus 5“.</p>
+      <div class="figwrap">${nl({ lo: -7, hi: 7, pts: [{ v: -5, lab: '−5', cls: 'neg' }, { v: 5, lab: '5', cls: 'pos' }], spans: [{ a: -5, b: 0, lab: '|−5| = 5', cls: 'neg' }, { a: 0, b: 5, lab: '|5| = 5', cls: 'pos' }] })}</div>
+      <p>Ein Abstand ist nie negativ. Darum gilt: Beim Betrag lässt du das Vorzeichen einfach weg. Eine Zahl und ihre Gegenzahl haben den gleichen Betrag.</p>
+      <p>Beim <b>Rechnen mit Beträgen</b> wirken die Betragsstriche wie eine Klammer: Zuerst rechnest du aus, was zwischen den Strichen steht. Dann nimmst du den Betrag.</p>`,
+    merke: ul(['|a| ist der Abstand von 0: |−6| = 6, |6| = 6, |0| = 0.', 'Zwei Zahlen haben den Betrag 5: −5 und 5.', 'Betragsstriche sind wie Klammern: Zuerst innen rechnen, dann den Betrag nehmen.', 'Ein Minus vor den Betragsstrichen bleibt stehen: −|−4| = −4.']),
+    falle: ul(['|−3 + 8| ist 5, nicht 11. Erst innen rechnen!', '|−7| − |−2| ist 7 − 2 = 5, nicht −5.', '−|−4| ist −4, nicht 4.', '|a + b| ist nicht immer |a| + |b|: |−3 + 5| = 2, aber |−3| + |5| = 8.']),
+    hint: () => 'Der Betrag ist der Abstand von 0, also die Zahl ohne Vorzeichen. Steht eine Rechnung zwischen den Strichen, rechne sie zuerst aus. Ein Minus vor den Strichen bleibt.',
+    gen: gen4b, examples: () => S4BEX.map(e => ({ label: e.label, x: e })), explore: explore4b,
+    bsp: () => [ops4(-9, '−', 4), inner4(6, '−', 11), minus4(-13)],
+  },
+  {
+    id: 5, title: 'Plus und Minus vor Klammern', short: 'Vorzeichen vereinfachen, lange Summen', sample: '5 − (−3) + (−2)',
+    lvl: ['Zeichen-Regel, 3 Zahlen', '4 Zahlen bis 20', '5 bis 6 Zahlen'],
+    intro: `<p>Oft stehen Zahlen mit Vorzeichen in Klammern: 5 − (−3) + (−2). Vor der Klammer steht ein <b>Rechenzeichen</b>, in der Klammer ein <b>Vorzeichen</b>. Aus beiden zusammen wird ein einziges Zeichen:</p>${VZT()}
+      <p>Danach hast du eine Reihe aus Plus- und Minus-Zahlen. Die sammelst du getrennt und ziehst am Ende ab.</p>`,
+    merke: ul(['Gleiche Zeichen ergeben +: + (+3) = + 3 und − (−3) = + 3.', 'Verschiedene Zeichen ergeben −: + (−3) = − 3 und − (+3) = − 3.', 'Lange Summen: Plus-Zahlen addieren, Minus-Zahlen addieren, dann Plus-Summe minus Minus-Summe.']),
+    falle: ul(['− (−6) ist + 6, nicht − 6.', '+ (−4) ist − 4. Das Plus vor der Klammer ändert nichts am Minus in der Klammer.', 'Vergiss bei langen Summen keine Zahl. Hake ab, was du schon gezählt hast.']),
+    hint: () => 'Mach zuerst aus jedem Paar „Zeichen vor der Klammer“ und „Zeichen in der Klammer“ ein Zeichen: gleich → +, verschieden → −. Dann Plus-Zahlen und Minus-Zahlen getrennt sammeln.',
+    gen: gen4,
+    examples: () => exT([sum4([{ o: 1, n: 5 }, { o: -1, n: -3, par: true }, { o: 1, n: -2, par: true }]), sum4([{ o: 1, n: -4, par: true }, { o: 1, n: 7, par: true }, { o: -1, n: 5, par: true }]),
+      sum4([{ o: 1, n: 12 }, { o: -1, n: 7 }, { o: 1, n: 3 }, { o: -1, n: 9 }, { o: -1, n: 1 }]), sum4([{ o: -1, n: -6, par: true }, { o: -1, n: 8, par: true }, { o: 1, n: -1, par: true }, { o: -1, n: -4, par: true }])]),
+    explore: explore4,
+    bsp: () => [sum4([{ o: 1, n: 8 }, { o: -1, n: -5, par: true }, { o: 1, n: -9, par: true }]), sum4([{ o: 1, n: -3, par: true }, { o: -1, n: 6, par: true }, { o: 1, n: 10, par: true }, { o: -1, n: -2, par: true }])],
+  },
+  {
+    id: 6, title: 'Multiplizieren', short: 'Minus mal Minus gibt Plus', sample: '(−4) · (−6) = 24',
+    lvl: ['Minus mal Plus', 'Einmaleins mit Vorzeichen', 'drei und vier Faktoren'],
+    intro: `<p>Beim Multiplizieren rechnest du zuerst mit den Beträgen, so wie du es kennst. Das Vorzeichen bestimmst du mit dieser Regel:</p>${SIGNT()}
+      <p>Warum ist Minus mal Minus Plus? Das zeigt dir das Beispiel „Muster“ unten Schritt für Schritt.</p>`,
+    merke: ul(['Gleiche Vorzeichen: Ergebnis positiv. (−3) · (−4) = 12.', 'Verschiedene Vorzeichen: Ergebnis negativ. (−3) · 4 = −12.', 'Viele Faktoren: Zähle die Minuszeichen. Gerade Anzahl → plus, ungerade Anzahl → minus.', 'Ist ein Faktor 0, ist das Produkt 0.']),
+    falle: ul(['(−3) · (−4) ist 12, nicht −12.', '(−3) · 4 ist −12, nicht 1. Der Punkt heißt mal, nicht plus.', '(−1) · (−1) · (−1) ist −1: drei Minus, also ungerade.']),
+    hint: () => 'Rechne zuerst ohne Vorzeichen. Dann zähle die Minuszeichen: gerade Anzahl → plus, ungerade Anzahl → minus.',
+    gen: gen5,
+    examples: () => [{ label: '(−3) · 4', x: { mode: 'wieder', fs: [-3, 4] } }, { label: 'Muster: (−3) · (−4)', x: { mode: 'muster', fs: [-3, -4] } }, { label: '(−2) · 3 · (−5) · (−1)', x: { mode: 'zaehlen', fs: [-2, 3, -5, -1] } }],
+    explore: explore5,
+    bsp: () => [mul5([-7, 8]), mul5([-6, -9]), mul5([-2, -3, 4, -1])],
+  },
+  {
+    id: 7, title: 'Dividieren', short: 'Geteilt mit Vorzeichen', sample: '(−24) : 6 = −4',
+    lvl: ['kleines Einmaleins', 'mit 0 und bis 12', 'große Zahlen, Ketten'],
+    intro: `<p>Dividieren ist das Gegenteil von Multiplizieren. (−12) : 3 fragt: Welche Zahl mal 3 ergibt −12? Das ist −4.</p>
+      <p>Deshalb gelten beim Dividieren genau die gleichen Vorzeichen-Regeln wie beim Malnehmen:</p>${SIGNT(undefined, ':')}`,
+    merke: ul(['Gleiche Vorzeichen: Ergebnis positiv. (−18) : (−6) = 3.', 'Verschiedene Vorzeichen: Ergebnis negativ. 20 : (−4) = −5.', '0 geteilt durch eine Zahl ist 0. Durch 0 teilen geht nicht.', 'Probe: Ergebnis mal Teiler muss die erste Zahl geben.', 'Bei mal und geteilt in einer Reihe: von links nach rechts rechnen.']),
+    falle: ul(['(−18) : (−6) ist 3, nicht −3.', '0 : (−5) ist 0. Aber (−5) : 0 gibt es nicht.']),
+    hint: () => 'Rechne zuerst ohne Vorzeichen. Gleiche Vorzeichen → plus, verschiedene → minus. Mach dann die Probe mit Malnehmen.',
+    gen: gen6, examples: () => exT([div6(-12, 3), div6(20, -4), div6(-18, -6), div6(0, -5)]), explore: explore6,
+    bsp: () => [div6(-56, 7), div6(-72, -9), div6(132, -11)],
+  },
+  {
+    id: 8, title: 'Potenzen', short: 'Negative Grundzahlen', sample: `(−2)${s3} = −8`,
+    lvl: [`Quadrat und hoch 3`, 'mit und ohne Klammer', 'Potenzen in Summen'],
+    intro: `<p>Eine Potenz ist eine Kurzschrift für Malnehmen mit gleichen Faktoren: (−2)${supH(4)} = (−2) · (−2) · (−2) · (−2). Die Zahl unten heißt <b>Grundzahl</b>, die kleine Zahl oben heißt <b>Hochzahl</b>.</p>
+      <p>Weil je zwei Minus ein Plus ergeben, entscheidet die Hochzahl über das Vorzeichen. Ganz wichtig ist die Klammer: (−3)${s2} und −3${s2} sind verschieden!</p>`,
+    merke: ul(['Gerade Hochzahl: Ergebnis positiv. (−2)' + supH(4) + ' = 16.', `Ungerade Hochzahl: Ergebnis negativ. (−2)${s3} = −8.`, `Mit Klammer wird das Minus mitquadriert: (−3)${s2} = 9.`, `Ohne Klammer bleibt das Minus draußen: −3${s2} = −(3 · 3) = −9.`, '(−1) hoch gerade Zahl = 1, (−1) hoch ungerade Zahl = −1.']),
+    falle: ul([`(−2)${s3} ist −8, nicht −6. Hoch 3 heißt nicht mal 3.`, `−3${s2} ist −9, nicht 9.`, `(−5)${s2} ist 25, nicht −25.`]),
+    hint: () => 'Schreib die Potenz als Produkt aus. Achte auf die Klammer: Gehört das Minus zur Grundzahl? Gerade Hochzahl → plus, ungerade → minus.',
+    gen: gen7,
+    examples: () => [{ label: '(−2)⁴', x: { b: -2, e: 4 } }, { label: '(−2)³', x: { b: -2, e: 3 } }, { label: '(−3)² oder −3²?', x: { mode: 'ohne', a: 3 } }, { label: '(−5)²', x: { b: -5, e: 2 } }],
+    explore: explore7,
+    bsp: () => [pw7(-3, 3), nopar7(4, 2), mix7('-2^2 + (-2)^2', [])],
+  },
+  {
+    id: 9, title: 'Rechenreihenfolge', short: 'Klammer, Hoch, Punkt, Strich', sample: '−3 + 4 · (−2)',
+    lvl: ['Punkt vor Strich', 'mit Klammern', 'mit Potenzen'],
+    intro: `<p>Wenn in einer Aufgabe mehrere Rechenarten vorkommen, gilt eine feste Reihenfolge:</p>
+      <div class="ladder"><span>1. Klammer</span><i>→</i><span>2. Hoch</span><i>→</i><span>3. Punkt (·, :)</span><i>→</i><span>4. Strich (+, −)</span></div>
+      <p>Bei jedem Schritt verwendest du die Vorzeichen-Regeln aus den Stationen vorher.</p>`,
+    merke: ol(['Zuerst rechnest du die Klammern aus.', 'Dann die Potenzen.', 'Dann mal und geteilt (Punktrechnung), von links nach rechts.', 'Zum Schluss plus und minus (Strichrechnung), von links nach rechts.']),
+    falle: ul(['−3 + 4 · (−2) ist −11. Nicht (−3 + 4) · (−2) = −2!', `2 · (−3)${s2} ist 18: zuerst hoch, dann mal.`, 'Schreib jeden Schritt in eine neue Zeile. So verlierst du kein Vorzeichen.']),
+    hint: () => 'Klammer, Hoch, Punkt, Strich. Rechne Schritt für Schritt und schreib jede Zeile neu ab.',
+    gen: gen8,
+    examples: () => exT([make8('-3 + 4*(-2)', []), make8('(-12)/(5 - 8) + 2', []), make8('-2*(3 - 7)^2', []), make8('10 - (-3)^2*2', [])]),
+    explore: explore8,
+    bsp: () => [make8('5 - 3*(-4)', []), make8('(-6 + 2)*(-3) - 10', []), make8('-4^2 + (-4)^2 / 8', [])],
+  },
+  {
+    id: 10, title: 'Sachaufgaben', short: 'Temperatur, Konto, Tauchen', sample: '−4 °C + 7 °C',
+    lvl: ['eine Änderung', 'zwei Änderungen, Unterschied', 'Mittelwert, mehrmals'],
+    intro: `<p>Negative Zahlen begegnen dir im Alltag. In Sachaufgaben übersetzt du den Text in eine Rechnung. Diese Wörter helfen dir:</p>
+      <div class="dictwrap"><table class="dict"><thead><tr><th>Wörter im Text</th><th>Zeichen</th><th>Beispiel</th></tr></thead><tbody>
+      <tr><td>steigt, wärmer, einzahlen, nach oben, auftauchen</td><td class="z">+</td><td>−4 + 7</td></tr>
+      <tr><td>sinkt, kälter, abheben, abbuchen, nach unten, tiefer</td><td class="z">−</td><td>3 − 8</td></tr>
+      <tr><td>Unterschied, um wie viel wärmer / höher</td><td class="z">−</td><td>5 − (−3)</td></tr>
+      <tr><td>jeden Monat, jede Stunde, mehrmals</td><td class="z">·</td><td>4 · (−2)</td></tr>
+      <tr><td>Mittelwert, Durchschnitt</td><td class="z">:</td><td>Summe : Anzahl</td></tr>
+      </tbody></table></div>`,
+    merke: ol(['Suche den Startwert. Unter null ist negativ.', 'Übersetze jede Änderung mit + oder −.', 'Rechne aus.', 'Schreib einen Antwortsatz mit Einheit.']),
+    falle: ul(['Unterschied zwischen 5 °C und −3 °C ist 8 °C, nicht 2 °C.', 'Beim Mittelwert die Summe durch die Anzahl teilen.', 'Gib im Eingabefeld nur die Zahl ein, ohne °C oder €.']),
+    hint: () => 'Startwert suchen, dann jede Änderung übersetzen: mehr werden → plus, weniger werden → minus. Unterschied: höherer minus tieferer Wert.',
+    gen: gen9, examples: () => S9EX.map(e => ({ label: e.label, x: e })), explore: explore9,
+    bsp: () => [make9({ text: 'Um 6 Uhr sind es −7 °C. Bis 14 Uhr steigt die Temperatur um 11 °C.', src: '-7 + 11', unit: C, say: v => `Um 14 Uhr sind es ${nH(v)} ${C}.`, traps: [] }),
+      make9({ text: 'Ein Konto steht bei 40 €. Es werden 3-mal je 25 € abgebucht.', src: '40 + 3*(-25)', unit: '€', say: v => `Der Kontostand ist ${nH(v)} €.`, traps: [] })],
+  },
+];
+const MIX = {
+  id: 11, title: 'Gemischtes Training', short: 'Aufgaben aus allen Stationen', sample: 'alles', mix: true,
+  lvl: ['leicht', 'mittel', 'schwer'],
+  hint: t => byId(t.st).hint(t),
+  gen(l) { const s = pick(STATIONS); const t = s.gen(l); t.tag = `${s.id} · ${s.title}`; return t; },
+};
+STATIONS.forEach(s => { if (!s.sid) s.sid = s.id > 4 ? s.id - 1 : s.id; });
+function byId(id) { return id === 11 ? MIX : STATIONS.find(s => s.id === id); }
+
+// ---------- Selbsttest (Node: TL.runTests()) ----------
+function runTests(n = 150) {
+  const fails = [];
+  const ok = (c, m) => { if (!c) fails.push(m); };
+  const V = s => plainNum(val(parse(s)));
+  const cases = [['-3^2', '-9'], ['(-3)^2', '9'], ['(−2)³', '-8'], ['5 - (-3)', '8'], ['−3 + 4·(−2)', '-11'], ['(-12):(5-8)+2', '6'], ['2.400', '2400'], ['(-3)(-4)', '12'], ['[-2]·3', '-6'], ['7:2', '7/2']];
+  for (const [a, b] of cases) ok(V(a) === b, `Wert ${a} → ${V(a)} statt ${b}`);
+  for (const bad of ['', '3x', '3+', '(2+1', '2+1)', '2^', '5?', '()', '2 3', '5:0', '=5']) {
+    try { val(parse(bad)); fails.push('kein Fehler bei: ' + bad); } catch (e) { ok(e.user, 'Fehlerart bei: ' + bad + ' ' + e.message); }
+  }
+  ok(fmt(parse('5 - (-3) + (+2)')) === '5 − (−3) + (+2)', 'fmt Klammern → ' + fmt(parse('5 - (-3) + (+2)')));
+  ok(fmt(parse('-3^2')) === '−3<sup>2</sup>', 'fmt −3² → ' + fmt(parse('-3^2')));
+  ok(fmt(parse('(-3)^2')) === '(−3)<sup>2</sup>', 'fmt (−3)² → ' + fmt(parse('(-3)^2')));
+  const t2 = add2(-9, 4);
+  ok(check(t2, '-5').ok && check(t2, '−5').ok, 'st2 richtig'); ok(!check(t2, '5').ok && /Vorzeichen/.test(check(t2, '5').msg), 'st2 Vorzeichen');
+  ok(/subtrahieren|kleineren/.test(check(t2, '-13').msg), 'st2 Falle'); ok(check(t2, '-9+4').near, 'st2 nicht ausgerechnet'); ok(check(t2, 'x').syntax, 'st2 Syntax');
+  const t3 = sub3(6, -3); ok(check(t3, '9').ok && /plus/.test(check(t3, '3').msg), 'st3');
+  const tl = ord1([3, -4, 0, -1, 5]); ok(check(tl, '-4; -1; 0; 3; 5').ok && check(tl, '−4 < −1 < 0 < 3 < 5').ok, 'Liste ok');
+  ok(/groß nach klein/.test(check(tl, '5;3;0;-1;-4').msg), 'Liste umgekehrt'); ok(/negativen/.test(check(tl, '-1;-4;0;3;5').msg), 'Liste negative'); ok(check(tl, '1;2').syntax, 'Liste Anzahl');
+  const t7 = nopar7(3, 2); ok(check(t7, '-9').ok && /Klammer/.test(check(t7, '9').msg), 'st7 ohne Klammer');
+  for (const s of STATIONS.concat([MIX])) for (const l of [1, 2, 3]) for (let i = 0; i < n; i++) {
+    let t;
+    try { t = s.gen(l); } catch (e) { fails.push(`gen ${s.id}/${l}: ${e.stack}`); break; }
+    const tag = `S${t.st} L${l} ${t.q && t.q.slice(0, 60)}`;
+    if (t.kind === 'mc') {
+      const i0 = t.opts.findIndex(o => o.ok);
+      ok(i0 >= 0 && t.opts.filter(o => o.ok).length === 1 && t.opts.length >= 2, 'mc ' + tag);
+      ok(check(t, i0).ok && t.opts.every((o, k) => k === i0 || !check(t, k).ok), 'mc prüfen ' + tag);
+    } else {
+      const r = check(t, t.sol);
+      ok(r.ok, `Lösung nicht akzeptiert: ${tag} / ${t.sol} → ${r.msg}`);
+      if (t.kind === 'number') {
+        ok(t.val[1] === 1, 'keine ganze Zahl: ' + tag + ' ' + t.sol);
+        ok(abs(t.val[0]) < 100000, 'zu groß: ' + tag);
+        for (const tr of t.traps) ok(!check(t, plainNum(tr.val)).ok, `Falle akzeptiert: ${tag} / ${plainNum(tr.val)}`);
+      }
+    }
+    ok(t.lines.length >= 2, 'Lösungsweg ' + tag);
+    ok(typeof s.hint(t) === 'string', 'Tipp ' + tag);
+  }
+  for (const s of STATIONS) {
+    for (const ex of s.examples()) {
+      try { const st = s.explore(ex.x); ok(st.length >= 2 && st.every(x => x.h && x.cap && x.lab), 'explore ' + s.id); }
+      catch (e) { fails.push(`explore ${s.id}: ${e.stack}`); }
+    }
+    try { s.bsp().forEach(t => ok(t.lines.length >= 2 && check(t, t.sol).ok, 'bsp ' + s.id)); } catch (e) { fails.push(`bsp ${s.id}: ${e.stack}`); }
+  }
+  return fails;
+}
+
+global.TL = { stations: STATIONS, mix: MIX, byId, check, preview, previewList, runTests, seed, parse, fmt, val, lineH, evalSteps, nl };
+})(typeof window !== 'undefined' ? window : globalThis);
+</script>
+
+<!-- =====================================================================
+     OBERFLÄCHE: Lernpfad, Stationen (Verstehen / Üben), Fortschritt.
+     Test-Haken für den Durchklick: window.TLUI
+     ===================================================================== -->
+<script>
+(function () {
+'use strict';
+const T = window.TL;
+const $ = (s, r = document) => r.querySelector(s);
+const main = $('#main');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ohne Speicher geht es auch */ } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* egal */ } },
+};
+const PER = 3, SLOTS = 9, MAXW = 5;       // je Station 3 Stufen × 3 Aufgaben; Lösung beim 5. Fehlversuch
+const LV = ['Leicht', 'Mittel', 'Schwer'];
+const STAR = 'M12 2.8l2.85 5.78 6.38.93-4.62 4.5 1.09 6.35L12 17.36l-5.7 3 1.09-6.35-4.62-4.5 6.38-.93z';
+const starSvg = on => `<svg viewBox="0 0 24 24" class="${on ? 'on' : 'off'}" aria-hidden="true"><path d="${STAR}" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+const TLUI = window.TLUI = {};
+const nice = s => String(s).replace(/-/g, '−');
+
+// ---------- Fortschritt ----------
+// gz-v2 = { v: 2, salt, off, st: { Station: { Platz 0–8: { s: "free"|"hint"|"shown", w: Fehlversuche } } } }
+// Version 1 hatte 9 Stationen; seit Version 2 ist „Der Betrag“ Station 4, die alten Stationen 4–10 rücken um eins nach hinten.
+const KEY = 'gz-v2', OLD = 'gz-v1', POS = 'gz-pos';
+const remap = id => (+id >= 4 ? +id + 1 : +id);
+const remapPos = p => { const m = p && /^#s(\d+)(-ueben)?$/.exec(p); return m ? `#s${remap(m[1])}${m[2] || ''}` : p; };
+function migrate(d) {
+  if (d.v === 2) return d;
+  const st = {}, off = {};
+  for (const id in d.st || {}) st[remap(id)] = d.st[id];
+  for (const id in d.off || {}) off[remap(id)] = d.off[id];
+  return { ...d, st, off, v: 2 };
+}
+function loadData() {
+  const d = store.get(KEY, null);
+  if (d && d.st && d.salt) return d;
+  const o = store.get(OLD, null);
+  let nd;
+  if (o && o.st && o.salt) {
+    nd = migrate(o);
+    store.set(POS, remapPos(store.get(POS, null)));
+    for (let i = 10; i >= 4; i--) { const l = store.get('gz-lvl-' + i, null); if (l !== null) { store.set('gz-lvl-' + (i + 1), l); store.del('gz-lvl-' + i); } }
+    store.del(OLD);
+  } else nd = { v: 2, salt: 1 + Math.floor(Math.random() * 1e9), st: {} };
+  store.set(KEY, nd); return nd;
+}
+let data = loadData();
+const save = () => store.set(KEY, data);
+const slot = (id, i) => (data.st[id] || {})[i] || {};
+const setSlot = (id, i, v) => { (data.st[id] = data.st[id] || {})[i] = v; save(); };
+const isDone = x => x.s === 'free' || x.s === 'hint' || x.s === 'shown';
+function stats(ids) {
+  const c = { free: 0, hint: 0, shown: 0, total: ids.length * SLOTS };
+  ids.forEach(id => { for (let i = 0; i < SLOTS; i++) { const x = slot(id, i); if (isDone(x)) c[x.s]++; } });
+  c.done = c.free + c.hint + c.shown; return c;
+}
+const ALL = () => T.stations.map(s => s.id);
+const PCT = (x, t) => (t ? Math.round(100 * x / t) : 0);
+const levelStar = (id, l) => [0, 1, 2].every(k => { const x = slot(id, (l - 1) * PER + k); return x.s === 'free' || x.s === 'hint'; });
+const starCount = id => [1, 2, 3].filter(l => levelStar(id, l)).length;
+const starsH = id => { const n = starCount(id); return `<span class="stars" role="img" aria-label="${n} von 3 Sternen">${[0, 1, 2].map(i => starSvg(i < n)).join('')}</span>`; };
+const stackH = c => `<i class="stack" role="img" aria-label="${PCT(c.done, c.total)} Prozent bearbeitet, ${PCT(c.free, c.total)} Prozent ohne Hilfe"><b class="f" style="width:${100 * c.free / c.total}%"></b><b class="h" style="width:${100 * c.hint / c.total}%"></b><b class="s" style="width:${100 * c.shown / c.total}%"></b></i>`;
+const legendH = c => { const v = x => `${x} (${PCT(x, c.total)} %)`;
+  return `<div class="legend"><span><i class="f"></i>ohne Hilfe: ${v(c.free)}</span><span><i class="h"></i>mit Tipps: ${v(c.hint)}</span><span><i class="s"></i>Lösung angezeigt: ${v(c.shown)}</span><span><i class="o"></i>offen: ${v(c.total - c.done)}</span></div>`; };
+const progLine = c => `${PCT(c.done, c.total)} % bearbeitet · davon ${PCT(c.free, c.total)} % ohne Hilfe`;
+function genSlot(s, i) {
+  T.seed((data.salt + (s.sid || s.id) * 7919 + i * 104729 + ((data.off || {})[s.id] || 0) * 31337) | 0);
+  const t = s.gen(Math.floor(i / PER) + 1);
+  T.seed(1 + Math.floor(Math.random() * 1e9));
+  return t;
+}
+const firstOpen = id => { for (let i = 0; i < SLOTS; i++) if (!isDone(slot(id, i))) return i; return -1; };
+// Knopf, der erst beim zweiten Klick auslöst (Dialogfenster gehen nicht überall)
+function twoClick(b, label, ask, fn) {
+  b.onclick = () => {
+    if (b.dataset.s !== '1') { b.dataset.s = '1'; b.textContent = ask; setTimeout(() => { if (b.isConnected) { b.dataset.s = ''; b.textContent = label; } }, 4000); return; }
+    fn();
+  };
+}
+
+// ---------- Bewegung: Elemente mit gleichem data-k gleiten an ihren neuen Platz ----------
+function morph(el, html) {
+  const old = new Map();
+  const anim = !reduce && typeof el.animate === 'function';
+  if (anim) el.querySelectorAll('[data-k]').forEach(n => old.set(n.dataset.k, n.getBoundingClientRect()));
+  el.innerHTML = html;
+  if (!anim) return;
+  if (!old.size) { el.animate([{ opacity: 0.35 }, { opacity: 1 }], { duration: 250 }); return; }
+  el.querySelectorAll('[data-k]').forEach(n => {
+    const o = old.get(n.dataset.k), r = n.getBoundingClientRect();
+    if (o) {
+      const dx = o.left - r.left, dy = o.top - r.top;
+      if (Math.abs(dx) + Math.abs(dy) > 1) n.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 650, easing: 'cubic-bezier(.5,0,.25,1)' });
+    } else n.animate([{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'none' }], { duration: 380, easing: 'ease-out' });
+  });
+}
+
+// ---------- Startseite ----------
+function home() {
+  const all = T.stations.concat([T.mix]), c = stats(ALL());
+  const open = T.stations.find(s => firstOpen(s.id) >= 0);
+  const pos = store.get(POS, null);
+  const posS = pos && /^#s(\d+)/.exec(pos), posSt = posS && T.byId(+posS[1]);
+  main.innerHTML = `
+  <section class="card hero">
+    <div>
+      <p class="lbl">Lernpfad</p>
+      <h2>Rechnen mit ganzen Zahlen</h2>
+      <p>In zehn Stationen lernst du Schritt für Schritt, wie man mit negativen Zahlen rechnet. Jede Station beginnt mit einer kurzen <b>Erklärung</b> mit Zahlengerade, Bildern und Beispielen. Danach kommen <b>9 Übungsaufgaben</b> in drei Stufen.</p>
+      <p>Nach jedem Fehlversuch bekommst du einen neuen, genaueren Tipp. Beim ${MAXW}. Fehlversuch wird die richtige Lösung angezeigt. Das wird im Fortschritt vermerkt. Einen Stern pro Stufe gibt es, wenn du alle 3 Aufgaben der Stufe selbst gelöst hast.</p>
+      <p class="btns">${posSt && pos !== '#start' ? `<a class="btn primary" href="${pos}">▶ Weiter, wo du aufgehört hast</a>` : ''}${open ? `<a class="btn${posSt ? '' : ' primary'}" href="#s${open.id}${c.done ? '-ueben' : ''}">${c.done ? `Nächste offene Aufgabe: Station ${open.id}` : 'Los geht’s mit Station 1'} →</a>` : ''}</p>
+      ${posSt && pos !== '#start' ? `<p class="goalinfo">Zuletzt: Station ${posSt.id} · ${posSt.title} (${/-ueben$/.test(pos) ? 'Üben' : 'Verstehen'})</p>` : ''}
+    </div>
+    <div class="herofx" aria-hidden="true">
+      <p class="lbl">Am Ende kannst du das</p>
+      ${T.nl({ lo: -6, hi: 6, jumps: [{ a: 0, b: -5, cls: 'neg', lab: '−5' }, { a: -5, b: 3, cls: 'pos', lab: '+8' }], pts: [{ v: 3, lab: '3', cls: 'hop', high: true }] })}
+      <p class="eqbig sm">(<span class="nv">−5</span>) + <span class="pv">8</span> = <span class="pv">3</span></p>
+      <p class="eqbig sm">(<span class="nv">−4</span>) · (<span class="nv">−6</span>) = <span class="pv">24</span></p>
+      <p class="eqbig sm">(−3)<sup>2</sup> = 9, aber −3<sup>2</sup> = −9</p>
+    </div>
+  </section>
+  <section class="card prog"><div class="ptop2"><h3>Dein Fortschritt: ${progLine(c)}</h3><span class="lbl">${c.done} von ${c.total} Aufgaben</span></div>${stackH(c)}${legendH(c)}</section>
+  <ol class="path">${all.map(s => { const x = s.mix ? null : stats([s.id]); return `
+    <li><a class="stn${!s.mix && x.done === x.total ? ' done' : ''}${s.mix ? ' goal' : ''}" href="#s${s.id}${s.mix ? '-ueben' : ''}">
+      <span class="num" aria-hidden="true">${s.mix ? '∑' : s.id}</span>
+      <span class="st-t"><b>${s.mix ? '' : `<span class="sr">Station ${s.id}: </span>`}${s.title}</b><small>${s.mix ? 'freies Training mit Aufgaben aus allen Stationen (zählt nicht zum Fortschritt)' : s.short}</small></span>
+      <span class="st-ex">${s.mix ? '' : `${PCT(x.done, x.total)} % bearbeitet<br><small>${PCT(x.free, x.total)} % ohne Hilfe</small>`}</span>
+      ${s.mix ? '' : `<span class="st-r">${starsH(s.id)}${stackH(x)}</span>`}
+    </a></li>`; }).join('')}
+  </ol>
+  <section class="card"><h3>Fortschritt sichern und zurücksetzen</h3>
+    <p>Dein Fortschritt wird <b>automatisch in diesem Browser auf diesem Gerät</b> gespeichert, auch wenn du die Datei schließt und später wieder öffnest. Öffne die Datei dafür immer vom selben Ort und im selben Browser. Mit einer Sicherungsdatei kannst du den Stand aufheben oder auf ein anderes Gerät mitnehmen.</p>
+    <div class="btns"><button class="btn" type="button" id="h-exp">💾 Fortschritt als Datei sichern</button><label class="btn">📂 Sicherung laden<input type="file" id="h-imp" accept=".json,application/json" hidden></label><button class="btn danger" type="button" id="h-reset">🗑 Gesamten Fortschritt löschen</button></div>
+    <p class="goalinfo" id="h-msg" aria-live="polite"></p>
+    <p class="goalinfo">Einzelne Stationen setzt du auf ihrer Üben-Seite zurück. Beim Zurücksetzen bekommst du neue Aufgaben mit anderen Zahlen.</p>
+  </section>`;
+  $('#h-exp').onclick = exportData;
+  $('#h-imp').onchange = e => { const f = e.target.files[0]; if (f) importData(f); e.target.value = ''; };
+  twoClick($('#h-reset'), '🗑 Gesamten Fortschritt löschen', 'Wirklich alles löschen? Nochmal klicken.', () => {
+    store.del(KEY); store.del(POS); for (let i = 1; i <= 11; i++) store.del('gz-lvl-' + i);
+    data = loadData(); home(); $('#h-msg').textContent = 'Der gesamte Fortschritt wurde gelöscht.';
+  });
+}
+function exportData() {
+  const blob = new Blob([JSON.stringify({ app: 'ganze-zahlen-lernpfad', saved: new Date().toISOString(), data, pos: store.get(POS, null) }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Ganze-Zahlen_Fortschritt_' + new Date().toISOString().slice(0, 10) + '.json';
+  document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+function importData(file) {
+  const r = new FileReader();
+  r.onload = () => {
+    let j = null; try { j = JSON.parse(r.result); } catch (e) { /* unten */ }
+    const msg = $('#h-msg');
+    if (!j || j.app !== 'ganze-zahlen-lernpfad' || !j.data || !j.data.st) { msg.textContent = 'Das ist keine gültige Sicherungsdatei des Lernpfads Ganze Zahlen.'; return; }
+    const old = j.data.v !== 2; data = migrate(j.data); save(); if (j.pos) store.set(POS, old ? remapPos(j.pos) : j.pos); home();
+    $('#h-msg').textContent = 'Sicherung vom ' + new Date(j.saved).toLocaleString('de-DE') + ' geladen.';
+  };
+  r.readAsText(file);
+}
+
+// ---------- Station ----------
+function station(id, mode) {
+  const s = T.byId(id);
+  if (s.mix) mode = 'ueben';
+  main.innerHTML = `
+  <nav class="shead" aria-label="Station">
+    <a class="btn" href="#start">← Lernpfad</a>
+    <div class="stitle"><span class="num" aria-hidden="true">${s.mix ? '∑' : id}</span><div><p class="lbl">${s.mix ? 'Zum Schluss' : `Station ${id} von ${T.stations.length}`}</p><h2>${s.title}</h2></div></div>
+    ${s.mix ? '' : `<div class="seg"><a href="#s${id}"${mode !== 'ueben' ? ' aria-current="page"' : ''}>1. Verstehen</a><a href="#s${id}-ueben"${mode === 'ueben' ? ' aria-current="page"' : ''}>2. Üben</a></div>`}
+  </nav>
+  <div id="pane" class="view"></div>`;
+  const pane = $('#pane');
+  if (mode === 'ueben') practice(s, pane); else learn(s, pane);
+}
+
+function learn(s, pane) {
+  const c = stats([s.id]);
+  pane.innerHTML = `
+  <section class="card intro"><h3>Worum geht es?</h3>${s.intro}</section>
+  <section class="card" id="ex">
+    <div class="exhead"><h3>Schritt für Schritt</h3><span class="lbl">Wähle ein Beispiel</span></div>
+    <div class="chips" id="ex-chips"></div>
+    <div class="stagebox" id="ex-stage"></div>
+    <p class="cap" id="ex-cap" aria-live="polite"></p>
+    <div class="player">
+      <div class="chain" id="ex-chain"></div>
+      <div class="btns"><button class="btn" type="button" id="ex-prev">Zurück</button><button class="btn primary" type="button" id="ex-next">Weiter</button></div>
+    </div>
+  </section>
+  <div class="two"><section class="card merke"><h3>Merke</h3>${s.merke}</section><section class="card falle"><h3>Vorsicht, Falle!</h3>${s.falle}</section></div>
+  <section class="card"><h3>Beispiele mit Lösungsweg</h3>
+    <div class="bsp">${s.bsp().map(t => `<div class="wk"><p class="wq">${t.prompt}${t.qText ? ': ' + t.q : ''}</p>${T.lineH(t.lines)}</div>`).join('')}</div>
+  </section>
+  <div class="nextrow"><span class="goalinfo">Übungen dieser Station: ${progLine(c)}</span><a class="btn primary" href="#s${s.id}-ueben">Jetzt üben →</a></div>`;
+  explorer(s);
+}
+
+function explorer(s) {
+  const items = s.examples();
+  let cur = 0, step = 0, steps = [];
+  const chips = $('#ex-chips'), stage = $('#ex-stage'), cap = $('#ex-cap'), chain = $('#ex-chain');
+  const prev = $('#ex-prev'), next = $('#ex-next');
+  chips.innerHTML = items.map((it, i) => `<button type="button" class="chip" data-i="${i}" aria-pressed="${i === 0}">${it.label}</button>`).join('');
+  function draw() {
+    morph(stage, steps[step].h);
+    cap.innerHTML = steps[step].cap;
+    chain.innerHTML = steps.map((x, i) => (i ? '<span class="ar" aria-hidden="true">→</span>' : '')
+      + `<button type="button" class="cv${i < step ? ' past' : ''}" data-s="${i}"${i === step ? ' aria-current="step"' : ''}>${x.lab}</button>`).join('');
+    prev.disabled = step === 0;
+    next.textContent = step === steps.length - 1 ? 'Nochmal' : 'Weiter';
+  }
+  function load(i) {
+    cur = i; steps = s.explore(items[i].x); step = 0; draw();
+    chips.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.i === i)));
+  }
+  chips.onclick = e => { const b = e.target.closest('[data-i]'); if (b) load(+b.dataset.i); };
+  chain.onclick = e => { const b = e.target.closest('[data-s]'); if (b) { step = +b.dataset.s; draw(); } };
+  prev.onclick = () => { if (step > 0) { step--; draw(); } };
+  next.onclick = () => { step = step === steps.length - 1 ? 0 : step + 1; draw(); };
+  load(0);
+  TLUI.explorer = { steps: () => steps.length, step: () => step, next: () => next.click(), load, count: items.length };
+}
+
+// ---------- Üben ----------
+function helpStages(t) {
+  const base = T.byId(t.st);
+  const st = [base.hint(t), 'Erinnere dich an die Regeln:' + base.merke, 'Achte auf diese typischen Fehler:' + base.falle];
+  st.push(t.lines.length >= 3
+    ? 'So beginnt der Lösungsweg – rechne ab hier selbst weiter:' + T.lineH(t.lines.slice(0, -1))
+    : `Schau dir die <a href="#s${t.st}">Erklärung und die Beispiele mit Lösungsweg</a> dieser Station noch einmal an.`);
+  return st.slice(0, MAXW - 1);
+}
+function practice(s, pane) {
+  const counted = !s.mix;
+  let cur = counted ? Math.max(0, firstOpen(s.id)) : -1;
+  let t, w = 0, status = null, extraLvl = Math.min(3, Math.max(1, +store.get('gz-lvl-' + s.id, 1) || 1));
+  pane.innerHTML = `
+  ${counted ? `<div class="card ptop">
+    <div class="slots" id="p-slots" role="group" aria-label="Aufgaben dieser Station"></div>
+    <div class="pstat"><span id="p-stars"></span><span class="score" id="p-score" aria-live="polite"></span></div>
+  </div>` : `<div class="card ptop"><div class="seg" id="p-level" role="group" aria-label="Stufe">${LV.map((n, i) => `<button type="button" data-l="${i + 1}" aria-pressed="${extraLvl === i + 1}">${n}<small>${s.lvl[i]}</small></button>`).join('')}</div><p class="goalinfo">Freies Training: Diese Aufgaben zählen nicht zum Fortschritt.</p></div>`}
+  <form class="card task" id="p-form" autocomplete="off" novalidate>
+    <div class="tq"><p class="lbl" id="p-prompt"></p><span class="tag" id="p-tag" hidden></span><span class="tries" id="p-tries"></span></div>
+    <div class="qline" id="p-q"></div>
+    <div id="p-ans"></div>
+    <div class="actions">
+      <button class="btn primary" type="submit" id="p-check">Prüfen</button>
+      <button class="btn" type="button" id="p-next">Nächste Aufgabe</button>
+      <button class="btn" type="button" id="p-sol" hidden>Lösungsweg</button>
+    </div>
+    <div class="fb" id="p-fb" aria-live="polite" hidden></div>
+    <ul class="hints" id="p-hints"></ul>
+    <div class="solbox" id="p-solbox" hidden></div>
+  </form>
+  <p class="goalinfo">Nach jedem Fehlversuch erscheint ein neuer Tipp. Beim ${MAXW}. Fehlversuch wird die richtige Lösung angezeigt. Eingaben, die ich nicht lesen kann, und fast richtige Ergebnisse (zum Beispiel noch nicht ganz ausgerechnet) zählen nicht als Fehlversuch.</p>
+  ${counted ? `<section class="card prog" id="p-prog"></section>` : ''}
+  ${s.mix ? '' : `<div class="nextrow"><a class="btn" href="#s${s.id}">← Zur Erklärung</a>${s.id < T.stations.length
+    ? `<a class="btn primary" href="#s${s.id + 1}">Nächste Station →</a>`
+    : `<a class="btn primary" href="#s${T.mix.id}-ueben">Gemischtes Training →</a>`}</div>`}`;
+  const form = $('#p-form'), fb = $('#p-fb'), solbox = $('#p-solbox'), ans = $('#p-ans'), checkBtn = $('#p-check'), hintsEl = $('#p-hints'), solBtn = $('#p-sol');
+  let inp = null, prevEl = null, stages = [];
+
+  function paintStats() {
+    if (!counted) return;
+    const c = stats([s.id]);
+    $('#p-slots').innerHTML = LV.map((n, l) => `<span class="slv"><span class="lbl">${n}</span>${[0, 1, 2].map(k => { const i = l * PER + k, x = slot(s.id, i);
+      return `<button type="button" class="sl${x.s ? ' ' + x.s : x.w ? ' tried' : ''}${i === cur ? ' cur' : ''}" data-i="${i}" title="${x.s === 'free' ? 'ohne Hilfe gelöst' : x.s === 'hint' ? 'mit Tipps gelöst' : x.s === 'shown' ? 'Lösung angezeigt' : x.w ? x.w + ' Fehlversuch(e)' : 'offen'}">${i + 1}</button>`; }).join('')}</span>`).join('')
+      + `<button type="button" class="sl extra${cur < 0 ? ' cur' : ''}" data-i="-1" title="Extra-Aufgabe, zählt nicht">+</button>`;
+    $('#p-stars').innerHTML = starsH(s.id);
+    $('#p-score').textContent = `${c.done} von ${c.total} bearbeitet`;
+    $('#p-prog').innerHTML = `<div class="ptop2"><h3>Station ${s.id}: ${progLine(c)}</h3><button class="btn danger sm" type="button" id="p-reset">Fortschritt dieser Station löschen</button></div>${stackH(c)}${legendH(c)}`;
+    twoClick($('#p-reset'), 'Fortschritt dieser Station löschen', 'Wirklich löschen? Nochmal klicken.', () => {
+      delete data.st[s.id]; data.off = data.off || {}; data.off[s.id] = (data.off[s.id] || 0) + 1; save();
+      cur = 0; openTask();
+    });
+  }
+  function showFb(cls, html) { fb.className = 'fb' + (cls ? ' ' + cls : ''); fb.innerHTML = html; fb.hidden = false; }
+  function paintHints() { hintsEl.innerHTML = stages.slice(0, Math.min(w, stages.length)).map((h, i) => `<li><b>Tipp ${i + 1}:</b> ${h}</li>`).join(''); }
+  function paintTries() { $('#p-tries').textContent = status || !w ? '' : 'Fehlversuche ' + '●'.repeat(w) + '○'.repeat(MAXW - w); }
+  const right = () => (t.kind === 'mc' ? `„${t.opts.find(o => o.ok).h}“` : t.solH);
+  const showSolution = () => { solbox.innerHTML = `<p class="lbl">Lösungsweg</p>${T.lineH(t.lines)}<p>Lösung: <b>${right()}</b></p>`; solbox.hidden = false; };
+  function keysFor() {
+    const d = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '−'];
+    return t.kind === 'list' ? d.concat([';', '⌫']) : d.concat(['(', ')', '⌫']);
+  }
+  function lockInput() { if (inp) inp.disabled = true; ans.querySelectorAll('button').forEach(b => { b.disabled = true; }); }
+  function openTask() {
+    const st = cur >= 0 ? slot(s.id, cur) : {};
+    const fo = firstOpen(s.id);
+    t = cur >= 0 ? genSlot(s, cur) : s.gen(counted ? (fo < 0 ? 3 : Math.floor(fo / PER) + 1) : extraLvl);
+    w = st.w || 0; status = st.s || null; stages = helpStages(t);
+    $('#p-prompt').textContent = (cur >= 0 ? `Aufgabe ${cur + 1} von ${SLOTS} · ${LV[Math.floor(cur / PER)]} · ` : counted ? 'Extra-Aufgabe (zählt nicht) · ' : '') + t.prompt;
+    const tag = $('#p-tag'); tag.hidden = !t.tag; tag.textContent = t.tag || '';
+    const q = $('#p-q');
+    q.className = 'qline' + (t.qText ? ' text' : '');
+    q.innerHTML = t.q + (t.after ? `<span class="for">${t.after}</span>` : '');
+    fb.hidden = true; solbox.hidden = true; hintsEl.innerHTML = '';
+    checkBtn.textContent = 'Prüfen'; checkBtn.hidden = false; checkBtn.disabled = false;
+    solBtn.hidden = cur >= 0;
+    if (t.kind === 'mc') {
+      inp = null; prevEl = null; checkBtn.hidden = true;
+      ans.innerHTML = `<div class="opts${t.sym ? ' sym' : ''}" role="group" aria-label="Antworten">${t.opts.map((o, i) => `<button type="button" class="opt" data-i="${i}">${o.h}</button>`).join('')}</div>`;
+    } else {
+      const list = t.kind === 'list';
+      ans.innerHTML = `<div class="ansrow">
+        <input id="p-in" class="tin" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false"
+          aria-label="Deine Antwort" placeholder="${list ? 'zum Beispiel −5; −2; 0; 3' : 'Ergebnis, zum Beispiel −12'}">
+        <div class="preview" id="p-prev" aria-live="polite"></div>
+        <div class="keypad" role="group" aria-label="Bildschirmtasten">${keysFor().map(k => `<button type="button" class="key${k === '−' ? ' mi' : ''}" data-key="${k}" aria-label="${k === '⌫' ? 'Löschen' : k === '−' ? 'Minus' : k === ';' ? 'Strichpunkt' : k}">${k}</button>`).join('')}</div>
+      </div>`;
+      inp = $('#p-in'); prevEl = $('#p-prev');
+      inp.addEventListener('input', onInput);
+    }
+    if (status === 'free' || status === 'hint') {
+      if (inp) { inp.value = nice(t.sol); inp.classList.add('good'); onInput(); }
+      else ans.querySelector(`.opt[data-i="${t.opts.findIndex(o => o.ok)}"]`).classList.add('good');
+      lockInput(); checkBtn.hidden = false; checkBtn.textContent = 'Nächste Aufgabe';
+      showFb('ok', `<p class="head">Schon gelöst – ${status === 'free' ? 'ohne Hilfe' : 'mit Tipps'}.</p><p class="lbl">So geht es</p>${T.lineH(t.lines)}`);
+    } else if (status === 'shown') {
+      if (inp) { inp.value = nice(t.sol); onInput(); }
+      lockInput(); checkBtn.hidden = false; checkBtn.textContent = 'Nächste Aufgabe';
+      showFb('no', `<p class="head">Hier wurde nach ${MAXW} Fehlversuchen die Lösung angezeigt.</p>`); showSolution();
+    } else {
+      if (w) { paintHints(); showFb('', `<p>Du hattest hier schon ${w} Fehlversuch${w > 1 ? 'e' : ''}. Deine Tipps stehen unten. Noch ${MAXW - w} Versuch${MAXW - w > 1 ? 'e' : ''} bis zur Lösung.</p>`); }
+      if (inp) try { inp.focus({ preventScroll: true }); } catch (e) { inp.focus(); }
+    }
+    paintTries(); paintStats();
+  }
+  function onInput() {
+    inp.classList.remove('bad');
+    const v = inp.value.trim();
+    if (!v) { prevEl.innerHTML = ''; return; }
+    const h = t.kind === 'list' ? T.previewList(v) : T.preview(v);
+    prevEl.innerHTML = h ? `So lese ich das: <b>${h}</b>` : 'So lese ich das: …';
+  }
+  function finish(st) {
+    status = st;
+    if (cur >= 0) setSlot(s.id, cur, { s: st, w });
+    lockInput(); checkBtn.hidden = false; checkBtn.disabled = false; checkBtn.textContent = 'Nächste Aufgabe';
+    paintTries(); paintStats();
+    try { checkBtn.focus({ preventScroll: true }); } catch (e) { /* egal */ }
+  }
+  function evaluate(r) {
+    if (r.ok) {
+      const before = cur >= 0 ? starCount(s.id) : 0;
+      finish(w === 0 ? 'free' : 'hint');
+      const star = cur >= 0 && starCount(s.id) > before ? `<p class="star">${starSvg(true)} Neuer Stern für „${LV[Math.floor(cur / PER)]}“!</p>` : '';
+      showFb('ok', `<p class="head">Richtig!${w === 0 ? ' Ohne Hilfe geschafft.' : ''}</p>${star}<p class="lbl">So geht es</p>${T.lineH(t.lines)}`);
+      if (inp) inp.classList.add('good');
+      return;
+    }
+    if (r.syntax || r.near) {
+      showFb('no', `<p class="head">${r.near ? 'Fast!' : 'Das kann ich noch nicht lesen.'}</p><p>${r.msg}</p><p class="lbl">Das zählt nicht als Fehlversuch.</p>`);
+      if (inp) { inp.classList.add('bad'); inp.focus({ preventScroll: true }); }
+      return;
+    }
+    w++;
+    if (w >= MAXW) {
+      finish('shown');
+      showFb('no', `<p class="head">Das war der ${MAXW}. Fehlversuch.</p><p>${r.msg}</p><p>Hier ist die richtige Lösung. Vergleiche sie genau mit deinem Weg.</p>`);
+      if (inp) { inp.value = nice(t.sol); onInput(); }
+      showSolution(); return;
+    }
+    if (cur >= 0) setSlot(s.id, cur, { w });
+    paintHints(); paintTries(); paintStats();
+    showFb('no', `<p class="head">Noch nicht richtig.</p><p>${r.msg}</p>`
+      + (w <= stages.length ? '<p>Unten steht ein neuer Tipp.</p>' : '')
+      + (w === MAXW - 1 ? '<p><b>Beim nächsten Fehlversuch wird die Lösung angezeigt.</b></p>' : ''));
+    if (inp) { inp.classList.add('bad'); inp.focus({ preventScroll: true }); }
+  }
+  function goNext() {
+    if (!counted) { cur = -1; openTask(); return; }
+    const n = firstOpen(s.id);
+    if (cur >= 0 && n >= 0) { let k = cur + 1; while (k < SLOTS && isDone(slot(s.id, k))) k++; cur = k < SLOTS ? k : n; }
+    else cur = n;
+    openTask();
+    if (cur < 0 && firstOpen(s.id) < 0) showFb('ok', '<p class="head">Alle 9 Aufgaben dieser Station sind bearbeitet! 🎉</p><p>Hier kannst du mit Extra-Aufgaben weiterüben – sie zählen nicht zum Fortschritt.</p>');
+  }
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (status) { goNext(); return; }
+    if (!inp) return;
+    const v = inp.value.trim();
+    if (!v) { showFb('', '<p>Gib zuerst eine Antwort ein.</p>'); return; }
+    evaluate(T.check(t, v));
+  });
+  ans.addEventListener('click', e => {
+    const o = e.target.closest('.opt');
+    if (o && !status) {
+      if (o.disabled) return;
+      const r = T.check(t, +o.dataset.i);
+      o.classList.add(r.ok ? 'good' : 'bad');
+      if (!r.ok) o.disabled = true;
+      evaluate(r);
+      return;
+    }
+    const k = e.target.closest('[data-key]');
+    if (!k || !inp || status) return;
+    const key = k.dataset.key, a = inp.selectionStart ?? inp.value.length, b = inp.selectionEnd ?? a;
+    if (key === '⌫') {
+      if (a !== b) inp.setRangeText('', a, b, 'end');
+      else if (a > 0) inp.setRangeText('', a - 1, a, 'end');
+    } else inp.setRangeText(key === ';' ? '; ' : key, a, b, 'end');
+    onInput();
+    try { inp.focus({ preventScroll: true }); } catch (err) { inp.focus(); }
+  });
+  solBtn.addEventListener('click', showSolution);
+  $('#p-next').addEventListener('click', goNext);
+  if (counted) $('#p-slots').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (!b) return; cur = +b.dataset.i; openTask(); });
+  else $('#p-level').addEventListener('click', e => {
+    const b = e.target.closest('[data-l]'); if (!b) return;
+    extraLvl = +b.dataset.l; store.set('gz-lvl-' + s.id, extraLvl);
+    $('#p-level').querySelectorAll('[data-l]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    openTask();
+  });
+  if (counted && firstOpen(s.id) < 0) cur = -1;
+  openTask();
+  TLUI.practice = {
+    task: () => t, cur: () => cur, status: () => status, wrong: () => w,
+    open(i) { cur = i; openTask(); },
+    answer(v) { inp.value = v; onInput(); form.requestSubmit(); return { cls: fb.className, text: fb.textContent }; },
+    choose(i) { $(`.opt[data-i="${i}"]`).click(); return { cls: fb.className, text: fb.textContent }; },
+    next: goNext,
+    hints: () => hintsEl.children.length,
+    sol: () => solbox.hidden ? '' : solbox.textContent,
+    preview: () => (prevEl ? prevEl.innerHTML : ''),
+  };
+}
+
+// ---------- Navigation: letzte Stelle merken ----------
+function route() {
+  const m = /^#s(\d+)(-ueben)?$/.exec(location.hash);
+  if (m && T.byId(+m[1])) { station(+m[1], m[2] ? 'ueben' : 'lernen'); store.set(POS, location.hash); }
+  else { home(); if (location.hash === '#start') store.set(POS, '#start'); }
+  window.scrollTo(0, 0);
+}
+TLUI.route = route;
+TLUI.reload = () => { data = loadData(); route(); };
+addEventListener('hashchange', route);
+if (!location.hash) { const p = store.get(POS, null); if (p && /^#s\d+(-ueben)?$/.test(p)) history.replaceState(null, '', p); }
+try { const th = store.get('gz-theme', null); if (th) document.documentElement.dataset.theme = th; } catch (e) { /* egal */ }
+route();
+
+$('#theme').addEventListener('click', () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  store.set('gz-theme', root.dataset.theme);
+});
+})();
+</script>
+</body>
+</html>
